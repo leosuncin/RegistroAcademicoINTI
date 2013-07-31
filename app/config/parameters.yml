@@ -11,4 +11,4 @@ parameters:
     mailer_user: null
     mailer_password: null
     locale: es
-    secret: 'la verdar duele las mentiras no'
+    secret: '$1$5ExXkDhC$HIYxle7U6d7mp5BMpf1SL/'

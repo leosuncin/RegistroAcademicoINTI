@@ -6,8 +6,12 @@
 /vendor/
 /bin/
 /composer.phar
+/composer.lock
+/.travis.yml
 *.back
 *~
 *.tmp
 /.project
-.*
+/nbproject/
+*.sublime-project
+*.sublime-workspace
