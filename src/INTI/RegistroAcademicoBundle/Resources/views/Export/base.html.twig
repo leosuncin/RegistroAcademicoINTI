@@ -1,0 +1,21 @@
+<html>
+    <head>
+		<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+		<meta name="author" content="{{ author }}" />
+		<title>{{ title|default('Documento') }}</title>
+		{% block style %}
+		<link rel="stylesheet" href="{{ asset('assets/normalize-css/normalize.css') }}" />
+		<style>
+		#header {
+			text-align: center;
+		}
+		#header h1 {
+			text-transform: uppercase;
+		}
+		</style>
+		{% endblock %}
+	</head>
+	<body>
+		{% block body %}{% endblock %}
+	</body>
+</html>

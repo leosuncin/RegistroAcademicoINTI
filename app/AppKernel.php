@@ -23,11 +23,11 @@ class AppKernel extends Kernel
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new BeSimple\SoapBundle\BeSimpleSoapBundle(),
-            new Bc\Bundle\BootstrapBundle\BcBootstrapBundle,
+            new Bc\Bundle\BootstrapBundle\BcBootstrapBundle(),
             new EE\DataExporterBundle\EEDataExporterBundle(),
-            new SunCat\MobileDetectBundle\MobileDetectBundle(),
             new Slik\DompdfBundle\SlikDompdfBundle(),
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
+            new INTI\RegistroAcademicoBundle\RegistroAcademicoBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

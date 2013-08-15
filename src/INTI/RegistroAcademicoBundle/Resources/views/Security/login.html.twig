@@ -1,0 +1,51 @@
+{% extends "RegistroAcademicoBundle::base.html.twig" %}
+
+{% block style %}
+{{ parent() }}
+<style>
+    #logo {
+		width: 128px;
+		height: 128px;
+		float: right;
+		position: relative;
+	}
+</style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+	<header class="page-header">
+		<img id="logo" src="{{ asset('bundles/registroacademico/images/logo_inti.png') }}" alt="Logo INTI" />
+		<h1>
+		Instituto Nacional Técnico Industrial<br /><small>Sistema de registro académico</small>
+		</h1>
+	</header>
+	<div class="row">
+		<div class="span8">
+			<p class="lead">
+				<strong>Bienvenido al sistema</strong><br />
+				para poder ingresar debe identificarse con su usuario previamente asignado. Sino lo conoce póngase en contacto con el departamento de registro académico de la institución
+			</p>
+		</div>
+		<div class="span4">
+			<form id="login_form" action="{{ path('login_check') }}" method="post" class="form-horizontal">
+			    <label for="username">Usuario:</label>
+			    <input id="username" type="text" name="_username" value="{{ last_username }}" />
+			    <label for="password">Contraseña:</label>
+			    <input id="password" type="password" name="_password" />
+			    <div class="control-group">
+					<div class="form-actions">
+						<input type="submit" value="Acceder" class="btn btn-primary" />
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	{% if error %}
+	<div class="control-group error">{{ error.message }}</div>
+	{% endif %}
+	<footer class="row-fluid">
+	{% include 'RegistroAcademicoBundle:Default:footer.html.twig' %}
+	</footer>
+</div>
+{% endblock %}

@@ -1,17 +1,20 @@
 security:
     encoders:
-        Symfony\Component\Security\Core\User\User: plaintext
+        INTI\RegistroAcademicoBundle\Entity\Usuario:
+            algorithm: sha512
+            encode-as-base64: true
+            iterations: 10
 
     role_hierarchy:
-        ROLE_ADMIN:       ROLE_USER
+        ROLE_ACADEMIC:    ROLE_USER
+        ROLE_ADMIN:       ROLE_ACADEMIC
         ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
 
     providers:
-        in_memory:
-            memory:
-                users:
-                    user:  { password: userpass, roles: [ 'ROLE_USER' ] }
-                    admin: { password: adminpass, roles: [ 'ROLE_ADMIN' ] }
+        user_db:
+            entity:
+                class: RegistroAcademicoBundle:Usuario
+                property: username
 
     firewalls:
         dev:
@@ -19,21 +22,36 @@ security:
             security: false
 
         login:
-            pattern:  ^/demo/secured/login$
+            pattern: ^/login$
             security: false
 
-        secured_area:
-            pattern:    ^/demo/secured/
+        #web_service:
+        #    pattern: ^/ws
+        #    security: true
+        #    http_basic:
+        #        realm: "Introduzca usuario y contraseña"
+        main:
+            pattern: ^/
+            provider: user_db
             form_login:
-                check_path: _security_check
-                login_path: _demo_login
+                login_path: /login
+                check_path: /login_check
+                default_target_path: index
+                remember_me: true
             logout:
-                path:   _demo_logout
-                target: _demo
-            #anonymous: ~
-            #http_basic:
-            #    realm: "Secured Demo Area"
+                path: /logout
+                target: index
+            remember_me:
+                key: a24d680e112b289c1d408fd351e8abadd4591f6d362675dfc3e6d6ebf6532a25
+                lifetime: 1800
+                path: ^/
+                domain: ~
+            security: true
+            anonymous: ~
 
     access_control:
-        - { path: ^/demo/secured/hello/admin/, roles: ROLE_ADMIN }
         #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
+        - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/expediente, roles: ROLE_USER }
+        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/, roles: IS_AUTHENTICATED_FULLY }

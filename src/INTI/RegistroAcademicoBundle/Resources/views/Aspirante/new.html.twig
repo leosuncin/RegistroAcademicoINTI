@@ -1,0 +1,16 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block content %}
+    <h1>Aspirante creation</h1>
+
+    <form action="{{ path('expediente_aspirante_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+        {{ form_widget(form) }}
+        <div class="form-actions">
+            <input type="submit" value="Crear" class="btn btn-primary" />
+            <a href="{{ path('expediente_aspirante') }}" class="btn">Regresar</a>
+        </div>
+        <div class="control-group error">
+            {{ form_errors(form) }}
+        </div>
+    </form>
+{% endblock %}

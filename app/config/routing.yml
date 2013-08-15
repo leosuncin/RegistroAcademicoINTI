@@ -1,0 +1,4 @@
+registro_academico:
+    resource: "@RegistroAcademicoBundle/Controller/"
+    type:     annotation
+    prefix:   /

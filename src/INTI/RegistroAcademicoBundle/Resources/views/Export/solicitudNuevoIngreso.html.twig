@@ -1,0 +1,68 @@
+{% extends "RegistroAcademicoBundle:Export:base.html.twig" %}
+
+{% block style %}
+	{{ parent() }}
+	<style>
+		table {
+			width: 100%;
+		}
+		.cell-center {
+			text-align: center;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+<div id="header">
+	<h1>Instituto Nacional Técnico Industrial</h1>
+	<p>Colonia Roma, Boulevard Venezuela</p>
+	<p>San Salvador, El Salvador, C.A.</p>
+	<p>Tels: 2224-6946, 2223-3886, 2223-3156</p>
+	<p>Fax: 2223-1385</p>
+	<h1>Solicitud de nuevo ingreso año: {{ "now"|date('Y')+1 }}</h1>
+</div>
+<div class="container">
+	<table>
+		<tbody>
+		<tr>
+		</tr>
+		<tr>
+			<td class="cell-center">1er apellido</td>
+			<td class="cell-center">2do apellido</td>
+			<td class="cell-center">Nombres</td>
+		</tr>
+		</tbody>
+	</table>
+</div>
+<div class="container">
+	<table>
+		<caption><strong>Especialidad Solicitada:</strong></caption>
+		<tbody>
+			<tr>
+				<td>Electrotecnia ...... ELT</td>
+				<td>Desarrollo de software .......... DS</td>
+			</tr>
+			<tr>
+				<td>Electrónica ........ ELCA</td>
+				<td>Mantenimiento de computadoras ... COMP</td>
+			</tr>
+			<tr>
+				<td>Automotores ........ AUTO</td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Mecánica general ... MECA</td>
+				<td></td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+<p>Dirección actual exacta:<br />
+________________________________
+Telefono:____________</p>
+<p>lugar y fecha de nacimiento:<br />
+_____________________________________</p>
+<p>Edad:______________	Sexo:__________</p>
+<p>Nombre del encargado o responsable: _____________________________</p>
+<p>Parentesco: ___________</p>
+{% endblock %}

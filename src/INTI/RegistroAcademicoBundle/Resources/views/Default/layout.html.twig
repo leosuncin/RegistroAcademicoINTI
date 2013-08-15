@@ -1,0 +1,81 @@
+{% extends 'RegistroAcademicoBundle::base.html.twig' %}
+
+{% block body %}
+<div class="container-fluid">
+    <div class="row-fluid">
+		<div class="span12">
+			<nav class="row pull-right">
+				{% block nav %}
+				<div class="row btn-group">
+					<a class="btn btn-primary" href="#"><i class="icon-user icon-white"></i> Usuario</a>
+					<a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
+					<ul class="dropdown-menu">
+						<li><a href="{{ path('index') }}"><i class="icon-home"></i> Inicio</a></li>
+						<li><a href="#"><i class="icon-pencil"></i> Información</a></li>
+						<li><a href="#"><i class="icon-wrench"></i> Cambiar contraseña</a></li>
+						<li class="divider"></li>
+						<li><a href="{{ path('logout') }}"><i class="icon-off"></i> Salir</a></li>
+					</ul>
+				</div>
+				{% endblock %}
+			</nav>
+			<div class="row-fluid">
+				<aside class="span4">
+					{% block aside %}
+					<div class="accordion" id="accordion-619107" style="float: center;">
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-619107" href="#accordion-element-526096">Grupo de opciones #1</a>
+							</div>
+							<div id="accordion-element-526096" class="accordion-body collapse">
+								<div class="accordion-inner">
+									Opcion #1.1
+								</div>
+								<div class="accordion-inner">
+									Opcion #1.2
+								</div>
+								<div class="accordion-inner">
+									Opcion #1.3
+								</div>
+								<div class="accordion-inner">
+									Opcion #1.4
+								</div>
+							</div>
+						</div>
+						<div class="accordion-group">
+							<div class="accordion-heading">
+								<a class="accordion-toggle collapsed" data-toggle="collapse" data-parent="#accordion-619107" href="#accordion-element-407670">Grupo de opciones #2</a>
+							</div>
+							<div id="accordion-element-407670" class="accordion-body collapse">
+								<div class="accordion-inner">
+									Opcion #2.1
+								</div>
+								<div class="accordion-inner">
+									Opcion #2.2
+								</div><div class="accordion-inner">
+									Opcion #2.3
+								</div>
+							</div>
+						</div>
+					</div>
+					{% endblock %}
+				</aside>
+				<div class="span8">
+					{% block content %}
+					<header class="page-header">
+						<h1>
+						Instituto Nacional Técnico Industrial<br /><small>Sistema de registro acádemico</small>
+						</h1>
+					</header>
+					{% endblock %}
+				</div>
+			</div>
+			<footer class="row-fluid">
+				{% block footer %}
+				{% include 'RegistroAcademicoBundle:Default:footer.html.twig' %}
+				{% endblock %}
+			</footer>
+		</div>
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="es-SV">
+    <head>
+    	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+		<link rel="shortcut icon" href="{{ asset('bundles/registroacademico/images/favicon.ico') }}" />
+		<link rel="apple-touch-icon" href="{{ asset('bundles/registroacademico/images/apple-touch-icon.png') }}" />
+		<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('bundles/registroacademico/images/apple-touch-icon-72x72.png') }}" />
+		<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('bundles/registroacademico/images/apple-touch-icon-114x114.png') }}" />
+		<title>{{ title|default('Sistema de registro académico') }}</title>
+		{% block style %}
+		<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
+        <link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}" />
+        <!--[if IE 7]><link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome-ie7.min.css') }}"><![endif]-->
+        <link rel="stylesheet" href="{{ asset('assets/normalize-css/normalize.css') }}" />
+		{% endblock %}
+	</head>
+	<body>
+        <!--[if lt IE 7]>
+        <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+        <![endif]-->
+		{% block body %}{% endblock %}
+        {% block javascript %}
+		<script type="text/javascript" src="{{ asset('assets/jquery/jquery.js') }}"></script>
+		<script src="{{ asset('js/bootstrap.js') }}"></script>
+        <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+        {% endblock %}
+	</body>
+</html>
