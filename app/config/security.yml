@@ -30,6 +30,7 @@ security:
         #    security: true
         #    http_basic:
         #        realm: "Introduzca usuario y contraseña"
+
         main:
             pattern: ^/
             provider: user_db

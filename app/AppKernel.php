@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new EE\DataExporterBundle\EEDataExporterBundle(),
             new Slik\DompdfBundle\SlikDompdfBundle(),
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
+            new Nelmio\SecurityBundle\NelmioSecurityBundle(),
             new INTI\RegistroAcademicoBundle\RegistroAcademicoBundle(),
         );
 

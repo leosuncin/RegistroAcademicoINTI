@@ -13,13 +13,12 @@ use Doctrine\ORM\Mapping as ORM;
 class Encargado
 {
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="DUI", type="string", length=10, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    private $dui;
 
     /**
      * @var string
@@ -31,16 +30,9 @@ class Encargado
     /**
      * @var string
      *
-     * @ORM\Column(name="Parentesco", type="string", length=12, nullable=false)
+     * @ORM\Column(name="parentesco", type="string", length=12, nullable=false)
      */
     private $parentesco;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="DUI", type="string", length=10, nullable=false)
-     */
-    private $dui;
 
     /**
      * @var string
@@ -49,16 +41,27 @@ class Encargado
      */
     private $telefono;
 
-
+    /**
+     * Set dui
+     *
+     * @param string $dui
+     * @return Encargado
+     */
+    public function setDui($dui)
+    {
+        $this->dui = $dui;
+    
+        return $this;
+    }
 
     /**
-     * Get id
+     * Get dui
      *
-     * @return integer 
+     * @return string 
      */
-    public function getId()
+    public function getDui()
     {
-        return $this->id;
+        return $this->dui;
     }
 
     /**
@@ -105,29 +108,6 @@ class Encargado
     public function getParentesco()
     {
         return $this->parentesco;
-    }
-
-    /**
-     * Set dui
-     *
-     * @param string $dui
-     * @return Encargado
-     */
-    public function setDui($dui)
-    {
-        $this->dui = $dui;
-    
-        return $this;
-    }
-
-    /**
-     * Get dui
-     *
-     * @return string 
-     */
-    public function getDui()
-    {
-        return $this->dui;
     }
 
     /**

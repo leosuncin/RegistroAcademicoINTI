@@ -52,13 +52,6 @@ class Aspirante
     /**
      * @var string
      *
-     * @ORM\Column(name="especialidad", type="string", length=30, nullable=false)
-     */
-    private $especialidad;
-
-    /**
-     * @var string
-     *
      * @ORM\Column(name="direccion", type="string", length=100, nullable=false)
      */
     private $direccion;
@@ -96,17 +89,27 @@ class Aspirante
      *
      * @ORM\ManyToOne(targetEntity="Encargado")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Encargado_id", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="Encargado", referencedColumnName="DUI")
      * })
      */
     private $encargado;
+
+    /**
+     * @var \Especialidad
+     *
+     * @ORM\ManyToOne(targetEntity="Especialidad")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Especialidad", referencedColumnName="codigo")
+     * })
+     */
+    private $especialidad;
 
 
 
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -122,14 +125,14 @@ class Aspirante
     public function setFoto($foto)
     {
         $this->foto = $foto;
-    
+
         return $this;
     }
 
     /**
      * Get foto
      *
-     * @return string 
+     * @return string
      */
     public function getFoto()
     {
@@ -145,14 +148,14 @@ class Aspirante
     public function setPrimerapellido($primerapellido)
     {
         $this->primerapellido = $primerapellido;
-    
+
         return $this;
     }
 
     /**
      * Get primerapellido
      *
-     * @return string 
+     * @return string
      */
     public function getPrimerapellido()
     {
@@ -168,14 +171,14 @@ class Aspirante
     public function setSegundoapellido($segundoapellido)
     {
         $this->segundoapellido = $segundoapellido;
-    
+
         return $this;
     }
 
     /**
      * Get segundoapellido
      *
-     * @return string 
+     * @return string
      */
     public function getSegundoapellido()
     {
@@ -191,41 +194,18 @@ class Aspirante
     public function setNombres($nombres)
     {
         $this->nombres = $nombres;
-    
+
         return $this;
     }
 
     /**
      * Get nombres
      *
-     * @return string 
+     * @return string
      */
     public function getNombres()
     {
         return $this->nombres;
-    }
-
-    /**
-     * Set especialidad
-     *
-     * @param string $especialidad
-     * @return Aspirante
-     */
-    public function setEspecialidad($especialidad)
-    {
-        $this->especialidad = $especialidad;
-    
-        return $this;
-    }
-
-    /**
-     * Get especialidad
-     *
-     * @return string 
-     */
-    public function getEspecialidad()
-    {
-        return $this->especialidad;
     }
 
     /**
@@ -237,14 +217,14 @@ class Aspirante
     public function setDireccion($direccion)
     {
         $this->direccion = $direccion;
-    
+
         return $this;
     }
 
     /**
      * Get direccion
      *
-     * @return string 
+     * @return string
      */
     public function getDireccion()
     {
@@ -260,14 +240,14 @@ class Aspirante
     public function setTelefono($telefono)
     {
         $this->telefono = $telefono;
-    
+
         return $this;
     }
 
     /**
      * Get telefono
      *
-     * @return string 
+     * @return string
      */
     public function getTelefono()
     {
@@ -283,14 +263,14 @@ class Aspirante
     public function setFechanac($fechanac)
     {
         $this->fechanac = $fechanac;
-    
+
         return $this;
     }
 
     /**
      * Get fechanac
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getFechanac()
     {
@@ -306,14 +286,14 @@ class Aspirante
     public function setLugarnac($lugarnac)
     {
         $this->lugarnac = $lugarnac;
-    
+
         return $this;
     }
 
     /**
      * Get lugarnac
      *
-     * @return string 
+     * @return string
      */
     public function getLugarnac()
     {
@@ -329,14 +309,14 @@ class Aspirante
     public function setSexo($sexo)
     {
         $this->sexo = $sexo;
-    
+
         return $this;
     }
 
     /**
      * Get sexo
      *
-     * @return string 
+     * @return string
      */
     public function getSexo()
     {
@@ -352,17 +332,40 @@ class Aspirante
     public function setEncargado(\INTI\RegistroAcademicoBundle\Entity\Encargado $encargado = null)
     {
         $this->encargado = $encargado;
-    
+
         return $this;
     }
 
     /**
      * Get encargado
      *
-     * @return \INTI\RegistroAcademicoBundle\Entity\Encargado 
+     * @return \INTI\RegistroAcademicoBundle\Entity\Encargado
      */
     public function getEncargado()
     {
         return $this->encargado;
+    }
+
+    /**
+     * Set especialidad
+     *
+     * @param \INTI\RegistroAcademicoBundle\Entity\Especialidad $especialidad
+     * @return Aspirante
+     */
+    public function setEspecialidad(\INTI\RegistroAcademicoBundle\Entity\Especialidad $especialidad = null)
+    {
+        $this->especialidad = $especialidad;
+
+        return $this;
+    }
+
+    /**
+     * Get especialidad
+     *
+     * @return \INTI\RegistroAcademicoBundle\Entity\Especialidad 
+     */
+    public function getEspecialidad()
+    {
+        return $this->especialidad;
     }
 }

@@ -18,4 +18,13 @@ class DefaultController extends Controller
     {
         return array();
     }
+
+    /**
+	* @Route("/construction/{modulo}", name="under_constrution")
+	* @Template()
+	*/
+	public function underConstructionAction($module)
+	{
+		return array('module' => $module);
+	}
 }

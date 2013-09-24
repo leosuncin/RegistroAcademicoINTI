@@ -15,20 +15,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class Usuario implements AdvancedUserInterface, \Serializable
 {
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="id", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $id;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="username", type="string", length=50, nullable=false)
-     *
-     * @Assert\Length(
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="IDENTITY")
+	 *
+	 * @Assert\Length(
      *      min = "8",
      *      max = "50",
      *      minMessage = "El nombre de usuario por lo menos debe tener {{ limit }} caracteres de largo",
@@ -55,8 +48,6 @@ class Usuario implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(name="salt", type="string", length=255, nullable=false)
-     *
-     * @Assert\NotBlank()
      */
     private $salt;
 
@@ -77,25 +68,15 @@ class Usuario implements AdvancedUserInterface, \Serializable
     /**
      * @var boolean
      *
-     * @ORM\Column(name="lock", type="boolean", nullable=false)
+     * @ORM\Column(name="locked", type="boolean", nullable=true)
      */
-    private $lock;
+    private $locked;
 
     function __construct() {
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->rol = array();
         $this->enabled = true;
-        $this->lock = false;
-    }
-
-    /**
-     * Get id
-     *
-     * @return integer
-     */
-    public function getId()
-    {
-        return $this->id;
+        $this->locked = false;
     }
 
     /**
@@ -232,26 +213,26 @@ class Usuario implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     * Set lock
+     * Set locked
      *
-     * @param boolean $lock
+     * @param boolean $locked
      * @return Usuario
      */
-    public function setLock($lock)
+    public function setLocked($locked)
     {
-        $this->lock = $lock;
+        $this->locked = $locked;
 
         return $this;
     }
 
     /**
-     * Get lock
+     * Get locked
      *
      * @return boolean
      */
-    public function getLock()
+    public function getLocked()
     {
-        return $this->lock;
+        return $this->locked;
     }
 
     /**
@@ -269,7 +250,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     public function serialize()
     {
         return serialize(array(
-            $this->id
+            $this->username
         ));
     }
 
@@ -279,7 +260,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     public function unserialize($serialized)
     {
         list (
-            $this->id
+            $this->username
         ) = unserialize($serialized);
     }
 
@@ -296,7 +277,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
      */
     public function isAccountNonLocked()
     {
-            return !$this->lock;
+            return !$this->locked;
     }
 
     /**
@@ -314,16 +295,4 @@ class Usuario implements AdvancedUserInterface, \Serializable
     {
         return $this->enabled;
     }
-
-    /**
-     * Verifica el cambio de contraseña para el usuario
-     *
-     * @Assert\False(message = "La contraseña anterior es incorrecta")
-     *
-     * @return boolean
-     */
-    // public function isCorrectPassword($new_password)
-    // {
-    //     return $this->password == $new_password;
-    // }
 }

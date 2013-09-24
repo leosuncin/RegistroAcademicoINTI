@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use INTI\RegistroAcademicoBundle\Entity\Usuario;
 use INTI\RegistroAcademicoBundle\Form\UsuarioType;
+use INTI\RegistroAcademicoBundle\Form\LoginType;
 
 class SecurityController extends Controller
 {
@@ -29,12 +30,15 @@ class SecurityController extends Controller
         } else {
             $error = $session->get(SecurityContext::AUTHENTICATION_ERROR);
         }
- 
+
+        $form = $this->container->get('form.factory')->create(new LoginType());
+
         return array(
             // último nombre de usuario ingresado
             'last_username' => $session->get(SecurityContext::LAST_USERNAME),
             'error'         => $error,
-            'title'         => "Acceso al sistema"
+            'title'         => "Acceso al sistema",
+            'form'          => $form->createView()
         );
     }
 

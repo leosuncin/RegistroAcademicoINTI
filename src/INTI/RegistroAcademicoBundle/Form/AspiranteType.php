@@ -35,18 +35,11 @@ class AspiranteType extends AbstractType
                     )
             )
             ->add('especialidad',
-                'choice',
+                'entity',
                 array(
-                    'label'       => 'Especialidad',
-                    'choices'     => array(
-                        'ELT'     => 'Electrotecnia',
-                        'ELCA'    => 'Electrónica',
-                        'AUTO'    => 'Automotores',
-                        'MECA'    => 'Mecánica general',
-                        'DS'      => 'Desarrollo de software',
-                        'COMP'    => 'Mantenimiento de computadora'
-                        ),
-                    'empty_value' => 'Escoja una especialidad'
+                    'label'    => 'Especialidad',
+                    'class'    => 'RegistroAcademicoBundle:Especialidad',
+                    'property' => 'nombre'
                     )
             )
             ->add('direccion',
@@ -59,12 +52,13 @@ class AspiranteType extends AbstractType
                 'number',
                 array('label' => 'Teléfono')
                 )
-            ->add('fechanac', 
+            ->add('fechanac',
                 'birthday',
                 array(
                     'label'     => 'Fecha de nacimiento',
+                    'widget'    => 'single_text',
                     'attr'      => array(
-                        'class' => 'controls-row input-mini'
+                        'class' => 'date'
                         )
                     )
                 )
@@ -79,13 +73,7 @@ class AspiranteType extends AbstractType
                         )
                     )
                 )
-            ->add('encargado',
-                'entity',
-                array(
-                    'class'    => 'RegistroAcademicoBundle:Encargado',
-                    'property' => 'nombre'
-                    )
-                );
+            ->add('encargado', new EncargadoType());
     }
 
     /**
@@ -94,7 +82,8 @@ class AspiranteType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'INTI\RegistroAcademicoBundle\Entity\Aspirante'
+            'data_class' => 'INTI\RegistroAcademicoBundle\Entity\Aspirante',
+            'cascade_validation' => true
         ));
     }
 

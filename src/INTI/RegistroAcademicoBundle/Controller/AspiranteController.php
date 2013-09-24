@@ -50,6 +50,8 @@ class AspiranteController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
+            $em->persist($entity->getEspecialidad());
+            $em->persist($entity->getEncargado());
             $em->persist($entity);
             $em->flush();
 

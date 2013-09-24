@@ -1,0 +1,16 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block content %}
+    <h1>Añadir un empleado al personal</h1>
+
+    <form action="{{ path('admin_empleado_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+        {{ form_rest(form, {'form_type': 'horizontal'}) }}
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" value="Crear" />
+            <a href="{{ path('admin_empleado') }}" class="btn">Regresar</a>
+        </div>
+        <div class="control-group error">
+          {{ form_errors(form) }}
+        </div>
+    </form>
+{% endblock %}

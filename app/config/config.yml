@@ -84,4 +84,19 @@ knp_paginator:
 
 bc_bootstrap:
     less_filter: lessphp
-    assets_dir:  %kernel.root_dir%/../vendor/twitter/bootstrap
+    
+nelmio_security:
+    # prevents framing of the entire site
+    clickjacking:
+        paths:
+            '^/.*': DENY
+    # prevents redirections outside the website's domain
+    external_redirects:
+        abort: true
+        log: true
+    # forced HTTPS handling, don't combine with flexible mode
+    # and make sure you have SSL working on your site before enabling this
+    forced_ssl: 
+        enabled: true
+        hsts_max_age: 2592000 # 30 days
+        hsts_subdomains: true

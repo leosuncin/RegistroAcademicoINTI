@@ -1,0 +1,56 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block content %}
+    <h1>Empleado</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Nombres</th>
+                <td>{{ entity.nombres }}</td>
+            </tr>
+            <tr>
+                <th>Apellidos</th>
+                <td>{{ entity.apellidos }}</td>
+            </tr>
+            <tr>
+                <th>Puesto</th>
+                <td>{{ entity.puesto }}</td>
+            </tr>
+            <tr>
+                <th>Fotografia</th>
+                <td>{{ entity.fotografia }}</td>
+            </tr>
+            <tr>
+                <th>Dui</th>
+                <td>{{ entity.dui }}</td>
+            </tr>
+            <tr>
+                <th>Isss</th>
+                <td>{{ entity.isss }}</td>
+            </tr>
+            <tr>
+                <th>Nit</th>
+                <td>{{ entity.nit }}</td>
+            </tr>
+            <tr>
+                <th>Nup</th>
+                <td>{{ entity.nup }}</td>
+            </tr>
+            <tr>
+                <th>Sexo</th>
+                <td>{{ entity.sexo }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+<div class="form-actions">
+  <a href="{{ path('admin_empleado') }}" class="btn">Regresar</a>
+  <a href="{{ path('admin_empleado_edit', { 'id': entity.id }) }}" class="btn">Edit</a>
+  <form action="{{ path('admin_empleado_delete', { 'id': entity.id }) }}" method="post">
+      <input type="hidden" name="_method" value="DELETE" />
+      {{ form_widget(delete_form) }}
+      <button type="submit">Borrar</button>
+  </form>
+</div>
+{% endblock %}

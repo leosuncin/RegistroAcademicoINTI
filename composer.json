@@ -35,11 +35,12 @@
         "leafo/lessphp": "dev-master",
         "liuggio/excelbundle": ">=1.0.4",
         "slik/dompdf-bundle": "dev-master",
-        "twitter/bootstrap": "dev-master",
+        "twbs/bootstrap": "dev-master",
         "components/jquery": "1.9.*",
         "components/modernizr": "dev-master",
         "components/font-awesome": "3.2.*",
-        "components/normalize.css": "dev-master"
+        "components/normalize.css": "dev-master",
+        "nelmio/security-bundle": "~1.0"
     },
     "scripts": {
         "post-install-cmd": [
@@ -66,6 +67,7 @@
     "extra": {
         "symfony-app-dir": "app",
         "symfony-web-dir": "web",
+        "symfony-assets-install": "symlink",
         "incenteev-parameters": {
             "file": "app/config/parameters.yml"
         },

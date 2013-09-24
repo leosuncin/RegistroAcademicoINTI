@@ -1,16 +1,29 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
-{% block content %}
-    <h1>Aspirante creation</h1>
+{% block style %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('assets/jquery-ui/css/smoothness/jquery-ui.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/jquery-ui/css/smoothness/jquery.ui.theme.css') }}" />
+{% endblock %}
 
-    <form action="{{ path('expediente_aspirante_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-        {{ form_widget(form) }}
-        <div class="form-actions">
-            <input type="submit" value="Crear" class="btn btn-primary" />
-            <a href="{{ path('expediente_aspirante') }}" class="btn">Regresar</a>
-        </div>
-        <div class="control-group error">
-            {{ form_errors(form) }}
-        </div>
-    </form>
+{% block content %}
+<h1>Aspirante creation</h1>
+<form action="{{ path('expediente_aspirante_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	{{ form_label(form.foto) }}
+    <input type="file" id="filePicker" class="btn btn-success"/>
+    {{ form_widget(form, {'form_type': 'horizontal'}) }}
+    <div class="form-actions">
+        <input type="submit" value="Crear" class="btn btn-primary" />
+        <a href="{{ path('expediente_aspirante') }}" class="btn">Regresar</a>
+    </div>
+    <div class="control-group error">
+        {{ form_errors(form) }}
+    </div>
+</form>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/jquery-ui/js/jquery-ui.js') }}"></script>
+<script src="{{ asset('bundles/registroacademico/js/fotografia_base64.js') }}"
 {% endblock %}
