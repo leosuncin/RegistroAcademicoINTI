@@ -5,7 +5,6 @@ namespace INTI\RegistroAcademicoBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
@@ -32,7 +31,6 @@ class WebServiceController extends Controller
     /**
      * @Route("/test", name="ws_test")
      * @Method("GET")
-     * @Secure(roles="ROLE_ADMIN")
      */
     public function testAction()
     {

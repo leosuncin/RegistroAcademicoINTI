@@ -29,7 +29,10 @@
 		</div>
 		<div class="span6">
 			<form id="login_form" action="{{ path('login_check') }}" method="post" class="form-horizontal">
-			    {{ form_widget(form, {'form_type': 'horizontal'}) }}
+			    <label for="username">Usuario:</label>
+				<input id="username" type="text" name="_username" value="{{ last_username }}" />
+				<label for="password">ContraseÃ±a:</label>
+				<input id="password" type="password" name="_password" />
 			    <div class="control-group">
 					<div class="form-actions">
 						<input type="submit" value="Acceder" class="btn btn-primary" />

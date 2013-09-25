@@ -13,7 +13,7 @@
 					<ul class="dropdown-menu">
 						<li><a href="{{ path('index') }}"><i class="icon-home"></i> Inicio</a></li>
 						<li><a href="#"><i class="icon-pencil"></i> Información</a></li>
-						<li><a href="#"><i class="icon-wrench"></i> Cambiar contraseña</a></li>
+						<li><a href="{{ path('update_password', {'username' : app.user.username }) }}"><i class="icon-wrench"></i> Cambiar contraseña</a></li>
 						<li class="divider"></li>
 						<li><a href="{{ path('logout') }}"><i class="icon-off"></i> Salir</a></li>
 					</ul>
@@ -24,7 +24,17 @@
 			<div class="row-fluid">
 				<aside class="span4">
 					{% block aside %}
-					{{ knp_menu_render('RegistroAcademicoBundle:Builder:asideMenu') }}
+					<ul class="nav nav-list">
+    					<li class="first nav-header"></li>
+    					<li class="first"></li>
+    					<li></li>
+    					<li class="last"></li>
+    					<li class="nav-header"></li>
+    					<li class="first"></li>
+    					<li class="last"></li>
+    					<li class="divider" divider="divider"></li>
+    					<li class="last"></li>
+					</ul>
 					{% endblock %}
 				</aside>
 				<div class="span8">

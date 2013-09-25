@@ -19,7 +19,6 @@ class Usuario implements AdvancedUserInterface, \Serializable
      *
      * @ORM\Column(name="username", type="string", length=50, nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
 	 *
 	 * @Assert\Length(
      *      min = "8",

@@ -12,4 +12,4 @@ parameters:
     mailer_password: null
     locale: es
     secret: $1$5ExXkDhC$HIYxle7U6d7mp5BMpf1SL/
-    uploads_directory: %kernel.root_dir%/../web/uploads
+    uploads_directory: '%kernel.root_dir%/../web/uploads'

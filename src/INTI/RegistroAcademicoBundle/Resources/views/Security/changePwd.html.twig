@@ -1,0 +1,15 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+    <form action="{{ path('cambiar_contrasenha', {'username':form.username})}}" method="post" class="form-horizontal">
+    {{ form_widget(form, {'form_type': 'horizontal'}) }}
+    <div class="form-actions">
+		<input type="submit" class="btn btn-primary" value="Cambiar contraseña" />
+		<a href="{{ path('index') }}" class="btn">Cancelar</a>
+	</div>
+	<div class="control-group error">
+	  {{ form_errors(form) }}
+	</div>
+    </form>
+{% endblock %}

@@ -27,7 +27,6 @@
         "braincrafted/bootstrap-bundle": "dev-master",
         "ee/dataexporter-bundle": "dev-master",
         "jms/di-extra-bundle": "dev-master",
-        "jms/security-extra-bundle": "dev-master",
         "jms/serializer-bundle": "dev-master",
         "knplabs/knp-menu": "dev-master",
         "knplabs/knp-menu-bundle": "dev-master",
