@@ -3,6 +3,7 @@
 namespace INTI\RegistroAcademicoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Aspirante
@@ -59,6 +60,10 @@ class Aspirante
     /**
      * @var string
      *
+     * @Assert\Regex(
+     *     pattern="/^\d{8}$/",
+     *     message="El telefono debe contener solo 8 números")
+     * 
      * @ORM\Column(name="telefono", type="string", length=8, nullable=false)
      */
     private $telefono;
@@ -86,6 +91,8 @@ class Aspirante
 
     /**
      * @var \Encargado
+     *
+     * @Assert\Valid
      *
      * @ORM\ManyToOne(targetEntity="Encargado")
      * @ORM\JoinColumns({
@@ -257,7 +264,7 @@ class Aspirante
     /**
      * Set fechanac
      *
-     * @param \DateTime $fechanac
+     * @param \Date $fechanac
      * @return Aspirante
      */
     public function setFechanac($fechanac)
@@ -270,7 +277,7 @@ class Aspirante
     /**
      * Get fechanac
      *
-     * @return \DateTime
+     * @return \Date
      */
     public function getFechanac()
     {

@@ -49,7 +49,7 @@ class AspiranteType extends AbstractType
                     )
             )
             ->add('telefono',
-                'number',
+                'text',
                 array('label' => 'Teléfono')
                 )
             ->add('fechanac',
@@ -57,6 +57,8 @@ class AspiranteType extends AbstractType
                 array(
                     'label'     => 'Fecha de nacimiento',
                     'widget'    => 'single_text',
+                    'format' => 'dd/MM/yyyy',
+                    'invalid_message' => 'La fecha debe tener el formato dd/mm/yyyy'
                     'attr'      => array(
                         'class' => 'date'
                         )

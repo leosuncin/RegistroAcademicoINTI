@@ -3,6 +3,7 @@
 namespace INTI\RegistroAcademicoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Encargado
@@ -15,13 +16,26 @@ class Encargado
     /**
      * @var string
      *
+     * @Assert\Regex(
+     *     pattern="/^\d{8}-\d$/",
+     *     message="El DUI debe contener solo números e incluir el guion medio"
+     * )
+     *
      * @ORM\Column(name="DUI", type="string", length=10, nullable=false)
      * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $dui;
 
     /**
      * @var string
+     *
+     * @Assert\Length(
+     *      min = "3",
+     *      max = "80",
+     *      minMessage = "El nombre por lo menos debe tener {{ limit }} caracteres de largo",
+     *      maxMessage = "El nombre no puede tener más de {{ limit }} caracteres de largo"
+     * )
      *
      * @ORM\Column(name="nombre", type="string", length=80, nullable=false)
      */
@@ -30,12 +44,19 @@ class Encargado
     /**
      * @var string
      *
+     * @Assert\NotBlank(message="Debe especificar un parentesco")
+     *
      * @ORM\Column(name="parentesco", type="string", length=12, nullable=false)
      */
     private $parentesco;
 
     /**
      * @var string
+     *
+     * @Assert\Regex(
+     *     pattern="/^\d{8}$/",
+     *     message="El telefono debe contener solo 8 números"
+     * )
      *
      * @ORM\Column(name="telefono", type="string", length=8, nullable=false)
      */

@@ -1,15 +1,26 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span> <a href="{{ path('user_info', { 'username':usuario.username }) }} ">Usuario</a></li>
+<li class="active"><span class="divider">&gt;</span> Principal</li>
+{% endblock %}
+
 {% block content %}
-<h1>{{ title }}</h1>
-    <form action="{{ path('cambiar_contrasenha', {'username':form.username})}}" method="post" class="form-horizontal">
+{% for flashMessage in app.session.flashbag.get('errores') %}
+<div class="alert alert-error">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ flashMessage }}
+</div>
+{% endfor %}
+<form action="{{ path('update_password', { 'username':usuario.username }) }}" method="POST" {{ form_enctype(form) }} class="form-horizontal">
     {{ form_widget(form, {'form_type': 'horizontal'}) }}
     <div class="form-actions">
-		<input type="submit" class="btn btn-primary" value="Cambiar contraseña" />
-		<a href="{{ path('index') }}" class="btn">Cancelar</a>
-	</div>
-	<div class="control-group error">
-	  {{ form_errors(form) }}
-	</div>
-    </form>
+        <input type="submit" value="Cambiar contraseña" class="btn btn-primary" />
+        <a href="{{ path('user_info', { 'username':usuario.username }) }}" class="btn">Cancelar</a>
+    </div>
+    <div class="control-group error">
+        {{ form_errors(form)|label_important }}
+    </div>
+</form>
 {% endblock %}

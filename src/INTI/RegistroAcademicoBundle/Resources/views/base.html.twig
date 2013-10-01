@@ -8,12 +8,14 @@
 		<link rel="apple-touch-icon" href="{{ asset('bundles/registroacademico/images/apple-touch-icon.png') }}" />
 		<link rel="apple-touch-icon" sizes="72x72" href="{{ asset('bundles/registroacademico/images/apple-touch-icon-72x72.png') }}" />
 		<link rel="apple-touch-icon" sizes="114x114" href="{{ asset('bundles/registroacademico/images/apple-touch-icon-114x114.png') }}" />
-		<title>{{ title|default('Sistema de registro académico') }}</title>
+        {% if title is not defined %}{% set title = 'Sistema de registro académico' %}{% endif %}
+		<title>{{ title }}</title>
 		{% block style %}
 		<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}" />
         <!--[if IE 7]><link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome-ie7.min.css') }}"><![endif]-->
         <link rel="stylesheet" href="{{ asset('assets/normalize-css/normalize.css') }}" />
+        <link rel="stylesheet" href="{{ asset('bundles/registroacademico/css/estilo.css') }}" />
 		{% endblock %}
 	</head>
 	<body>
@@ -25,13 +27,6 @@
 		<script type="text/javascript" src="{{ asset('assets/jquery/jquery.js') }}"></script>
 		<script src="{{ asset('js/bootstrap.js') }}"></script>
         <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-        {#
-        <script type="text/javascript" src="{{ asset('assets/select2/js/select2.js') }}"></script>
-        <script type="text/javascript" src="{{ asset('assets/select2/js/select2_locale_es.js') }}"></script>
-        {% javascripts filter='cssrewrite' output='js/base.js' '@PinanoSelect2Bundle/Resources/public/js/select2.min.js' '@PinanoSelect2Bundle/Resources/public/js/select2_locale_XX.js' %}
-        <script src="{{ asset_url }}"></script>
-        {% endjavascripts %}
-        #}
         {% endblock %}
 	</body>
 </html>

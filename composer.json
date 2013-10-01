@@ -34,7 +34,7 @@
         "leafo/lessphp": "dev-master",
         "liuggio/excelbundle": ">=1.0.4",
         "slik/dompdf-bundle": "dev-master",
-        "twbs/bootstrap": "dev-master",
+        "twbs/bootstrap": "2.3.*",
         "components/jquery": "1.9.*",
         "components/modernizr": "dev-master",
         "components/font-awesome": "3.2.*",

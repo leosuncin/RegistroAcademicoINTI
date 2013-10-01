@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EmpleadoType extends AbstractType
+class EmpleadoEditType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -56,7 +56,8 @@ class EmpleadoType extends AbstractType
             ->add('dui',
                 'text',
                 array(
-                    'label' => 'DUI'
+                    'label'     => 'DUI',
+                    'read_only' => true
                     )
             )
             ->add('isss',
@@ -69,8 +70,7 @@ class EmpleadoType extends AbstractType
                 'text',
                 array('label' => 'NIT')
                 )
-            ->add('nup', 'text', array('label' => 'NUP'))
-            ->add('usuario', new UsuarioType());
+            ->add('nup', 'text', array('label' => 'NUP'));
     }
 
     /**
@@ -80,7 +80,6 @@ class EmpleadoType extends AbstractType
     {
         $resolver->setDefaults(array(
             'data_class'         => 'INTI\RegistroAcademicoBundle\Entity\Empleado',
-            'cascade_validation' => true,
             'trim'               => true
         ));
     }
@@ -90,6 +89,6 @@ class EmpleadoType extends AbstractType
      */
     public function getName()
     {
-        return 'empleadotype';
+        return 'empleadoedittype';
     }
 }

@@ -1,0 +1,52 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block style %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Lista de especialidades</h1>
+
+    <table id="tabla" class="table table-hover">
+        <thead>
+            <tr>
+                <th>codigo</th>
+                <th>Nombre</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('especialidad_show', { 'id': entity.codigo }) }}">{{ entity.codigo }}</a></td>
+                
+                <td>{{ entity.nombre }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('especialidad_show', { 'id': entity.codigo }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('especialidad_edit', { 'id': entity.codigo }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('especialidad_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/watable/jquery.watable.js') }}"></script>
+{% endblock %}

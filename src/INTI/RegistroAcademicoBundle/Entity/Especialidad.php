@@ -3,6 +3,7 @@
 namespace INTI\RegistroAcademicoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Especialidad
@@ -15,6 +16,13 @@ class Especialidad
     /**
      * @var string
      *
+     * @Assert\Length(
+     *      min = "2",
+     *      max = "5",
+     *      minMessage = "El codigo de la especialidad por lo menos debe tener {{ limit }} caracteres de largo",
+     *      maxMessage = "El codigo de la especialidad no puede tener más de {{ limit }} caracteres de largo"
+     * )
+     *
      * @ORM\Column(name="codigo", type="string", length=5, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
@@ -23,6 +31,13 @@ class Especialidad
 
     /**
      * @var string
+     *
+     * @Assert\Length(
+     *      min = "5",
+     *      max = "100",
+     *      minMessage = "El codigo de la especialidad por lo menos debe tener {{ limit }} caracteres de largo",
+     *      maxMessage = "El codigo de la especialidad no puede tener más de {{ limit }} caracteres de largo"
+     * )
      *
      * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
      */

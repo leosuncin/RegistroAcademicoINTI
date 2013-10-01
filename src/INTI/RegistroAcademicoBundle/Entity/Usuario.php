@@ -16,30 +16,39 @@ class Usuario implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var string
+	 *
+	 * @Assert\Length(
+     *     min = "6",
+     *     max = "50",
+     *     minMessage = "El nombre de usuario por lo menos debe tener {{ limit }} caracteres de largo",
+     *     maxMessage = "El nombre de usuario no puede tener más de {{ limit }} caracteres de largo"
+     * )
+     * @Assert\Regex(
+     *     pattern="/^[A-Za-z0-9_-]{6,50}$/",
+     *     message="El nombre de usuario solo puede ser una combinación letras mayúscula y minúsculas, números, _, - sin espacios en blanco"
+     * )
      *
      * @ORM\Column(name="username", type="string", length=50, nullable=false)
      * @ORM\Id
-	 *
-	 * @Assert\Length(
-     *      min = "8",
-     *      max = "50",
-     *      minMessage = "El nombre de usuario por lo menos debe tener {{ limit }} caracteres de largo",
-     *      maxMessage = "El nombre de usuario no puede tener más de {{ limit }} caracteres de largo"
-     *      )
+     * @ORM\GeneratedValue(strategy="NONE")
      */
     private $username;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="password", type="string", length=255, nullable=false)
-     *
      * @Assert\Length(
      *      min = "8",
      *      max = "60",
      *      minMessage = "La contraseña del usuario por lo menos debe tener {{ limit }} caracteres de largo",
      *      maxMessage = "La contraseña del usuario no puede tener más de {{ limit }} caracteres de largo"
-     *      )
+     * )
+     * @Assert\Regex(
+     *     pattern="/(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d){8,60}.+$)/",
+     *     message="La contraseña de usuario debe contener por lo menos una letra en mayúscula, una letra en minúscula y un numero para ser segura"
+     * )
+     *
+     * @ORM\Column(name="password", type="string", length=255, nullable=false)
      */
     private $password;
 
@@ -239,8 +248,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
      */
     public function eraseCredentials()
     {
-        $this->password = "";
-        $this->enabled = false;
+        $this->locked = true;
     }
 
     /**

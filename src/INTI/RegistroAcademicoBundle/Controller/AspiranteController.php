@@ -13,7 +13,7 @@ use INTI\RegistroAcademicoBundle\Form\AspiranteType;
 /**
  * Aspirante controller.
  *
- * @Route("/expediente/aspirante")
+ * @Route("/aspirante")
  */
 class AspiranteController extends Controller
 {
@@ -21,7 +21,7 @@ class AspiranteController extends Controller
     /**
      * Lists all Aspirante entities.
      *
-     * @Route("/", name="expediente_aspirante")
+     * @Route("/", name="aspirante_index")
      * @Method("GET")
      * @Template()
      */
@@ -33,12 +33,13 @@ class AspiranteController extends Controller
 
         return array(
             'entities' => $entities,
+            'title'    => 'Consultar aspirantes'
         );
     }
     /**
      * Creates a new Aspirante entity.
      *
-     * @Route("/", name="expediente_aspirante_create")
+     * @Route("/", name="aspirante_create")
      * @Method("POST")
      * @Template("RegistroAcademicoBundle:Aspirante:new.html.twig")
      */
@@ -55,19 +56,20 @@ class AspiranteController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('expediente_aspirante_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('aspirante_show', array('id' => $entity->getId())));
         }
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'title'  => 'Añadir un aspirante'
         );
     }
 
     /**
      * Displays a form to create a new Aspirante entity.
      *
-     * @Route("/new", name="expediente_aspirante_new")
+     * @Route("/new", name="aspirante_new")
      * @Method("GET")
      * @Template()
      */
@@ -79,13 +81,14 @@ class AspiranteController extends Controller
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'title'  => 'Añadir un aspirante'
         );
     }
 
     /**
      * Finds and displays a Aspirante entity.
      *
-     * @Route("/{id}", name="expediente_aspirante_show")
+     * @Route("/{id}", name="aspirante_show")
      * @Method("GET")
      * @Template()
      */
@@ -99,18 +102,16 @@ class AspiranteController extends Controller
             throw $this->createNotFoundException('Unable to find Aspirante entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'title'  => 'Consultar aspirante'
         );
     }
 
     /**
      * Displays a form to edit an existing Aspirante entity.
      *
-     * @Route("/{id}/edit", name="expediente_aspirante_edit")
+     * @Route("/{id}/edit", name="aspirante_edit")
      * @Method("GET")
      * @Template()
      */
@@ -125,19 +126,18 @@ class AspiranteController extends Controller
         }
 
         $editForm = $this->createForm(new AspiranteType(), $entity);
-        $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity'    => $entity,
+            'edit_form' => $editForm->createView(),
+            'title'     => 'Modificar aspirante'
         );
     }
 
     /**
      * Edits an existing Aspirante entity.
      *
-     * @Route("/{id}", name="expediente_aspirante_update")
+     * @Route("/{id}", name="aspirante_update")
      * @Method("PUT")
      * @Template("RegistroAcademicoBundle:Aspirante:edit.html.twig")
      */
@@ -151,7 +151,6 @@ class AspiranteController extends Controller
             throw $this->createNotFoundException('Unable to find Aspirante entity.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
         $editForm = $this->createForm(new AspiranteType(), $entity);
         $editForm->submit($request);
 
@@ -159,53 +158,31 @@ class AspiranteController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('expediente_aspirante_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('aspirante_show', array('id' => $id)));
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'title'       => 'Modificar aspirante'
         );
     }
+
     /**
      * Deletes a Aspirante entity.
-     *
-     * @Route("/{id}", name="expediente_aspirante_delete")
-     * @Method("DELETE")
+     * 
+     * @Route("/{id}/del", name="aspirante_erase")
+     * @Method("GET")
      */
-    public function deleteAction(Request $request, $id)
+    public function eraseAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->submit($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('RegistroAcademicoBundle:Aspirante')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Aspirante entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $empleado = $em->getRepository('RegistroAcademicoBundle:Aspirante')->find($id);
+        if (!$empleado) {
+            throw $this->createNotFoundException('Unable to find Aspirante entity.');
         }
-
-        return $this->redirect($this->generateUrl('expediente_aspirante'));
-    }
-
-    /**
-     * Creates a form to delete a Aspirante entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder(array('id' => $id))
-            ->add('id', 'hidden')
-            ->getForm()
-        ;
+        $em->remove($empleado);
+        $em->flush();
+        return $this->redirect($this->generateUrl('aspirante_index'));
     }
 }

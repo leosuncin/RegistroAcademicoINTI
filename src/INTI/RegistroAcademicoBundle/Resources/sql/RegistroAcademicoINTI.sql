@@ -6,9 +6,9 @@ CREATE SCHEMA IF NOT EXISTS `registro` DEFAULT CHARACTER SET ucs2 COLLATE ucs2_s
 USE `registro` ;
 
 -- -----------------------------------------------------
--- Table `Especialidad`
+-- Table `registro`.`Especialidad`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Especialidad` (
+CREATE TABLE IF NOT EXISTS `registro`.`Especialidad` (
   `codigo` VARCHAR(5) NOT NULL,
   `nombre` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`codigo`),
@@ -17,9 +17,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Encargado`
+-- Table `registro`.`Encargado`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Encargado` (
+CREATE TABLE IF NOT EXISTS `registro`.`Encargado` (
   `nombre` VARCHAR(80) NOT NULL,
   `parentesco` VARCHAR(12) NOT NULL,
   `DUI` VARCHAR(10) NOT NULL,
@@ -29,9 +29,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Aspirante`
+-- Table `registro`.`Aspirante`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Aspirante` (
+CREATE TABLE IF NOT EXISTS `registro`.`Aspirante` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `foto` TEXT NOT NULL,
   `primerApellido` VARCHAR(15) NOT NULL,
@@ -52,21 +52,21 @@ CREATE TABLE IF NOT EXISTS `Aspirante` (
   INDEX `idx_Aspirante_Encargado` (`Encargado` ASC),
   CONSTRAINT `fk_Aspirante_Especialidad`
     FOREIGN KEY (`Especialidad`)
-    REFERENCES `Especialidad` (`codigo`)
+    REFERENCES `registro`.`Especialidad` (`codigo`)
     ON DELETE RESTRICT
     ON UPDATE RESTRICT,
   CONSTRAINT `fk_Aspirante_Encargado`
     FOREIGN KEY (`Encargado`)
-    REFERENCES `Encargado` (`DUI`)
+    REFERENCES `registro`.`Encargado` (`DUI`)
     ON DELETE RESTRICT
     ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Usuario`
+-- Table `registro`.`Usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Usuario` (
+CREATE TABLE IF NOT EXISTS `registro`.`Usuario` (
   `username` VARCHAR(50) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `salt` VARCHAR(255) NOT NULL,
@@ -79,33 +79,36 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Empleado`
+-- Table `registro`.`Empleado`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Empleado` (
+CREATE TABLE IF NOT EXISTS `registro`.`Empleado` (
   `nombres` VARCHAR(80) NOT NULL,
   `apellidos` VARCHAR(80) NOT NULL,
   `puesto` VARCHAR(60) NOT NULL,
   `fotografia` TEXT NULL,
-  `DUI` VARCHAR(8) NOT NULL,
+  `DUI` VARCHAR(10) NOT NULL,
   `ISSS` VARCHAR(9) NOT NULL,
   `NIT` VARCHAR(17) NOT NULL,
   `NUP` VARCHAR(12) NOT NULL,
   `sexo` CHAR(1) NOT NULL,
   `Usuario` VARCHAR(50) NOT NULL,
   INDEX `idx_Empleado_Usuario` (`Usuario` ASC),
-  PRIMARY KEY (`NUP`, `NIT`, `ISSS`, `DUI`),
+  PRIMARY KEY (`DUI`),
+  UNIQUE INDEX `ISSS_UNIQUE` (`ISSS` ASC),
+  UNIQUE INDEX `NIT_UNIQUE` (`NIT` ASC),
+  UNIQUE INDEX `NUP_UNIQUE` (`NUP` ASC),
   CONSTRAINT `fk_Empleado_Usuario1`
     FOREIGN KEY (`Usuario`)
-    REFERENCES `Usuario` (`username`)
+    REFERENCES `registro`.`Usuario` (`username`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `Bloqueo_usuarios`
+-- Table `registro`.`Bloqueo_usuarios`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Bloqueo_usuarios` (
+CREATE TABLE IF NOT EXISTS `registro`.`Bloqueo_usuarios` (
   `bloqueo` TIMESTAMP NOT NULL,
   `username` VARCHAR(50) NOT NULL,
   `desbloqueo` VARCHAR(45) NULL,
@@ -113,9 +116,24 @@ CREATE TABLE IF NOT EXISTS `Bloqueo_usuarios` (
   INDEX `fk_bloqueo_usuario_idx` (`username` ASC),
   CONSTRAINT `fk_bloqueo_usuario`
     FOREIGN KEY (`username`)
-    REFERENCES `Usuario` (`username`)
+    REFERENCES `registro`.`Usuario` (`username`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `registro`.`Alumno`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `registro`.`Alumno` (
+  `Aspirante` INT NOT NULL,
+  `NIE` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`Aspirante`, `NIE`),
+  CONSTRAINT `fk_Alumno_Aspirante1`
+    FOREIGN KEY (`Aspirante`)
+    REFERENCES `registro`.`Aspirante` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
 USE `registro` ;
@@ -134,6 +152,8 @@ BEGIN
 	END IF;
 END$$
 
+DELIMITER ;
+
 -- -----------------------------------------------------
 -- procedure desbloquear_usuario
 -- -----------------------------------------------------
@@ -147,6 +167,8 @@ BEGIN
 		UPDATE Usuario SET locked = FALSE, intents = 0 WHERE username = usuario;
 	END IF;
 END$$
+
+DELIMITER ;
 
 -- -----------------------------------------------------
 -- procedure desbloquear_usuarios
@@ -168,9 +190,8 @@ BEGIN
 	CLOSE bloqueos;
 END$$
 
-CREATE EVENT `actualizar_bloqueo_usuarios` ON SCHEDULE EVERY 1 HOUR DO CALL desbloquear_usuarios()$$
 DELIMITER ;
-CREATE USER 'academico'@'%' IDENTIFIED BY 'R1N9ts!ru040ct3dc3nm1€0l';
+CREATE USER 'academico' IDENTIFIED BY 'R1N9ts!ru040ct3dc3nm1€0l';
 
 GRANT DELETE, INSERT, SELECT, UPDATE, ALL ON TABLE `registro`.`Aspirante` TO 'academico';
 GRANT DELETE, INSERT, SELECT, UPDATE, ALL ON TABLE `registro`.`Encargado` TO 'academico';
@@ -187,27 +208,27 @@ SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
--- Data for table `Especialidad`
+-- Data for table `registro`.`Especialidad`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `registro`;
-INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('ELTIA', 'Electrotecnia');
-INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('ELCA', 'Electrónica');
-INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('AUTO', 'Automotores');
-INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('MECA', 'Mecánica general');
-INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('DS', 'Desarrollo de software');
-INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('COMP', 'Mantenimiento de computadoras');
+INSERT INTO `registro`.`Especialidad` (`codigo`, `nombre`) VALUES ('ELTIA', 'Electrotecnia');
+INSERT INTO `registro`.`Especialidad` (`codigo`, `nombre`) VALUES ('ELCA', 'Electrónica');
+INSERT INTO `registro`.`Especialidad` (`codigo`, `nombre`) VALUES ('AUTO', 'Automotores');
+INSERT INTO `registro`.`Especialidad` (`codigo`, `nombre`) VALUES ('MECA', 'Mecánica general');
+INSERT INTO `registro`.`Especialidad` (`codigo`, `nombre`) VALUES ('DS', 'Desarrollo de software');
+INSERT INTO `registro`.`Especialidad` (`codigo`, `nombre`) VALUES ('COMP', 'Mantenimiento de computadoras');
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `Usuario`
+-- Data for table `registro`.`Usuario`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `registro`;
-INSERT INTO `Usuario` (`username`, `password`, `salt`, `rol`, `enabled`, `locked`, `intents`) VALUES ('usuarioINTI', 'Uv9u6JM/NbN464qxZXpCzJomfYB2TWWCrI4MdT+S5C+N3EHP+TtvkA0lSA8ETyzZ/tcriC3aRy9YDPqr4Sa16Q==', 'l2gkhe40o5c44g8s8g4kw4w0o0sck0g', 'a:1:{i:0;s:9:\"ROLE_USER\";}', true, false, 0);
-INSERT INTO `Usuario` (`username`, `password`, `salt`, `rol`, `enabled`, `locked`, `intents`) VALUES ('desarrolladorUES', 'ok6HFgqr7/uwDPKRN7KfdOiiOedTYgpRdrfIfAQh5S1zubtz7O/+Rqg11IXU99h8jV8PI/d5SxcGIuAQqjSwfw==', 'pxzoid8tur4s440swgs0k84800scgk0', 'a:2:{i:0;s:9:\"ROLE_USER\";i:1;s:16:\"ROLE_SUPER_ADMIN\";}', true, false, 0);
+INSERT INTO `registro`.`Usuario` (`username`, `password`, `salt`, `rol`, `enabled`, `locked`, `intents`) VALUES ('usuarioINTI', 'Uv9u6JM/NbN464qxZXpCzJomfYB2TWWCrI4MdT+S5C+N3EHP+TtvkA0lSA8ETyzZ/tcriC3aRy9YDPqr4Sa16Q==', 'l2gkhe40o5c44g8s8g4kw4w0o0sck0g', 'a:1:{i:0;s:9:\"ROLE_USER\";}', 1, NULL, 0);
+INSERT INTO `registro`.`Usuario` (`username`, `password`, `salt`, `rol`, `enabled`, `locked`, `intents`) VALUES ('desarrolladorUES', 'ok6HFgqr7/uwDPKRN7KfdOiiOedTYgpRdrfIfAQh5S1zubtz7O/+Rqg11IXU99h8jV8PI/d5SxcGIuAQqjSwfw==', 'pxzoid8tur4s440swgs0k84800scgk0', 'a:2:{i:0;s:9:\"ROLE_USER\";i:1;s:16:\"ROLE_SUPER_ADMIN\";}', 1, NULL, 0);
 
 COMMIT;
 

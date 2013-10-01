@@ -1,5 +1,7 @@
 /web/bundles/
 /web/assets/
+/web/css/
+/web/js/
 /app/bootstrap.php.cache
 /app/cache/*
 /app/logs/*
@@ -16,3 +18,5 @@
 /nbproject/
 *.sublime-project
 *.sublime-workspace
+desktop.ini
+.dropbox

@@ -1,16 +1,28 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
-{% block content %}
-    <h1>Añadir un empleado al personal</h1>
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span> <a href="{{ path('empleado_index') }} ">Empleados</a></li>
+<li class="active"><span class="divider">&gt;</span> Crear</li>
+{% endblock %}
 
-    <form action="{{ path('admin_empleado_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-        {{ form_rest(form, {'form_type': 'horizontal'}) }}
+{% block content %}
+    <form action="{{ path('empleado_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+        {{ form_label(form.fotografia) }}
+        <input type="file" id="filePicker" class="btn"/>
+        {{ form_widget(form, {'form_type': 'horizontal'}) }}
+        {{ form_row(form.usuario) }}
         <div class="form-actions">
             <input type="submit" class="btn btn-primary" value="Crear" />
-            <a href="{{ path('admin_empleado') }}" class="btn">Regresar</a>
+            <a href="{{ path('empleado_index') }}" class="btn">Regresar</a>
         </div>
         <div class="control-group error">
           {{ form_errors(form) }}
         </div>
     </form>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('bundles/registroacademico/js/fotografia_base64.js') }}"></script>
 {% endblock %}

@@ -1,59 +1,55 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
-{% block content %}
-    <h1>Empleado list</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Nombre</th>
-                <th>Puesto</th>
-                <th>Fotografia</th>
-                <th>Dui</th>
-                <th>Isss</th>
-                <th>Nit</th>
-                <th>Nup</th>
-                <th>Sexo</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('admin_empleado_show', { 'id': entity.id }) }}" class="btn">{{ entity.id }}</a></td>
-                <td>{{ entity.nombres~' '~entity.apellidos }}</td>
-                <td>{{ entity.puesto }}</td>
-                <td><img src="data:image/jpg;base64,{{ entity.fotografia }}" alt="Fotografia" /></td>
-                <td>{{ entity.dui }}</td>
-                <td>{{ entity.isss }}</td>
-                <td>{{ entity.nit }}</td>
-                <td>{{ entity.nup }}</td>
-                <td>{{ entity.sexo }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('admin_empleado_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('admin_empleado_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-
-        <ul>
-        <li>
-            <a href="{{ path('admin_empleado_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
+<li class="active"><span class="divider">&gt;</span> Empleados</li>
 {% endblock %}
 
-{% block aside %}
-{{ knp_menu_render('RegistroAcademicoBundle:Builder:empleadosMenu') }}
+{% block content %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Puesto</th>
+            <th>DUI</th>
+            <th>Sexo</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.nombres~' '~entity.apellidos }}</td>
+            <td>{% if entity.puesto == 'director' %}
+                    Director
+                {% elseif entity.puesto == 'subdirector' %}
+                    Subdirector
+                {% elseif entity.puesto == 'encargado_reg_acad' %}
+                    Encargado de registro academico
+                {% elseif entity.puesto == 'encargado_serv_soc' %}
+                    Encargado del servicio social
+                {% elseif entity.puesto == 'encargado_prac_prof' %}
+                    Encargado de practica profesional
+                {% elseif entity.puesto == 'secretaria_reg_acad' %}
+                    Secretaria de registro academico
+                {% else %}
+                    Empleado
+                {% endif %}</td>
+            <td>{{ entity.dui }}</td>
+            <td>{% if entity.sexo == 'M' %}
+                    Masculino
+                {% else %}
+                    Femenino
+                {% endif %}</td>
+            <td>
+                <div class="btn-group btn-group-vertical">
+                    <a class="btn btn-info" href="{{ path('empleado_show', { 'id': entity.dui }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
+                    <a class="btn btn-info" href="{{ path('empleado_edit', { 'id': entity.dui }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+<a class="btn btn-primary" href="{{ path('empleado_new') }}">{{ '.icon-plus-sign Ingresar un nuevo empleado'|parse_icons('white') }}</a>
 {% endblock %}

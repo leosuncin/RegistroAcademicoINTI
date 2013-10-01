@@ -1,0 +1,27 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block content %}
+<h1>Especialidad</h1>
+
+<table class="record_properties">
+    <tbody>
+       
+        <tr>
+            <th>Codigo</th>
+            <td>{{ entity.codigo }}</td>
+        </tr>
+        <tr>
+            <th>Nombre</th>
+            <td>{{ entity.nombre }}</td>
+        </tr>
+        
+    </tbody>
+</table>
+<form action="{{ path('especialidad_delete', { 'id': entity.codigo }) }}" method="post" class="form-acctions">
+    <a href="{{ path('especialidad_index') }}" class="btn">Back to the list</a>
+    <a href="{{ path('especialidad_edit', { 'id': entity.codigo }) }}" class="btn">Edit</a>
+    <input type="hidden" name="_method" value="DELETE" />
+    {{ form_widget(delete_form) }}
+    <button type="submit" class="btn btn-warning">Delete</button>
+</form>
+{% endblock %}

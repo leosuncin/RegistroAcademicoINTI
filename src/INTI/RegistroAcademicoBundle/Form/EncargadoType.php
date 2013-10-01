@@ -18,7 +18,7 @@ class EncargadoType extends AbstractType
             ->add('nombre', 'text', array('label' => 'Nombre completo'))
             ->add('parentesco', 'text', array('label' => 'Parentesco'))
             ->add('dui', 'text', array('label' => 'DUI'))
-            ->add('telefono', 'number', array('label' => 'Teléfono'));
+            ->add('telefono', 'text', array('label' => 'Teléfono'));
     }
 
     /**

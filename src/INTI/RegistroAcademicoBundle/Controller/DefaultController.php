@@ -16,7 +16,7 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        return array();
+        return array('title' => 'Pagina principal');
     }
 
     /**

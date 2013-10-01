@@ -6,9 +6,12 @@ security:
             iterations: 10
 
     role_hierarchy:
-        ROLE_ACADEMIC:    ROLE_USER
-        ROLE_ADMIN:       ROLE_ACADEMIC
-        ROLE_SUPER_ADMIN: [ROLE_USER, ROLE_ADMIN, ROLE_ALLOWED_TO_SWITCH]
+        ROLE_ACADEMIC:       ROLE_USER
+        ROLE_ACADEMIC_ADMIN: ROLE_ACADEMIC
+        ROLE_ADMIN:          ROLE_USER
+        ROLE_SERV_SOC:       ROLE_USER
+        ROLE_PRAC_PROF:      ROLE_USER
+        ROLE_SUPER_ADMIN:    [ROLE_USER, ROLE_ADMIN, ROLE_ACADEMIC_ADMIN, ROLE_SERV_SOC, ROLE_PRAC_PROF ROLE_ALLOWED_TO_SWITCH]
 
     providers:
         user_db:
@@ -51,8 +54,12 @@ security:
             anonymous: ~
 
     access_control:
-        #- { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY, requires_channel: https }
-        - { path: ^/admin, roles: ROLE_ADMIN }
-        - { path: ^/expediente, roles: ROLE_USER }
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/user, roles: ROLE_USER }
+        - { path: ^/expediente, roles: ROLE_USER }
+        - { path: ^/aspirante, roles: ROLE_ACADEMIC }
+        - { path: ^/materia, roles: ROLE_ACADEMIC }
+        - { path: ^/especialidad, roles: ROLE_ACADEMIC_ADMIN }
+        - { path: ^/empleado, roles: ROLE_ADMIN }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+        #- { path: ^/, roles: IS_AUTHENTICATED_FULLY, requires_channel: https }
