@@ -15,7 +15,7 @@ class Alumno
     /**
      * @var string
      *
-     * @ORM\Column(name="NIE", type="string", length=45, nullable=false)
+     * @ORM\Column(name="NIE", type="string", length=6, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */

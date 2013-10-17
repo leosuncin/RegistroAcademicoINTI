@@ -20,14 +20,12 @@ class EmpleadoType extends AbstractType
                 'text',
                 array(
                     'label' => 'Nombres'
-                    )
-            )
+                ))
             ->add('apellidos',
                 'text',
                 array(
                     'label' => 'Apellidos'
-                    )
-            )
+                ))
             ->add('sexo',
                 'choice',
                 array(
@@ -36,8 +34,7 @@ class EmpleadoType extends AbstractType
                         'M'   => 'Masculino',
                         'F'   => 'Femenino'
                         )
-                    )
-                )
+                ))
             ->add('puesto',
                 'choice',
                 array(
@@ -51,25 +48,35 @@ class EmpleadoType extends AbstractType
                         'secretaria_reg_acad' => 'Secretaria de registro academico'
                         ),
                     'empty_value' => 'Asigne un puesto'
-                    )
-            )
+                ))
             ->add('dui',
                 'text',
                 array(
-                    'label' => 'DUI'
-                    )
-            )
+                    'label' => 'DUI',
+                    'attr' => array(
+                        'placeholder' => 'Por ejemplo: 12345678-9'
+                )))
             ->add('isss',
                 'text',
                 array(
-                    'label' => 'ISSS'
-                    )
-            )
+                    'label' => 'ISSS',
+                'attr' => array(
+                    'placeholder' => 'Por ejemplo: 123456789'
+                )))
             ->add('nit',
                 'text',
-                array('label' => 'NIT')
-                )
-            ->add('nup', 'text', array('label' => 'NUP'))
+                array(
+                    'label' => 'NIT',
+                    'attr' => array(
+                        'placeholder' => 'Por ejemplo: 1234-010190-123-6'
+                )))
+            ->add('nup',
+                'text',
+                array(
+                    'label' => 'NUP',
+                    'attr' => array(
+                        'placeholder' => 'Por ejemplo: 1234123412341234'
+                )))
             ->add('usuario', new UsuarioType());
     }
 

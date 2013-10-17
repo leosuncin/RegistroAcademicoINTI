@@ -21,7 +21,6 @@ class AppKernel extends Kernel
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
-            new BeSimple\SoapBundle\BeSimpleSoapBundle(),
             new Bc\Bundle\BootstrapBundle\BcBootstrapBundle(),
             new EE\DataExporterBundle\EEDataExporterBundle(),
             new Slik\DompdfBundle\SlikDompdfBundle(),

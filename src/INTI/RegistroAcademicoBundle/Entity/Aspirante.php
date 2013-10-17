@@ -111,6 +111,12 @@ class Aspirante
      */
     private $especialidad;
 
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="estado", type="string", length=1, nullable=false)
+     */
+    private $estado;
 
 
     /**
@@ -374,5 +380,28 @@ class Aspirante
     public function getEspecialidad()
     {
         return $this->especialidad;
+    }
+	
+	/**
+     * Set estado
+     *
+     * @param string $estado
+     * @return Aspirante
+     */
+    public function setSexo($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return string
+     */
+    public function getEstado()
+    {
+        return $this->estado;
     }
 }

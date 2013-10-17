@@ -50,20 +50,23 @@ class AspiranteType extends AbstractType
             )
             ->add('telefono',
                 'text',
-                array('label' => 'Teléfono')
-                )
+                array(
+                    'label' => 'Teléfono',
+                    'attr' => array(
+                        'placeholder' => 'Por ejemplo: 23253526'
+                )))
             ->add('fechanac',
                 'birthday',
                 array(
                     'label'     => 'Fecha de nacimiento',
                     'widget'    => 'single_text',
                     'format' => 'dd/MM/yyyy',
-                    'invalid_message' => 'La fecha debe tener el formato dd/mm/yyyy'
+                    'invalid_message' => 'La fecha debe tener el formato dd/mm/yyyy',
                     'attr'      => array(
-                        'class' => 'date'
-                        )
-                    )
-                )
+                        'placeholder' => 'Por ejemplo: 17/10/1990',
+                        'class' => 'date datepicker',
+                        'data-date-format' => 'dd/mm//yyyy'
+                )))
             ->add('lugarnac', 'text', array('label' => 'Lugar de nacimiento'))
             ->add('sexo',
                 'choice',
@@ -76,6 +79,18 @@ class AspiranteType extends AbstractType
                     )
                 )
             ->add('encargado', new EncargadoType());
+			->add('estado',
+                'choice',
+                array(
+                    'label'   => 'Estado',
+                    'choices' => array(
+                        'P'   => 'Pendiente',
+                        'A'   => 'Aprobado',
+						'R'	  => 'Reprobado',
+						'M'	  => 'Matriculado'
+                        )
+                    )
+                )
     }
 
     /**

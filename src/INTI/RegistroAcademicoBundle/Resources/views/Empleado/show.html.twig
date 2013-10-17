@@ -83,6 +83,22 @@
     <li id="tabUsuario" class="tab-pane fade">
         <p><strong>Nombre de usuario</strong> {{ entity.usuario.username }}</p>
         <a href="{{ path('update_password', {'username':entity.usuario.username}) }}" class="btn btn-info">Cambiar contraseña</a>
+        {% if is_granted('ROLE_ADMIN') %}
+        <a href="#myModal" role="button" class="btn btn-danger" data-toggle="modal">Deshabilitar usuario</a>
+        {% endif %}
     </li>
 </ul>
+    <div class="modal hide fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Confirmar deshabilitar usuario</h3>
+      </div>
+      <div class="modal-body">
+        <p><strong>Cuidado</strong> si deshabilita el usuario del empleado, él no podra acceder más al sistema hasta que se vuelva a habilitar su usuario</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#" class="btn">Cancelar</a>
+        <a href="#" class="btn btn-primary">Confirmar</a>
+      </div>
+    </div>
 {% endblock %}

@@ -18,8 +18,8 @@ class UsuarioType extends AbstractType
             ->add('username', 'text', array(
                 'label' => 'Nombre de usuario', 
                 'attr' => array(
-                    'placeholder' => 'Escriba el nombre del usuario sin espacios',
-                    'help_block' => 'Por ejemplo: secretaria_direccion'
+                    'placeholder' => 'Por ejemplo: secretaria_direccion',
+                    'help_block' => 'Escriba el nombre del usuario sin espacios'
                     )))
             ->add('password', 'password', array(
                 'label' => 'Contraseña del usuario',
@@ -27,13 +27,6 @@ class UsuarioType extends AbstractType
                     'placeholder' => 'Escriba una contraseña segura',
                     'help_block' => 'Utilice mayusculas, minusculas, numeros y otros caracteres intercalados'
                     )))
-            // ->add('rol', 'choice', array(
-            //     'choices' => array(
-            //         'ROLE_USER' => 'Alumno',
-            //         'ROLE_ADMIN' => 'Director',
-            //         'ROLE_ACADEMIC' => 'Encargada del registro académico'
-            //         ), 'empty_value' => 'Escoja un rol'
-            //     ))
             ->add('enabled', 'checkbox', array('label' => 'Habilitar el usuario'));
     }
 

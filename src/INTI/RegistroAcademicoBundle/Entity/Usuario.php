@@ -248,7 +248,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
      */
     public function eraseCredentials()
     {
-        $this->locked = true;
+        //$this->locked = true;
     }
 
     /**
