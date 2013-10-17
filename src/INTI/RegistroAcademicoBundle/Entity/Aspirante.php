@@ -388,7 +388,7 @@ class Aspirante
      * @param string $estado
      * @return Aspirante
      */
-    public function setSexo($estado)
+    public function setEstado($estado)
     {
         $this->estado = $estado;
 
