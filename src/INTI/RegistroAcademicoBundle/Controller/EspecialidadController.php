@@ -50,17 +50,18 @@ class EspecialidadController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity->getEspecialidad());
+           // $em->persist($entity->getEspecialidad());
             
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('Especialidad_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('especialidad_index'));
         }
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+            'title'  => 'Añadir Especialidad'
         );
     }
 
