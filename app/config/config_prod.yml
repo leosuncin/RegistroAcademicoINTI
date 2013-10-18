@@ -8,14 +8,14 @@ imports:
 framework:
     router:
         strict_requirements: null
-    #validation:
-    #    cache: apc
+    validation:
+        cache: apc
 
-#doctrine:
-#    orm:
-#        metadata_cache_driver: apc
-#        result_cache_driver: apc
-#        query_cache_driver: apc
+doctrine:
+    orm:
+        metadata_cache_driver: apc
+        result_cache_driver: apc
+        query_cache_driver: apc
 
 monolog:
     handlers:
@@ -30,16 +30,16 @@ monolog:
     
 nelmio_security:
     # prevents framing of the entire site
-#    clickjacking:
-#        paths:
-#            '^/.*': DENY
+    clickjacking:
+        paths:
+            '^/.*': DENY
     # prevents redirections outside the website's domain
-#    external_redirects:
-#        abort: true
-#        log: true
+    external_redirects:
+        abort: true
+        log: true
     # forced HTTPS handling, don't combine with flexible mode
     # and make sure you have SSL working on your site before enabling this
-#    forced_ssl: 
-#        enabled: true
+    forced_ssl: 
+        enabled: true
 #        hsts_max_age: 2592000 # 30 days
 #        hsts_subdomains: true

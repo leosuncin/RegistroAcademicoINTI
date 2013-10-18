@@ -3,15 +3,7 @@ body {
   z-index: 0;
 }
 
-.row-fluid:first-child {
-  z-index: 1;
-}
-
 #main {
-  background-color: #fff;
-  background-image:-webkit-radial-gradient(center, circle farthest-corner, #fff, #e2e2e2);
-  background-image:-moz-radial-gradient(center, circle farthest-corner, #fff, #e2e2e2);
-  background-image:radial-gradient(center, circle farthest-corner, #fff, #e2e2e2);
   position: relative;
   z-index: 1;
 }
@@ -20,11 +12,16 @@ body {
 	background: rgb(238, 238, 238);
 }
 
+@media screen and (min-height: 768px) {
+    .nav-list {
+        position: fixed;
+    }
+}
+
 .nav-list {
-  border: 2px none #000000;
-	border-radius: 10px;
-	background: rgb(238, 238, 238);
-  position: fixed;
+    border: 2px none #000000;
+    border-radius: 10px;
+    background: rgb(238, 238, 238);
 }
 
 footer {

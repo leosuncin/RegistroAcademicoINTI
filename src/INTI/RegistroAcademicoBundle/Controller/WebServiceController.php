@@ -23,22 +23,46 @@ class WebServiceController extends Controller
     	$encargado  = $repository->find($dui);
     	if(!$encargado)
     		return $this->createNotFoundException("No existe un encargado con DUI ".$dui);
-    	$respuesta  = new Response($serializer->serialize($encargado, "json"));
+    	$respuesta = new Response($serializer->serialize($encargado, "json"));
     	$respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
     	return $respuesta;
     }
 
     /**
-     * @Route("/test", name="ws_test")
+     * @Route("/user/{username}/exist")
      * @Method("GET")
      */
-    public function testAction()
+    public function usuarioExist($username)
     {
-    	$serializer = $this->get("jms_serializer");
-    	$repository = $this->getDoctrine()->getManager()->getRepository("RegistroAcademicoBundle:Usuario");
-    	$entities   = $repository->findAll();
-    	$respuesta  = new Response($serializer->serialize($entities, "json"));
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery("SELECT u FROM RegistroAcademicoINTI:Usuario u WHERE u.username = :username")->setParameter('username', $username);
+        $usuario = $query->getSingleResult();
+        $content = array();
+        if(!$usuario)
+            $content = array_push("exist" => false);
+        else
+            $content = array_push("exist" => true);
+        $respuesta = new Response(json_encode($content));
     	$respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
-    	return $respuesta;
+        return $respuesta;
+    }
+    
+    /**
+     * @Route("/user/{username}/check")
+     * @Method("GET")
+     */
+    public function usuarioCheck($username)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery("SELECT u FROM RegistroAcademicoINTI:Usuario u WHERE u.username = :username")->setParameter('username', $username);
+        $usuario = $query->getSingleResult();
+        $content = array();
+        if(!$usuario)
+            $content = array_push("exist" => false);
+        else
+            $content = array_push("exist" => true);
+        $respuesta = new Response(json_encode($content));
+    	$respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
+        return $respuesta;
     }
 }

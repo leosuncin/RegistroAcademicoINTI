@@ -160,7 +160,7 @@ class Usuario implements AdvancedUserInterface, \Serializable
     {
         $role = strtoupper($role);
         if (!in_array($role, $this->rol, true)) {
-            $this->rol[] = $role;
+            array_push($this->rol, $role);
         }
 
         return $this;
@@ -248,7 +248,6 @@ class Usuario implements AdvancedUserInterface, \Serializable
      */
     public function eraseCredentials()
     {
-        //$this->locked = true;
     }
 
     /**

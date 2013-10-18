@@ -25,9 +25,8 @@ class Especialidad
      *
      * @ORM\Column(name="codigo", type="string", length=5, nullable=false)
      * @ORM\Id
-     * 
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    //@ORM\GeneratedValue(strategy="IDENTITY")
     private $codigo;
 
     /**
@@ -44,18 +43,6 @@ class Especialidad
      */
     private $nombre;
 
-    /**
-     * Set codigo
-     *
-     * @param string $codigo
-     * @return Especialidad
-     */
-    public function setCodigo($codigo)
-    {
-        $this->codigo = $codigo;
-    
-        return $this;
-    }
 
 
     /**

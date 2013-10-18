@@ -79,18 +79,6 @@ class AspiranteType extends AbstractType
                     )
                 )
             ->add('encargado', new EncargadoType());
-			->add('estado',
-                'choice',
-                array(
-                    'label'   => 'Estado',
-                    'choices' => array(
-                        'P'   => 'Pendiente',
-                        'A'   => 'Aprobado',
-						'R'	  => 'Reprobado',
-						'M'	  => 'Matriculado'
-                        )
-                    )
-                )
     }
 
     /**

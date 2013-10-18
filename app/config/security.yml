@@ -46,8 +46,8 @@ security:
                 path: /logout
                 target: index
             remember_me:
-                key: a24d680e112b289c1d408fd351e8abadd4591f6d362675dfc3e6d6ebf6532a25
-                lifetime: 1800
+                key: %secret%
+                lifetime: 604800
                 path: ^/
                 domain: ~
             security: true

@@ -11,7 +11,7 @@
         {% if title is not defined %}{% set title = 'Sistema de registro académico' %}{% endif %}
 		<title>{{ title }}</title>
 		{% block style %}
-        <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
+		<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
         <link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}" />
         <!--[if IE 7]><link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome-ie7.min.css') }}"><![endif]-->
         <link rel="stylesheet" href="{{ asset('assets/normalize-css/normalize.css') }}" />
@@ -24,8 +24,8 @@
         <![endif]-->
 		{% block body %}{% endblock %}
         {% block javascript %}
-        <script type="text/javascript" src="{{ asset('assets/jquery/jquery.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.js') }}"></script>
+		<script type="text/javascript" src="{{ asset('assets/jquery/jquery.js') }}"></script>
+		<script src="{{ asset('js/bootstrap.js') }}"></script>
         <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
         {% endblock %}
 	</body>
