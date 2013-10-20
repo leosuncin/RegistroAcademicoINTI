@@ -39,9 +39,9 @@ class WebServiceController extends Controller
         $usuario = $query->getSingleResult();
         $content = array();
         if(!$usuario)
-            $content = array_push("exist" => false);
+            $content = array("exist" => false);
         else
-            $content = array_push("exist" => true);
+            $content = array("exist" => true);
         $respuesta = new Response(json_encode($content));
     	$respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
         return $respuesta;
@@ -58,9 +58,9 @@ class WebServiceController extends Controller
         $usuario = $query->getSingleResult();
         $content = array();
         if(!$usuario)
-            $content = array_push("exist" => false);
+            $content = array("exist" => false);
         else
-            $content = array_push("exist" => true);
+            $content = array("exist" => true);
         $respuesta = new Response(json_encode($content));
     	$respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
         return $respuesta;
