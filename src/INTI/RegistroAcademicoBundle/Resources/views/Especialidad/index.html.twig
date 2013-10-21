@@ -11,7 +11,7 @@
     <table id="tabla" class="table table-hover">
         <thead>
             <tr>
-                <th>codigo</th>
+                <th>Codigo</th>
                 <th>Nombre</th>
                 
             </tr>
@@ -19,7 +19,7 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('especialidad_show', { 'id': entity.codigo }) }}">{{ entity.codigo }}</a></td>
+                <td><a href="{{ path('especialidad_show', { 'codigo': entity.codigo }) }}">{{ entity.codigo }}</a></td>
                 
                 <td>{{ entity.nombre }}</td>
                 <td>

@@ -1,0 +1,32 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block style %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('assets/jquery-ui/css/smoothness/jquery-ui.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/jquery-ui/css/smoothness/jquery.ui.theme.css') }}" />
+{% endblock %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span> <a href="{{ path('alumno_index') }} ">Alumno</a></li>
+<li class="active"><span class="divider">&gt;</span> Crear</li>
+{% endblock %}
+
+{% block content %}
+<form action="{{ path('alumno_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+    {{ form_widget(form, {'form_type': 'horizontal'}) }}
+    <div class="form-actions">
+        <input type="submit" value="Crear" class="btn btn-primary" />
+        <a href="{{ path('alumno_index') }}" class="btn">Regresar</a>
+    </div>
+    <div class="control-group error">
+        {{ form_errors(form) }}
+    </div>
+</form>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/jquery-ui/js/jquery-ui.js') }}"></script>
+<script src="{{ asset('bundles/registroacademico/js/fotografia_base64.js') }}"></script>
+{% endblock %}

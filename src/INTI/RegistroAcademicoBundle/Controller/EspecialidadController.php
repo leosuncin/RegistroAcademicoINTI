@@ -2,6 +2,7 @@
 
 namespace INTI\RegistroAcademicoBundle\Controller;
 
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
@@ -49,17 +50,18 @@ class EspecialidadController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity->getEspecialidad());
+         //  $em->persist($entity->getCodigo());
             
             $em->persist($entity);
             $em->flush();
-
-            return $this->redirect($this->generateUrl('Especialidad_show', array('id' => $entity->getId())));
+			 $this->get('session')->getFlashBag()->add('notice', 'Se inserto correctamente');
+            return $this->redirect($this->generateUrl('especialidad_index'));
         }
 
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
+			'title'  => 'Añadir Especialidad'
         );
     }
 
@@ -190,7 +192,7 @@ class EspecialidadController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('especialidad'));
+        return $this->redirect($this->generateUrl('especialidad_index'));
     }
 
     /**

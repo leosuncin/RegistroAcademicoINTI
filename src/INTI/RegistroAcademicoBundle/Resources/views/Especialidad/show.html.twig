@@ -1,6 +1,12 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
 {% block content %}
+{% for flashMessage in app.session.flashbag.get('notice') %}
+    <div class="flash-notice">
+        {{ flashMessage }}
+    </div>
+{% endfor %}
+
 <h1>Especialidad</h1>
 
 <table class="record_properties">

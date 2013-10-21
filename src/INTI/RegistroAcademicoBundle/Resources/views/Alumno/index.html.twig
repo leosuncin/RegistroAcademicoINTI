@@ -1,0 +1,43 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block style %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}">
+{% endblock %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span><a href="#">Alumno</a></li>
+<li class="active"><span class="divider">&gt;</span> Consultar</li>
+{% endblock %}
+
+{% block content %}
+    <table id="tabla" class="table table-hover">
+        <thead>
+            <tr>
+                <th>NIE</th>
+                <th>Aspirante</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td>{{ entity.nie }}</td>
+                <td>{{ entity.aspirante.id }}</td>
+                <td>
+                    <div class="btn-group btn-group-vertical">
+                        <a class="btn btn-info" href="{{ path('alumno_show', { 'nie': entity.nie }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
+                        <a class="btn btn-info" href="{{ path('alumno_edit', { 'nie': entity.nie }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+                    </div>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+<a class="btn btn-primary" href="{{ path('alumno_new') }}">{{ '.icon-plus-sign Ingresar un nuevo alumno'|parse_icons('white') }}</a>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/watable/jquery.watable.js') }}"></script>
+{% endblock %}
