@@ -6,9 +6,9 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PeriodoType extends AbstractType
+class AnhoType extends AbstractType
 {
-        /**
+    /**
      * @param FormBuilderInterface $builder
      * @param array $options
      */
@@ -25,6 +25,9 @@ class PeriodoType extends AbstractType
 				'choices' => array(
 					''.$anhoActual => ''.$anhoActual,
 				)))
+			->add('continuar','submit', array(
+			'label' => 'Abrir Año Escolar',
+			'attr'=>array('class'=>'btn btn-primary')))
         ;
     }
     

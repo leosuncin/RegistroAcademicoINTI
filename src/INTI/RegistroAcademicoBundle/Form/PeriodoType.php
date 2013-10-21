@@ -37,14 +37,15 @@ class PeriodoType extends AbstractType
 						''.$anhoActual=>''.$anhoActual,
 						''.$anhoActualp1=>''.$anhoActualp1,
 						''.$anhoActualp2=>''.$anhoActualp2
-
-
-					)
+					),
 				))
-			
 			->add('estaAbierto','choice',array(
 				'label' => 'Estado del Periodo',
 				'choices' => array('1' => 'Periodo Abierto', '2' => 'Periodo Cerrado')))
+			->add('submit', 'submit', array(
+			'label' => 'Iniciar Periodo',
+			'attr'=>array('class'=>'btn btn-primary')
+		))
         ;
     }
     

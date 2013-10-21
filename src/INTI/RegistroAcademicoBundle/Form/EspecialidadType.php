@@ -15,8 +15,18 @@ class EspecialidadType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('codigo')
-            ->add('nombre');
+			->add('codigo','text',array(
+				'label'=>'Codigo',
+				'attr' => array(
+					'data-toggle'=> 'tooltip',
+					'title'=>'Escriba bien el codigo')
+			))
+            ->add('nombre','text',array('label'=>'Nombre',
+				'attr' => array(
+					'data-toggle'=> 'tooltip',
+					'title'=>'Escriba bien el nombre')));
+			
+
     }
 
     /**

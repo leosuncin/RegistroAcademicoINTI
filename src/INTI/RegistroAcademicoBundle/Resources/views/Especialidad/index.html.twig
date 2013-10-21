@@ -19,16 +19,16 @@
         <tbody>
         {% for entity in entities %}
             <tr>
-                <td><a href="{{ path('especialidad_show', { 'codigo': entity.codigo }) }}">{{ entity.codigo }}</a></td>
+                <td><a href="{{ path('especialidad_index', { 'codigo': entity.codigo }) }}">{{ entity.codigo }}</a></td>
                 
                 <td>{{ entity.nombre }}</td>
                 <td>
                 <ul>
                     <li>
-                        <a href="{{ path('especialidad_show', { 'id': entity.codigo }) }}">show</a>
+                        <a href="{{ path('especialidad_show', { 'id': entity.codigo }) }}">Mostrar</a>
                     </li>
                     <li>
-                        <a href="{{ path('especialidad_edit', { 'id': entity.codigo }) }}">edit</a>
+                        <a href="{{ path('especialidad_edit', { 'id': entity.codigo }) }}">Editar</a>
                     </li>
                 </ul>
                 </td>
@@ -40,7 +40,7 @@
         <ul>
         <li>
             <a href="{{ path('especialidad_new') }}">
-                Create a new entry
+                Crear una nueva especialidad
             </a>
         </li>
     </ul>

@@ -7,10 +7,18 @@
 {% endblock %}
 
 {% block content %}
+
+
+
+
 <h1>Creacion de una especialidad</h1>
+  
+  
+
 <form action="{{ path('especialidad_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 	
     {{ form_widget(form, {'form_type': 'horizontal'}) }}
+	
     <div class="form-actions">
         <input type="submit" value="Crear" class="btn btn-primary" />
         <a href="{{ path('especialidad_index') }}" class="btn">Regresar</a>
@@ -19,9 +27,11 @@
         {{ form_errors(form) }}
     </div>
 </form>
+
 {% endblock %}
 
 {% block javascript %}
 {{ parent() }}
 <script src="{{ asset('assets/jquery-ui/js/jquery-ui.js') }}"></script>
+
 {% endblock %}

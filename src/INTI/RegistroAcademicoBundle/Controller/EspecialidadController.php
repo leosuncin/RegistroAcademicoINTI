@@ -46,6 +46,7 @@ class EspecialidadController extends Controller
     {
         $entity  = new Especialidad();
         $form = $this->createForm(new EspecialidadType(), $entity);
+		
         $form->submit($request);
 
         if ($form->isValid()) {
@@ -53,9 +54,14 @@ class EspecialidadController extends Controller
          //  $em->persist($entity->getCodigo());
             
             $em->persist($entity);
-            $em->flush();
-			 $this->get('session')->getFlashBag()->add('notice', 'Se inserto correctamente');
-            return $this->redirect($this->generateUrl('especialidad_index'));
+			try{
+            $em->flush();}
+			catch(\PDOException $e){
+			$code=$e->errorInfo[1];
+			echo $code;
+			}
+			$this->get('session')->getFlashBag()->add('notice', 'Se inserto correctamente');
+            return $this->redirect($this->generateUrl('especialidad_show', array('id' => $entity->getCodigo())));
         }
 
         return array(

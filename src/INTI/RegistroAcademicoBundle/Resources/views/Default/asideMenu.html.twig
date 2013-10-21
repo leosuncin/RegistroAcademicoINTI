@@ -60,13 +60,30 @@
     				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-gestion" href="#accordion-gestion-periodos"><span class="icon-calendar"></span> Periodos</a>
     			</div>
 				<ul id="accordion-gestion-periodos" class="accordion-body collapse">					
-					<li class="accordion-inner"><a href="{{ path('periodo')}}">
-					<span class="icon-plus-sign"></span>
+					<li class="accordion-inner"><a href="{{ path('periodo_new')}}">
+					<span class="icon-plus-sign"> Abrir Periodo</span>
 					</a> </a></li>
-					<li class="accordion-inner"><a href="{{ path('periodo')}}"><span class="icon-eye-open"></span>Mostrar</a></li>
-					<li class="accordion-inner"><a href=""><span class="icon-remove-sign"> </span></a></li>
+					<li class="accordion-inner"><a href="{{ path('periodo')}}"><span class="icon-eye-open"></span> Mostrar Periodos</a></li>
+					<li class="accordion-inner"><a href=""><span class="icon-remove-sign"> Cerrar Periodo </span></a></li>
+{#
 					<li class="accordion-inner"><a href=""><span class="icon-edit"></span> </a></li>
+					#}
 				</ul>
+    			<div class="accordion-heading">
+    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-gestion" href="#accordion-gestion-anhos"><span class="icon-calendar"></span> Años</a>
+    			</div>
+				<ul id="accordion-gestion-anhos" class="accordion-body collapse">					
+					<li class="accordion-inner"><a href="{{ path('iniciar_anho')}}">
+					<span class="icon-plus-sign"> Abrir Año </span>
+					</a> </a></li>
+					<li class="accordion-inner"><a href="{{ path('periodo')}}"><span class="icon-eye-open"></span> Mostrar Años </a></li>
+					<li class="accordion-inner"><a href=""><span class="icon-remove-sign"> Cerrar Año </span></a></li>
+{#
+					<li class="accordion-inner"><a href=""><span class="icon-edit"></span> </a></li>
+					#}
+				</ul>
+
+
 				{% endif %}
     		</div>
     	</div>

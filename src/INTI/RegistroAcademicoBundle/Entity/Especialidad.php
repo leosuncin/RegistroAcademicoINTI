@@ -17,12 +17,19 @@ class Especialidad
      * @var string
      *
      * @Assert\Length(
+	 *		
      *      min = "2",
      *      max = "5",
      *      minMessage = "El codigo de la especialidad por lo menos debe tener {{ limit }} caracteres de largo",
      *      maxMessage = "El codigo de la especialidad no puede tener más de {{ limit }} caracteres de largo"
-     * )
+     *		
+	 *)
      *
+	 * @Assert\Regex(
+	 * pattern = "/\d/",
+	 * match=false,
+	 * message = "El codigo solo debe contener letras A-Z" 
+	 *)
      * @ORM\Column(name="codigo", type="string", length=5, nullable=false)
      * @ORM\Id
      * 
@@ -36,8 +43,8 @@ class Especialidad
      * @Assert\Length(
      *      min = "5",
      *      max = "100",
-     *      minMessage = "El codigo de la especialidad por lo menos debe tener {{ limit }} caracteres de largo",
-     *      maxMessage = "El codigo de la especialidad no puede tener más de {{ limit }} caracteres de largo"
+     *      minMessage = "El nombre de la especialidad por lo menos debe tener {{ limit }} caracteres de largo",
+     *      maxMessage = "El nombre de la especialidad no puede tener más de {{ limit }} caracteres de largo"
      * )
      *
      * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
