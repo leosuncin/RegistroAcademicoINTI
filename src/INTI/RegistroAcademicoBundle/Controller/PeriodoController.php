@@ -196,36 +196,29 @@ class PeriodoController extends Controller
 
             $em->persist($p1);
             $em->flush();
-//
 			$p2->setNumPeriodo(2);
 			$p2->setAnhoCorriente($entity->getAnhoCorriente());
 			$p2->setEstaAbierto(2);
 
             $em->persist($p2);
             $em->flush();
-//
 			$p3->setNumPeriodo(3);
 			$p3->setAnhoCorriente($entity->getAnhoCorriente());
 			$p3->setEstaAbierto(2);
 
             $em->persist($p3);
-            $em->flush();
-//
 			$p4->setNumPeriodo(4);
 			$p4->setAnhoCorriente($entity->getAnhoCorriente());
 			$p4->setEstaAbierto(2);
 
             $em->persist($p4);
             $em->flush();
-//
 			$p5->setNumPeriodo(5);
 			$p5->setAnhoCorriente($entity->getAnhoCorriente());
 			$p5->setEstaAbierto(2);
 
             $em->persist($p5);
-//
 
-            //$em->persist($entity);
             $em->flush();
 
 			$this->get('session')->getFlashBag()->add('notice','Se ha iniciado el año Escolar con exito');
@@ -326,7 +319,20 @@ class PeriodoController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('RegistroAcademicoBundle:Periodo')->find($id);
+		$query=$em->createQuery(
+				'SELECT p
+				FROM RegistroAcademicoBundle:Periodo p
+				WHERE p.estaAbierto = 2'
+				);
+			$periodos= $query->getResult();
+			$otroPeriodoAbierto=count($periodos);
+			if($otroPeriodoAbierto>0)
+			{
+			$this->get('session')->getFlashBag()->add('notice','Ya hay un periodo abierto');
 
+            return $this->redirect($this->generateUrl('periodo_edit', array('id' => $id)));
+				//si es cierto solo se muestra un mensaje de error
+			}
 		$estadoInicial = $entity->getEstaAbierto();
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Periodo entity.');
