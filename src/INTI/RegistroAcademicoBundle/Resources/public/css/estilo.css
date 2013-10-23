@@ -37,6 +37,7 @@ footer {
   max-width: 200px;
   max-height: 200px;
 }
+<<<<<<< HEAD
 
 span.error {
   -webkit-border-radius: 3px;
@@ -54,3 +55,5 @@ span.error {
   text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
   background-color: #b94a48;
 }
+=======
+>>>>>>> 19941833bd03ee243c3642db65e2c9a772c2a429

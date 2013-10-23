@@ -2,8 +2,7 @@
 
 {% block style %}
 {{ parent() }}
-<link rel="stylesheet" href="{{ asset('assets/jquery-ui/css/smoothness/jquery-ui.css') }}" />
-<link rel="stylesheet" href="{{ asset('assets/jquery-ui/css/smoothness/jquery.ui.theme.css') }}" />
+<link rel="stylesheet" href="{{ asset('assets/bootstrap-datepicker/css/datepicker.css') }}" />
 {% endblock %}
 
 {% block breadcrumb %}
@@ -15,7 +14,7 @@
 {% block content %}
 <form action="{{ path('aspirante_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 	{{ form_label(form.foto) }}
-    <input type="file" id="filePicker" class="btn"/>
+    <input type="file" id="filePicker" name="filePicker" accept="image/jpg" class="btn" required />
     {{ form_widget(form, {'form_type': 'horizontal'}) }}
     <div class="form-actions">
         <input type="submit" value="Crear" class="btn btn-primary" />
@@ -29,6 +28,12 @@
 
 {% block javascript %}
 {{ parent() }}
-<script src="{{ asset('assets/jquery-ui/js/jquery-ui.js') }}"></script>
+<script src="{{ asset('assets/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ asset('assets/jquery-validation/dist/jquery.validate.js') }}"></script>
+<script src="{{ asset('assets/jquery-validation/localization/messages_es.js') }}"></script>
+<script src="{{ asset('bundles/registroacademico/js/validacion-formularios.js') }}"></script>
 <script src="{{ asset('bundles/registroacademico/js/fotografia_base64.js') }}"></script>
+<script>
+    $('#aspirantetype_fechanac').datepicker();
+</script>
 {% endblock %}
