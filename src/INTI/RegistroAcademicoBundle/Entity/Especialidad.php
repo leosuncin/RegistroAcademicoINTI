@@ -1,4 +1,3 @@
-
 <?php
 
 namespace INTI\RegistroAcademicoBundle\Entity;
@@ -28,12 +27,8 @@ class Especialidad
      * )
      *
 	 * @Assert\Regex(
-	 * pattern = "/^[a-zA-Z]/",
-	 * match=true,
-	 * message = "El codigo solo debe contener letras" 
-	 *)
-	 *     pattern = "/\d|\#|\$/",
-	 *     match=false,
+	 *     pattern = "/^[a-zA-Z]*$/",
+	 *     match=true,
 	 *     message = "El codigo solo debe contener letras" 
 	 * )
 	 * @ORM\Column(name="codigo", type="string", length=5, nullable=false, unique=true)
@@ -53,7 +48,7 @@ class Especialidad
      * )
 
 	 * @Assert\Regex(
-	 * pattern = "/^[a-zA-Z]/",
+	 * pattern = "/^[A-Za-z]+(\s[A-Za-z]+)*$/",
 	 * match=true,
 	 * message = "El nombre solo debe contener letras" 
 	 *)
@@ -109,55 +104,5 @@ class Especialidad
     {
         return $this->nombre;
     }
-=======
-<?php
 
-namespace INTI\RegistroAcademicoBundle\Entity;
-
-use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
-
-/**
- * Especialidad
- *
- * @ORM\Table(name="Especialidad")
- * @DoctrineAssert\UniqueEntity(fields={"codigo"},message="Este valor ya existe!")
- * @ORM\Entity
- */
-class Especialidad
-{
-    /**
-     * @var string
-     *
-     * @Assert\Length(
-     *      min = "2",
-     *      max = "5",
-     *      minMessage = "El codigo de la especialidad por lo menos debe tener {{ limit }} caracteres de largo",
-     *      maxMessage = "El codigo de la especialidad no puede tener más de {{ limit }} caracteres de largo"
-     * )
-     *
-	 * @Assert\Regex(
-	 *     pattern = "/\d|\#|\$/",
-	 *     match=false,
-	 *     message = "El codigo solo debe contener letras" 
-	 * )
-	 * @ORM\Column(name="codigo", type="string", length=5, nullable=false, unique=true)
-	 * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $codigo;
-
-    /**
-     * @var string
-     *
-     * @Assert\Length(
-     *      min = "5",
-     *      max = "100",
-     *      minMessage = "El nombre de la especialidad por lo menos debe tener {{ limit }} caracteres de largo",
-     *      maxMessage = "El nombre de la especialidad no puede tener más de {{ limit }} caracteres de largo"
-     * )
-     *
-     
 }
