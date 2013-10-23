@@ -19,3 +19,11 @@
     </div>
 </form>
 {% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('bundles/registroacademico/js/fotografia_base64.js') }}"></script>
+<script src="{{ asset('assets/jquery-validation/dist/jquery.validate.js') }}"></script>
+<script src="{{ asset('assets/jquery-validation/localization/messages_es.js') }}"></script>
+<script src="{{ asset('bundles/registroacademico/js/validacion-formularios.js') }}"></script>
+{% endblock %}

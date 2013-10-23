@@ -80,6 +80,13 @@ class Usuario implements AdvancedUserInterface, \Serializable
      */
     private $locked;
 
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="intents", type="integer", nullable=true)
+     */
+    private $intents;
+
     function __construct() {
         $this->salt = base_convert(sha1(uniqid(mt_rand(), true)), 16, 36);
         $this->rol = array();
@@ -241,6 +248,29 @@ class Usuario implements AdvancedUserInterface, \Serializable
     public function getLocked()
     {
         return $this->locked;
+    }
+
+    /**
+     * Set intents
+     *
+     * @param integer $intents
+     * @return Usuario
+     */
+    public function setIntents($intents)
+    {
+        $this->intents = $intents;
+
+        return $this;
+    }
+
+    /**
+     * Get intents
+     *
+     * @return integer
+     */
+    public function getIntents()
+    {
+        return $this->intents;
     }
 
     /**

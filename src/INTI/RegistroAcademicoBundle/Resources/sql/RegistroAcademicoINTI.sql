@@ -6,9 +6,9 @@ CREATE SCHEMA IF NOT EXISTS `registro` DEFAULT CHARACTER SET ucs2 COLLATE ucs2_s
 USE `registro` ;
 
 -- -----------------------------------------------------
--- Table `registro`.`Especialidad`
+-- Table `Especialidad`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `registro`.`Especialidad` (
+CREATE TABLE IF NOT EXISTS `Especialidad` (
   `codigo` VARCHAR(5) NOT NULL,
   `nombre` VARCHAR(100) NOT NULL,
   PRIMARY KEY (`codigo`),
@@ -17,9 +17,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `registro`.`Encargado`
+-- Table `Encargado`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `registro`.`Encargado` (
+CREATE TABLE IF NOT EXISTS `Encargado` (
   `nombre` VARCHAR(80) NOT NULL,
   `parentesco` VARCHAR(12) NOT NULL,
   `DUI` VARCHAR(10) NOT NULL,
@@ -29,9 +29,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `registro`.`Aspirante`
+-- Table `Aspirante`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `registro`.`Aspirante` (
+CREATE TABLE IF NOT EXISTS `Aspirante` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `foto` TEXT NOT NULL,
   `primerApellido` VARCHAR(15) NOT NULL,
@@ -52,21 +52,21 @@ CREATE TABLE IF NOT EXISTS `registro`.`Aspirante` (
   INDEX `idx_Aspirante_Encargado` (`Encargado` ASC),
   CONSTRAINT `fk_Aspirante_Especialidad`
     FOREIGN KEY (`Especialidad`)
-    REFERENCES `registro`.`Especialidad` (`codigo`)
+    REFERENCES `Especialidad` (`codigo`)
     ON DELETE RESTRICT
     ON UPDATE RESTRICT,
   CONSTRAINT `fk_Aspirante_Encargado`
     FOREIGN KEY (`Encargado`)
-    REFERENCES `registro`.`Encargado` (`DUI`)
+    REFERENCES `Encargado` (`DUI`)
     ON DELETE RESTRICT
     ON UPDATE RESTRICT)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `registro`.`Usuario`
+-- Table `Usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `registro`.`Usuario` (
+CREATE TABLE IF NOT EXISTS `Usuario` (
   `username` VARCHAR(50) NOT NULL,
   `password` VARCHAR(255) NOT NULL,
   `salt` VARCHAR(255) NOT NULL,
@@ -79,9 +79,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `registro`.`Empleado`
+-- Table `Empleado`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `registro`.`Empleado` (
+CREATE TABLE IF NOT EXISTS `Empleado` (
   `nombres` VARCHAR(80) NOT NULL,
   `apellidos` VARCHAR(80) NOT NULL,
   `puesto` VARCHAR(60) NOT NULL,
@@ -99,16 +99,16 @@ CREATE TABLE IF NOT EXISTS `registro`.`Empleado` (
   UNIQUE INDEX `NUP_UNIQUE` (`NUP` ASC),
   CONSTRAINT `fk_Empleado_Usuario1`
     FOREIGN KEY (`Usuario`)
-    REFERENCES `registro`.`Usuario` (`username`)
+    REFERENCES `Usuario` (`username`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `registro`.`Bloqueo_usuarios`
+-- Table `Bloqueo_usuarios`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `registro`.`Bloqueo_usuarios` (
+CREATE TABLE IF NOT EXISTS `Bloqueo_usuarios` (
   `bloqueo` TIMESTAMP NOT NULL,
   `username` VARCHAR(50) NOT NULL,
   `desbloqueo` VARCHAR(45) NULL,
@@ -116,24 +116,83 @@ CREATE TABLE IF NOT EXISTS `registro`.`Bloqueo_usuarios` (
   INDEX `fk_bloqueo_usuario_idx` (`username` ASC),
   CONSTRAINT `fk_bloqueo_usuario`
     FOREIGN KEY (`username`)
-    REFERENCES `registro`.`Usuario` (`username`)
+    REFERENCES `Usuario` (`username`)
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `registro`.`Alumno`
+-- Table `Alumno`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `registro`.`Alumno` (
+CREATE TABLE IF NOT EXISTS `Alumno` (
   `Aspirante` INT NOT NULL,
-  `NIE` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`Aspirante`, `NIE`),
+  `NIE` INT NOT NULL,
+  PRIMARY KEY (`NIE`, `Aspirante`),
+  UNIQUE INDEX `Aspirante_UNIQUE` (`Aspirante` ASC),
   CONSTRAINT `fk_Alumno_Aspirante1`
     FOREIGN KEY (`Aspirante`)
-    REFERENCES `registro`.`Aspirante` (`id`)
+    REFERENCES `Aspirante` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Empresa`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Empresa` (
+  `nombre` VARCHAR(50) NOT NULL,
+  `contacto` VARCHAR(80) NOT NULL,
+  `telefono` VARCHAR(8) NOT NULL,
+  `direccion` TEXT NOT NULL,
+  `email` VARCHAR(40) NULL,
+  PRIMARY KEY (`nombre`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Practica_profesional`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Practica_profesional` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `horario` VARCHAR(10) NOT NULL,
+  `inicio` DATE NOT NULL,
+  `fin` DATE NULL,
+  `evaluacion` DOUBLE(2,2) NULL,
+  `Alumno` INT NOT NULL,
+  `Empresa` VARCHAR(50) NOT NULL,
+  PRIMARY KEY (`id`, `Alumno`, `Empresa`),
+  INDEX `fk_Practica_profesional_Alumno1_idx` (`Alumno` ASC),
+  INDEX `fk_Practica_profesional_Empresa1_idx` (`Empresa` ASC),
+  CONSTRAINT `fk_Practica_profesional_Alumno1`
+    FOREIGN KEY (`Alumno`)
+    REFERENCES `Alumno` (`NIE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Practica_profesional_Empresa1`
+    FOREIGN KEY (`Empresa`)
+    REFERENCES `Empresa` (`nombre`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Aspectos_practica_profesional`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Aspectos_practica_profesional` (
+  `practica_profesional` INT NOT NULL,
+  `aspecto` VARCHAR(80) NOT NULL,
+  `valoracion` CHAR(2) NULL,
+  `observacion` TINYTEXT NULL,
+  INDEX `fk_Aspectos_practica_profesional_idx` (`practica_profesional` ASC),
+  PRIMARY KEY (`aspecto`, `practica_profesional`),
+  CONSTRAINT `fk_Aspectos_practica_profesional`
+    FOREIGN KEY (`practica_profesional`)
+    REFERENCES `Practica_profesional` (`id`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 USE `registro` ;
@@ -191,6 +250,7 @@ BEGIN
 END$$
 
 DELIMITER ;
+
 CREATE USER 'academico' IDENTIFIED BY 'R1N9ts!ru040ct3dc3nm1€0l';
 
 GRANT DELETE, INSERT, SELECT, UPDATE, ALL ON TABLE `registro`.`Aspirante` TO 'academico';
@@ -199,36 +259,38 @@ GRANT UPDATE, SELECT, INSERT, DELETE, ALL ON TABLE `registro`.`Usuario` TO 'acad
 GRANT UPDATE, SELECT, INSERT, DELETE, ALL ON TABLE `registro`.`Empleado` TO 'academico';
 GRANT ALL, INSERT, SELECT, UPDATE, DELETE ON TABLE `registro`.`Especialidad` TO 'academico';
 GRANT ALL, INSERT, SELECT, UPDATE, DELETE ON TABLE `registro`.`Bloqueo_usuarios` TO 'academico';
-GRANT EXECUTE, ALL ON procedure `registro`.`bloquear_usuario` TO 'academico';
-GRANT ALL, EXECUTE ON procedure `registro`.`desbloquear_usuario` TO 'academico';
-GRANT ALL, EXECUTE ON procedure `registro`.`desbloquear_usuarios` TO 'academico';
+GRANT EXECUTE, ALL ON procedure `bloquear_usuario` TO 'academico';
+GRANT ALL, EXECUTE ON procedure `desbloquear_usuario` TO 'academico';
+GRANT ALL, EXECUTE ON procedure `desbloquear_usuarios` TO 'academico';
+
+FLUSH PRIVILEGES;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 
 -- -----------------------------------------------------
--- Data for table `registro`.`Especialidad`
+-- Data for table `Especialidad`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `registro`;
-INSERT INTO `registro`.`Especialidad` (`codigo`, `nombre`) VALUES ('ELTIA', 'Electrotecnia');
-INSERT INTO `registro`.`Especialidad` (`codigo`, `nombre`) VALUES ('ELCA', 'Electrónica');
-INSERT INTO `registro`.`Especialidad` (`codigo`, `nombre`) VALUES ('AUTO', 'Automotores');
-INSERT INTO `registro`.`Especialidad` (`codigo`, `nombre`) VALUES ('MECA', 'Mecánica general');
-INSERT INTO `registro`.`Especialidad` (`codigo`, `nombre`) VALUES ('DS', 'Desarrollo de software');
-INSERT INTO `registro`.`Especialidad` (`codigo`, `nombre`) VALUES ('COMP', 'Mantenimiento de computadoras');
+INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('ELTIA', 'Electrotecnia');
+INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('ELCA', 'Electrónica');
+INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('AUTO', 'Automotores');
+INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('MECA', 'Mecánica general');
+INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('DS', 'Desarrollo de software');
+INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('COMP', 'Mantenimiento de computadoras');
 
 COMMIT;
 
 
 -- -----------------------------------------------------
--- Data for table `registro`.`Usuario`
+-- Data for table `Usuario`
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `registro`;
-INSERT INTO `registro`.`Usuario` (`username`, `password`, `salt`, `rol`, `enabled`, `locked`, `intents`) VALUES ('usuarioINTI', 'Uv9u6JM/NbN464qxZXpCzJomfYB2TWWCrI4MdT+S5C+N3EHP+TtvkA0lSA8ETyzZ/tcriC3aRy9YDPqr4Sa16Q==', 'l2gkhe40o5c44g8s8g4kw4w0o0sck0g', 'a:1:{i:0;s:9:\"ROLE_USER\";}', 1, NULL, 0);
-INSERT INTO `registro`.`Usuario` (`username`, `password`, `salt`, `rol`, `enabled`, `locked`, `intents`) VALUES ('desarrolladorUES', 'ok6HFgqr7/uwDPKRN7KfdOiiOedTYgpRdrfIfAQh5S1zubtz7O/+Rqg11IXU99h8jV8PI/d5SxcGIuAQqjSwfw==', 'pxzoid8tur4s440swgs0k84800scgk0', 'a:2:{i:0;s:9:\"ROLE_USER\";i:1;s:16:\"ROLE_SUPER_ADMIN\";}', 1, NULL, 0);
+INSERT INTO `Usuario` (`username`, `password`, `salt`, `rol`, `enabled`, `locked`, `intents`) VALUES ('usuarioINTI', 'Uv9u6JM/NbN464qxZXpCzJomfYB2TWWCrI4MdT+S5C+N3EHP+TtvkA0lSA8ETyzZ/tcriC3aRy9YDPqr4Sa16Q==', 'l2gkhe40o5c44g8s8g4kw4w0o0sck0g', 'a:1:{i:0;s:9:\"ROLE_USER\";}', 1, NULL, 0);
+INSERT INTO `Usuario` (`username`, `password`, `salt`, `rol`, `enabled`, `locked`, `intents`) VALUES ('desarrolladorUES', 'ok6HFgqr7/uwDPKRN7KfdOiiOedTYgpRdrfIfAQh5S1zubtz7O/+Rqg11IXU99h8jV8PI/d5SxcGIuAQqjSwfw==', 'pxzoid8tur4s440swgs0k84800scgk0', 'a:2:{i:0;s:9:\"ROLE_USER\";i:1;s:16:\"ROLE_SUPER_ADMIN\";}', 1, NULL, 0);
 
 COMMIT;
 
@@ -244,6 +306,11 @@ BEGIN
 		INSERT INTO Bloqueo_usuarios(bloqueo, username) VALUES(NOW(), NEW.username);
 	END IF;
 END$$
+
+USE `registro`$$
+CREATE TRIGGER `Eliminar_Usuario_Empleado` AFTER DELETE ON `Empleado` FOR EACH ROW
+-- Edit trigger body code below this line. Do not edit lines above this one
+DELETE FROM Usuario WHERE username = OLD.Usuario;$$
 
 
 DELIMITER ;
