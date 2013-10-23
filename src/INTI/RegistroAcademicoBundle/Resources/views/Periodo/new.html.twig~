@@ -1,0 +1,22 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span><a href="#">Periodos</a></li>
+<li class="active"><span class="divider">&gt;</span>Abrir</li>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Abrir Nuevo Periodo </h1>
+
+    {{ form(form) }}
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('periodo') }}">
+            Regresar al Listado de Periodos
+        </a>
+    </li>
+</ul>
+{% endblock %}
