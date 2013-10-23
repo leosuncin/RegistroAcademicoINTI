@@ -1,0 +1,63 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span><a href="#">Periodos</a></li>
+<li class="active"><span class="divider">&gt;</span> Consultar</li>
+{% endblock %}
+
+{% block content %}
+
+
+    <h1>Periodo</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Numero de Periodo: </th>
+                <td>
+				{% if entity.numPeriodo==1 %}
+				Primero
+				{% elseif entity.numPeriodo==2 %}	
+				Segundo
+				{% elseif entity.numPeriodo==3 %}	
+				Tercer
+				{% elseif entity.numPeriodo==4 %}	
+				Cuarto
+				{% elseif entity.numPeriodo==5 %}	
+				Quinto
+				{% endif %}</td>
+            </tr>
+            <tr>
+                <th>Año: </th>
+                <td>
+				{{ entity.anhoCorriente }}	
+				</td>
+            </tr>
+            <tr>
+                <th>Estado del Periodo:</th>
+                <td>
+				{% if entity.estaAbierto == 1 %}
+					Abierto
+					{% else %}
+					Cerrado
+					{% endif %}
+				</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('periodo') }}">
+            Regresar al Listado de Periodos
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('periodo_edit', { 'id': entity.id }) }}">
+            Editar
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

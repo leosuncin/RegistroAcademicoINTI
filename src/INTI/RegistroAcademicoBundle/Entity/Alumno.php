@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 class Alumno
 {
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="NIE", type="string", length=6, nullable=false)
+     * @ORM\Column(name="NIE", type="integer", nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
@@ -38,7 +38,7 @@ class Alumno
     /**
      * Set nie
      *
-     * @param string $nie
+     * @param integer $nie
      * @return Alumno
      */
     public function setNie($nie)
@@ -51,7 +51,7 @@ class Alumno
     /**
      * Get nie
      *
-     * @return string 
+     * @return integer 
      */
     public function getNie()
     {

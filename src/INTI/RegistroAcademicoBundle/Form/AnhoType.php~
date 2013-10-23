@@ -20,14 +20,25 @@ class AnhoType extends AbstractType
 		//$anhoActualp1=Date('Y')+1;
 		//$anhoActualp2=Date('Y')+2;
         $builder
-			->add('numPeriodo','choice',array(
+			->add('numPeriodo','hidden',array(
+				'attr'=>array(
+				'value' => '1',
+				'style'=>'display:none;visibility:hidden'
+			)))
+			->add('anhoCorriente','choice',array(
 				'label' => 'Año a abrir',
 				'choices' => array(
 					''.$anhoActual => ''.$anhoActual,
 				)))
-			->add('continuar','submit', array(
+			->add('estaAbierto','hidden',array(
+				'attr'=>array('class'=>'btn btn-primary',
+				'style'=>'display:none;visibility:hidden',
+							'value'=>'2')
+				))
+			/*->add('continuar','submit', array(
 			'label' => 'Abrir Año Escolar',
-			'attr'=>array('class'=>'btn btn-primary')))
+			'attr'=>array('class'=>'btn btn-primary',
+			'value'=>'2')))*/
         ;
     }
     

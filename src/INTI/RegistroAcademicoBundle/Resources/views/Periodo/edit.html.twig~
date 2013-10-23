@@ -1,0 +1,43 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span><a href="#">Periodos</a></li>
+<li class="active"><span class="divider">&gt;</span>Cambiar Estado del Periodo</li>
+{% endblock %}
+
+{% block content %}
+
+    <h1>Editar Periodo </h1>
+
+	{{ form_start(edit_form) }}
+	{{ form_label(edit_form.numPeriodo) }}
+	{{ form_errors(edit_form.numPeriodo) }}
+	{{ form_widget(edit_form.numPeriodo,{'attr':{'read_only':'true'}}) }}
+
+	{{ form_label(edit_form.anhoCorriente) }}
+	{{ form_errors(edit_form.anhoCorriente) }}
+    {{ form_widget(edit_form.anhoCorriente,{'attr':{'read_only':'true'}}) }}
+
+	{{ form_label(edit_form.estaAbierto) }}
+	{{ form_errors(edit_form.estaAbierto) }}
+    {{ form_widget(edit_form.estaAbierto) }}
+	<div class="form-actions">
+       <input  type="submit" value="Cambiar Estado" class="btn btn-primary" />
+    </div>
+	{{ form_end(edit_form)}}
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('periodo') }}">
+            Regresar al Listado de Periodos
+        </a>
+    </li>
+</ul>
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div class="alert alert-warning">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ flashMessage }}
+</div>
+
+{% endfor %}
+{% endblock %}

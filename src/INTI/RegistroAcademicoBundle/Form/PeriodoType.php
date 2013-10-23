@@ -22,6 +22,7 @@ class PeriodoType extends AbstractType
         $builder
 			->add('numPeriodo','choice',array(
 				'label' => 'Numero de Periodo',
+				'read_only'=>'true',
 				'choices' => array(
 					'1' => 'Primer Periodo',
 					'2' => 'Segundo Periodo',
@@ -31,6 +32,7 @@ class PeriodoType extends AbstractType
 				)))
 				->add('anhoCorriente','choice',array(
 					'label' => 'Año de Periodo',
+					'read_only'=>'true',
 					'choices' => array(
 						''.$anhoActualm2=>''.$anhoActualm2,
 						''.$anhoActualm1=>''.$anhoActualm1,
@@ -42,10 +44,6 @@ class PeriodoType extends AbstractType
 			->add('estaAbierto','choice',array(
 				'label' => 'Estado del Periodo',
 				'choices' => array('1' => 'Periodo Abierto', '2' => 'Periodo Cerrado')))
-			->add('submit', 'submit', array(
-			'label' => 'Iniciar Periodo',
-			'attr'=>array('class'=>'btn btn-primary')
-		))
         ;
     }
     

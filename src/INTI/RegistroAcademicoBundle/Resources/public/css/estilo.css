@@ -37,3 +37,23 @@ footer {
   max-width: 200px;
   max-height: 200px;
 }
+<<<<<<< HEAD
+
+span.error {
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  display: inline-block;
+  margin: 2px 4px;
+  padding: 2px 4px;
+  font-size: 11.844px;
+  font-weight: bold;
+  line-height: 14px;
+  color: #fff;
+  vertical-align: baseline;
+  white-space: nowrap;
+  text-shadow: 0 -1px 0 rgba(0,0,0,0.25);
+  background-color: #b94a48;
+}
+=======
+>>>>>>> 19941833bd03ee243c3642db65e2c9a772c2a429

@@ -27,8 +27,8 @@ class Especialidad
      * )
      *
 	 * @Assert\Regex(
-	 *     pattern = "/\d|\#|\$/",
-	 *     match=false,
+	 *     pattern = "/^[a-zA-Z]*$/",
+	 *     match=true,
 	 *     message = "El codigo solo debe contener letras" 
 	 * )
 	 * @ORM\Column(name="codigo", type="string", length=5, nullable=false, unique=true)
@@ -46,6 +46,13 @@ class Especialidad
      *      minMessage = "El nombre de la especialidad por lo menos debe tener {{ limit }} caracteres de largo",
      *      maxMessage = "El nombre de la especialidad no puede tener más de {{ limit }} caracteres de largo"
      * )
+
+	 * @Assert\Regex(
+	 * pattern = "/^[A-Za-z]+(\s[A-Za-z]+)*$/",
+	 * match=true,
+	 * message = "El nombre solo debe contener letras" 
+	 *)
+	 *
      *
      * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
      */
@@ -97,4 +104,5 @@ class Especialidad
     {
         return $this->nombre;
     }
+
 }
