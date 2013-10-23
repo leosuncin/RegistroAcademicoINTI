@@ -20,7 +20,7 @@ $.validator.addMethod("telefono", function(value) {
 }, 'El telefono debe contener solo 8 números');
 
 $.validator.addMethod("password", function(value) {
-    return /(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d){8,60}.+$)/.test(value);;
+    return /(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d){8,60}.+$)/.test(value);
 }, function(params, element) {
     var passwd = element.value;
     var mensaje = "La contraseña por lo menos debe tener";
@@ -33,7 +33,16 @@ $.validator.addMethod("password", function(value) {
     return mensaje;
 });
 
-$(document).ready(function () {
+$.validator.addMethod("fecha", function(value) {
+    return Date.parseExact(value, "d/M/yyyy");
+}, "Por favor digita la fecha siguiendo el formato dd/mm/yyyy.");
+
+$.validator.addMethod("fechanac", function(value) {
+    return Date.parseExact(value, "d/M/yyyy");
+    ;
+}, "Por favor digita la fecha siguiendo el formato dd/mm/yyyy.");
+
+$(document).ready(function() {
     $("form").validate({
         rules: {
             "aspirantetype[primerapellido]": {
@@ -51,9 +60,12 @@ $(document).ready(function () {
             "aspirantetype[direccion]": {
                 maxlength: 100
             },
-            "aspirantetype[telefono]": "telefono",
+            "aspirantetype[telefono]": {
+                minlength: 8,
+                maxlength: 8
+            },
             "aspirantetype[fechanac]": {
-                date: true
+                fecha: true
             },
             "aspirantetype[lugarnac]": {
                 maxlength: 100
@@ -62,9 +74,16 @@ $(document).ready(function () {
                 minlength: 3,
                 maxlength: 80
             },
-            "aspirantetype[encargado][dui]": "dui",
-            "aspirantetype[encargado][telefono]": "telefono",
-            "empleadotype[dui]": "dui",
+            "aspirantetype[encargado][dui]": {
+                dui: true
+            },
+            "aspirantetype[encargado][telefono]": {
+                minlength: 8,
+                maxlength: 8
+            },
+            "empleadotype[dui]": {
+                dui: true
+            },
             "empleadotype[nombres]": {
                 minlength: 3,
                 maxlength: 80
@@ -73,10 +92,15 @@ $(document).ready(function () {
                 minlength: 3,
                 maxlength: 80
             },
-            "empleadotype[isss]": "isss",
-            "empleadotype[nit]": "nit",
-            "empleadotype[nup]": "nup",
-            "empleadotype[usuario][username]": {
+            "empleadotype[isss]": {
+                isss: true
+            },
+            "empleadotype[nit]": {
+                nit: true
+            },
+            "empleadotype[nup]": {
+                nup: true
+            }, "empleadotype[usuario][username]": {
                 minlength: 6,
                 maxlength: 50
             },
@@ -99,11 +123,11 @@ $(document).ready(function () {
                 required: false
             }
         },
-        showErrors: function (errorMap, errorList) {
-            $.each(this.successList, function (index, value) {
+        showErrors: function(errorMap, errorList) {
+            $.each(this.successList, function(index, value) {
                 return $(value).popover("hide");
             });
-            return $.each(errorList, function (index, value) {
+            return $.each(errorList, function(index, value) {
                 var _popover;
                 _popover = $(value.element).popover({
                     trigger: "manual",
@@ -116,12 +140,12 @@ $(document).ready(function () {
             });
         }
     });
-    $("#empleadotype_usuario_username").focus(function (){
+    $("#empleadotype_usuario_username").focus(function() {
         var username = $(this);
-        if(username.val().length <= 0){
+        if (username.val().length <= 0) {
             var nombres = $("#empleadotype_nombres").val().split(" ");
             var apellidos = $("#empleadotype_apellidos").val().split(" ");
-            if(nombres.length > 1)
+            if (nombres.length > 1)
                 username.val(username.val().concat(nombres[0].split("")[0] + nombres[1].split("")[0] + apellidos[0]).toLowerCase());
             else
                 username.val(username.val().concat(nombres[0].split("")[0] + nombres[0].split("")[0] + apellidos[0]).toLowerCase())
