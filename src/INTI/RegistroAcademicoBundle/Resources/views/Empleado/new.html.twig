@@ -34,11 +34,15 @@
 
 {% block javascript %}
 {{ parent() }}
-<script src="{{ asset('bundles/registroacademico/js/fotografia_base64.js') }}"></script>
 <script src="{{ asset('assets/jquery-validation/dist/jquery.validate.js') }}"></script>
 <script src="{{ asset('assets/jquery-validation/localization/messages_es.js') }}"></script>
+<script src="{{ asset('assets/jquery-mask/jquery.mask.js') }}"></script>
+<script src="{{ asset('bundles/registroacademico/js/fotografia_base64.js') }}"></script>
 <script src="{{ asset('bundles/registroacademico/js/validacion-formularios.js') }}"></script>
 <script>
-    $('#password-popover').popover();
+    $('#empleadotype_dui').mask("99999999-9");
+    $('#empleadotype_isss').mask("999999999");
+    $('#empleadotype_nit').mask("9999-999999-999-9");
+    $('#empleadotype_nup').mask("999999999999");
 </script>
 {% endblock %}
