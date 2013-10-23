@@ -55,7 +55,7 @@ class PeriodoController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('periodo_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('periodo_show', array('id' => $entity->getid())));
         }
 
         return array(
@@ -122,12 +122,13 @@ class PeriodoController extends Controller
             'action' => $this->generateUrl('anho_iniciar'),
             'method' => 'POST',
         ));
-
-		/*$form->add('submit', 'submit', array(
-			'label' => 'Iniciar Periodo',
+		/*
+		$form->add('submit', 'submit', array(
+			'label' => 'Abrir',
 			'attr'=>array('class'=>'btn btn-primary')
 		));
 		 */
+		 
 
         return $form;
     }
@@ -154,9 +155,9 @@ class PeriodoController extends Controller
 
 
 /**
-     * Creates a new Periodo entity.
+     * Crea 5 periodos del año que se acaba de abrir
      *
-     * @Route("/", name="anho_iniciar")
+     * @Route("/anho_ini", name="anho_iniciar")
      * @Method("POST")
      * @Template("RegistroAcademicoBundle:Periodo:ini_anho.html.twig")
      */
@@ -169,49 +170,71 @@ class PeriodoController extends Controller
 		$p3 = new Periodo();
 		$p4 = new Periodo();
 		$p5 = new Periodo();
+		$r1 = new Periodo();
 
         $form = $this->iniciarAnhoForm($entity);
         $form->handleRequest($request);
-        
+       
             $em = $this->getDoctrine()->getManager();
+			$query=$em->createQuery(
+				'SELECT p
+				FROM RegistroAcademicoBundle:Periodo p
+				WHERE p.anhoCorriente = :anhoCorriente'
+				)->setParameter('anhoCorriente',$entity->getAnhoCorriente());
+			$periodos= $query->getResult();
+			$yaingresados=count($periodos);
+			if($yaingresados>4)
+			{
+			$this->get('session')->getFlashBag()->add('notice','Ya se ha iniciado el año Escolar');
+            return $this->redirect($this->generateUrl('iniciar_anho'));
+			}
+			else
+			{
 			$p1->setNumPeriodo(1);
-			$p1->setAnhoCorriente($entity->getAnhoCorriente);
+			$p1->setAnhoCorriente($entity->getAnhoCorriente());
 			$p1->setEstaAbierto(2);
-//
-			$p2->setNumPeriodo(2);
-			$p2->setAnhoCorriente($entity->getAnhoCorriente);
-			$p2->setEstaAbierto(2);
-//
-			$p3->setNumPeriodo(3);
-			$p3->setAnhoCorriente($entity->getAnhoCorriente);
-			$p3->setEstaAbierto(2);
-//
-			$p4->setNumPeriodo(4);
-			$p4->setAnhoCorriente($entity->getAnhoCorriente);
-			$p4->setEstaAbierto(2);
-//
-			$p5->setNumPeriodo(5);
-			$p5->setAnhoCorriente($entity->getAnhoCorriente);
-			$p5->setEstaAbierto(2);
-//
 
             $em->persist($p1);
+            $em->flush();
+//
+			$p2->setNumPeriodo(2);
+			$p2->setAnhoCorriente($entity->getAnhoCorriente());
+			$p2->setEstaAbierto(2);
+
             $em->persist($p2);
+            $em->flush();
+//
+			$p3->setNumPeriodo(3);
+			$p3->setAnhoCorriente($entity->getAnhoCorriente());
+			$p3->setEstaAbierto(2);
+
             $em->persist($p3);
+            $em->flush();
+//
+			$p4->setNumPeriodo(4);
+			$p4->setAnhoCorriente($entity->getAnhoCorriente());
+			$p4->setEstaAbierto(2);
+
             $em->persist($p4);
+            $em->flush();
+//
+			$p5->setNumPeriodo(5);
+			$p5->setAnhoCorriente($entity->getAnhoCorriente());
+			$p5->setEstaAbierto(2);
+
             $em->persist($p5);
+//
+
             //$em->persist($entity);
             $em->flush();
 
+			$this->get('session')->getFlashBag()->add('notice','Se ha iniciado el año Escolar con exito');
             return $this->redirect($this->generateUrl('periodo'));
-
-  /*      return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-   */
+			}
     }
   
+
+
 
 //Fin metodos relacionados con el inicio de un año escolar
 
@@ -253,7 +276,12 @@ class PeriodoController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entity = $em->getRepository('RegistroAcademicoBundle:Periodo')->find($id);
-
+		$query=$em->createQuery(
+				'SELECT p
+				FROM RegistroAcademicoBundle:Periodo p
+				WHERE p.estaAbierto = 1'
+				);
+//		$otroPerAbierto= $m:	
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Periodo entity.');
         }
@@ -282,7 +310,7 @@ class PeriodoController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+//        $form->add('submit', 'submit', array('label' => 'Cambiar Estado'));
 
         return $form;
     }
@@ -299,6 +327,7 @@ class PeriodoController extends Controller
 
         $entity = $em->getRepository('RegistroAcademicoBundle:Periodo')->find($id);
 
+		$estadoInicial = $entity->getEstaAbierto();
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Periodo entity.');
         }
@@ -309,7 +338,10 @@ class PeriodoController extends Controller
 
         if ($editForm->isValid()) {
             $em->flush();
-
+			if($estadoInicial!=$entity->getEstaAbierto())
+			$this->get('session')->getFlashBag()->add('notice','Se ha cambiado el estado del periodo');
+			else
+			$this->get('session')->getFlashBag()->add('notice','Ningún cambio');
             return $this->redirect($this->generateUrl('periodo_edit', array('id' => $id)));
         }
 
@@ -357,7 +389,7 @@ class PeriodoController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('periodo_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => 'Eliminar'))
             ->getForm()
         ;
     }

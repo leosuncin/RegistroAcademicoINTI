@@ -11,10 +11,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="Empleado")
  * @ORM\Entity
- * @UniqueEntity("dui")
- * @UniqueEntity("isss")
- * @UniqueEntity("nit")
- * @UniqueEntity("nup")
+ * @UniqueEntity(fields="dui", message="El DUI ya esta registrado")
+ * @UniqueEntity(fields="isss", message="El ISSS ya esta registrado")
+ * @UniqueEntity(fields="nit", message="El NIT ya esta registrado")
+ * @UniqueEntity(fields="nup", message="El NUP ya esta registrado")
  */
 class Empleado
 {
@@ -84,7 +84,7 @@ class Empleado
      *
      * @Assert\Regex(
      *     pattern="/^\d{9}$/",
-     *     message="El ISSS debe contener solo números"
+     *     message="El ISSS debe contener 9 números"
      * )
      *
      * @ORM\Column(name="ISSS", type="string", length=9, nullable=false)
