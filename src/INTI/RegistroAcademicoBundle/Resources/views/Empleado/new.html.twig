@@ -8,8 +8,10 @@
 
 {% block content %}
     <form action="{{ path('empleado_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+		{#
         {{ form_label(form.fotografia) }}
         <input type="file" id="filePicker" class="btn"/>
+		#}
         {{ form_widget(form, {'form_type': 'horizontal'}) }}
         {{ form_row(form.usuario) }}
         <div class="form-actions">

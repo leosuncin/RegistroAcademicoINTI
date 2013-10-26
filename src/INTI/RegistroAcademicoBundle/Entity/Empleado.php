@@ -75,7 +75,7 @@ class Empleado
     /**
      * @var string
      *
-     * @ORM\Column(name="fotografia", type="text", nullable=true)
+     * @ORM\Column(name="fotografia", type="blob", nullable=true)
      */
     private $fotografia;
 

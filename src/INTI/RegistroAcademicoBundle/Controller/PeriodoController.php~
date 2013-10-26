@@ -326,7 +326,7 @@ class PeriodoController extends Controller
 				);
 			$periodos= $query->getResult();
 			$otroPeriodoAbierto=count($periodos);
-			if($otroPerAbierto>0)
+			if($otroPeriodoAbierto>0)
 			{
 			$this->get('session')->getFlashBag()->add('notice','Ya hay un periodo abierto');
 

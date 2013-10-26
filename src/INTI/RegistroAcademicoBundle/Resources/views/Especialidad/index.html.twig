@@ -24,26 +24,24 @@
                 <td>{{ entity.nombre }}</td>
                 <td>
                 <ul>
-                    <li>
-                        <a href="{{ path('especialidad_show', { 'id': entity.codigo }) }}">Mostrar</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('especialidad_edit', { 'id': entity.codigo }) }}">Editar</a>
-                    </li>
-                </ul>
+                   
+                        <a class="btn btn-info" href="{{ path('especialidad_show', { 'id': entity.codigo }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
+                   
+                        <a class="btn btn-info" href="{{ path('especialidad_edit', { 'id': entity.codigo }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+               
                 </td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('especialidad_new') }}">
-                Crear una nueva especialidad
+    
+       
+            <a class="btn btn-primary" href="{{ path('especialidad_new') }}">
+                {{ '.icon-plus-sign Ingresar un nuevo empleado'|parse_icons('white') }}
             </a>
-        </li>
-    </ul>
+       
+   
 {% endblock %}
 
 {% block javascript %}

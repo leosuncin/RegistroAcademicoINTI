@@ -32,6 +32,9 @@
 
 {% block javascript %}
 {{ parent() }}
-<script src="{{ asset('assets/jquery-ui/js/jquery-ui.js') }}"></script>
+
+<script src="{{ asset('assets/jquery-validation/dist/jquery.validate.js') }}"></script>
+<script src="{{ asset('bundles/registroacademico/js/validacion-formularios.js') }}"></script>
+<script src="{{ asset('assets/jquery-validation/localization/messages_es.js') }}"></script>
 
 {% endblock %}

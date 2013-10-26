@@ -1,13 +1,12 @@
 <?php
 
 namespace INTI\RegistroAcademicoBundle\Entity;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
-use Symfony\Bridge\Doctrine\Validator\Constraints as DoctrineAssert;
+
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Periodo
+ *
  * @ORM\Table()
  * @ORM\Entity
  */
@@ -18,7 +17,7 @@ class Periodo
      *
      * @ORM\Column(name="idPeriodo", type="integer")
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
     private $id;
 
@@ -42,6 +41,20 @@ class Periodo
      * @ORM\Column(name="EstaAbierto", type="integer")
      */
     private $estaAbierto;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="FechaInicio", type="date")
+     */
+    private $fechaInicio;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="FechaFin", type="date")
+     */
+    private $fechaFin;
 
 
     /**
@@ -121,5 +134,51 @@ class Periodo
     public function getEstaAbierto()
     {
         return $this->estaAbierto;
+    }
+
+    /**
+     * Set fechaInicio
+     *
+     * @param \DateTime $fechaInicio
+     * @return Periodo
+     */
+    public function setFechaInicio($fechaInicio)
+    {
+        $this->fechaInicio = $fechaInicio;
+    
+        return $this;
+    }
+
+    /**
+     * Get fechaInicio
+     *
+     * @return \DateTime 
+     */
+    public function getFechaInicio()
+    {
+        return $this->fechaInicio;
+    }
+
+    /**
+     * Set fechaFin
+     *
+     * @param \DateTime $fechaFin
+     * @return Periodo
+     */
+    public function setFechaFin($fechaFin)
+    {
+        $this->fechaFin = $fechaFin;
+    
+        return $this;
+    }
+
+    /**
+     * Get fechaFin
+     *
+     * @return \DateTime 
+     */
+    public function getFechaFin()
+    {
+        return $this->fechaFin;
     }
 }

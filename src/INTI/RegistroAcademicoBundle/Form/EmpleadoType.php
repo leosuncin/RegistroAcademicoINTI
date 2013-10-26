@@ -15,7 +15,8 @@ class EmpleadoType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('fotografia', 'hidden')
+			->add('fotografia', 'file',array(
+				'label'=>'Fotografia'))
             ->add('nombres',
                 'text',
                 array(

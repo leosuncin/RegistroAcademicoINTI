@@ -16,15 +16,11 @@ class EspecialidadType extends AbstractType
     {
         $builder
 			->add('codigo','text',array(
-				'label'=>'Codigo',
-				'attr' => array(
-					'data-toggle'=> 'tooltip',
-					'title'=>'Escriba bien el codigo')
+				'label'=>'Codigo'
+				
 			))
-            ->add('nombre','text',array('label'=>'Nombre',
-				'attr' => array(
-					'data-toggle'=> 'tooltip',
-					'title'=>'Escriba bien el nombre')));
+            ->add('nombre','text',array('label'=>'Nombre'
+				));
 			
 
     }

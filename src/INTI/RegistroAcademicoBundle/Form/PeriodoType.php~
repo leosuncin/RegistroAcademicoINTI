@@ -44,7 +44,8 @@ class PeriodoType extends AbstractType
 			->add('estaAbierto','choice',array(
 				'label' => 'Estado del Periodo',
 				'choices' => array('1' => 'Periodo Abierto', '2' => 'Periodo Cerrado')))
-			)
+				->add('fechaInicio','date')
+				->add('fechaFin','date')
         ;
     }
     

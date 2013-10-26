@@ -3,6 +3,14 @@ $.validator.addMethod("dui", function(value) {
     return regex.test(value);
 }, 'El DUI debe contener solo números e incluir el guion medio');
 
+$.validator.addMethod("codigo", function(value){
+	return /^[a-zA-Z]*$/.test(value);
+	}, 'El codigo solo debe contener letras');
+	
+$.validator.addMethod("nombre", function(value){
+	return /^[A-Za-z]+(\s[A-Za-z]+)*$/.test(value);
+	}, 'El nombre solo debe contener letras');
+	
 $.validator.addMethod("isss", function(value) {
     return /^\d{9}$/g.test(value);
 }, 'El ISSS debe contener 9 números');
@@ -121,7 +129,18 @@ $(document).ready(function() {
             },
             "usuariotype[enabled]": {
                 required: false
-            }
+            },
+			"especialidadtype[codigo]":{
+				codigo: true,
+				minlength: 2,
+				maxlength: 5
+			
+			
+			},
+			"especialidadtype[nombre]":{
+				nombre: true
+				
+			},
         },
         showErrors: function(errorMap, errorList) {
             $.each(this.successList, function(index, value) {
