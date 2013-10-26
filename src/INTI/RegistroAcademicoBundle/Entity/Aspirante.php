@@ -88,6 +88,20 @@ class Aspirante
      * @ORM\Column(name="sexo", type="string", length=1, nullable=false)
      */
     private $sexo;
+	
+	/**
+     * @var integer
+     *
+     * @ORM\Column(name="anhoAplicacion", type="integer", nullable=false)
+     */
+    private $anhoAplicacion;
+	
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="estado", type="string", length=1, nullable=false)
+     */
+    private $estado;
 
     /**
      * @var \Encargado
@@ -329,6 +343,52 @@ class Aspirante
     {
         return $this->sexo;
     }
+	
+	/**
+     * Set anhoAplicacion
+     *
+     * @param string $anhoAplicacion
+     * @return Aspirante
+     */
+    public function setAnhoAplicacion($anhoAplicacion)
+    {
+        $this->anhoAplicacion = $anhoAplicacion;
+
+        return $this;
+    }
+
+    /**
+     * Get anhoAplicacion
+     *
+     * @return integer
+     */
+    public function getAnhoAplicacion()
+    {
+        return $this->anhoAplicacion;
+    }
+	
+	/**
+     * Set estado
+     *
+     * @param string $estado
+     * @return Aspirante
+     */
+    public function setEstado($estado)
+    {
+        $this->estado = $estado;
+
+        return $this;
+    }
+
+    /**
+     * Get estado
+     *
+     * @return string
+     */
+    public function getEstado()
+    {
+        return $this->estado;
+    }
 
     /**
      * Set encargado
@@ -352,7 +412,7 @@ class Aspirante
     {
         return $this->encargado;
     }
-
+	
     /**
      * Set especialidad
      *

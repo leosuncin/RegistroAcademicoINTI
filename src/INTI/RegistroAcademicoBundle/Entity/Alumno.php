@@ -13,19 +13,24 @@ use Doctrine\ORM\Mapping as ORM;
 class Alumno
 {
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="NIE", type="integer", nullable=false)
+     * @ORM\Column(name="NIE", type="string", length=6, nullable=false)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
     private $nie;
+	
+	 /**
+     * @var string
+     *
+     * @ORM\Column(name="condicion", type="string", length=2, nullable=false)
+     */
+    private $condicion;
 
     /**
      * @var \Aspirante
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Aspirante")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="Aspirante", referencedColumnName="id")
@@ -38,7 +43,7 @@ class Alumno
     /**
      * Set nie
      *
-     * @param integer $nie
+     * @param string $nie
      * @return Alumno
      */
     public function setNie($nie)
@@ -51,11 +56,34 @@ class Alumno
     /**
      * Get nie
      *
-     * @return integer 
+     * @return string 
      */
     public function getNie()
     {
         return $this->nie;
+    }
+	
+	/**
+     * Set condicion
+     *
+     * @param string $condicion
+     * @return Alumno
+     */
+    public function setCondicion($condicion)
+    {
+        $this->condicion = $condicion;
+
+        return $this;
+    }
+
+    /**
+     * Get condicion
+     *
+     * @return string
+     */
+    public function getCondicion()
+    {
+        return $this->condicion;
     }
 
     /**

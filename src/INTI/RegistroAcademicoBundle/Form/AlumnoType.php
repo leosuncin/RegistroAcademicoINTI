@@ -21,6 +21,19 @@ class AlumnoType extends AbstractType
                     'label' => 'NIE'
                     )
             )
+			->add('condicion',
+				'choice',
+                array(
+                    'label'   => 'Condicion de Ingreso',
+                    'choices' => array(
+                        'CC'   => 'Condicionado Conducta',
+                        'CM'   => 'Condicionado Materia',
+						'RE'   => 'Repetidor',
+						'RI'   => 'Reingreso',
+						'NI'   => 'Nuevo Ingreso'
+                      )
+                )
+			)
             ->add('aspirante', new AspiranteType());
     }
 
@@ -38,7 +51,7 @@ class AlumnoType extends AbstractType
     /**
      * @return string
      */
-    public function getNIE()
+    public function getName()
     {
         return 'alumnotype';
     }
