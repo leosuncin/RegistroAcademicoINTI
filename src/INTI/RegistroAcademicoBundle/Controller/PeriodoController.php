@@ -279,11 +279,6 @@ class PeriodoController extends Controller
             throw $this->createNotFoundException('Unable to find Periodo entity.');
         }
 
-$request = $this->getRequest();
-
-$locale = $request->getLocale();
-
-$request->setLocale('es_ES');
         $editForm = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
 

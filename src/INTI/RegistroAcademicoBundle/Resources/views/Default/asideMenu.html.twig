@@ -5,82 +5,87 @@
     <li divider="divider" class="divider"></li>
     <li class="nav-header">
     	<span>Opciones de gestión</span>
-    	<div class="accordion" id="accordion-gestion">
-    		<div class="accordion-group">
+    	<div class="accordion" id="acc-gestion">
+    		<div class="acc-group">
     			{% if is_granted('ROLE_ADMIN') %}
-    			<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-gestion" href="#accordion-gestion-empleado"><span class="icon-briefcase"></span> Empleados</a>
+    			<div class="acc-heading">
+    				<a class="acc-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-empleado"><span class="icon-briefcase"></span> Empleados</a>
     			</div>
-				<ul id="accordion-gestion-empleado" class="accordion-body collapse">
-					<li class="accordion-inner"><a href="{{ path('empleado_new') }}"><span class="icon-plus-sign"></span> Añadir un empleado</a></li>
-					<li class="accordion-inner"><a href="{{ path('empleado_index') }}"><span class="icon-eye-open"></span> Consultar empleados</a></li>
+				<ul id="acc-gestion-empleado" class="acc-body collapse">
+					<li class="acc-inner"><a href="{{ path('empleado_new') }}"><span class="icon-plus-sign"></span> Añadir un empleado</a></li>
+					<li class="acc-inner"><a href="{{ path('empleado_index') }}"><span class="icon-eye-open"></span> Consultar empleados</a></li>
 				</ul>
 				{% endif %}
 				{% if is_granted('ROLE_ACADEMIC') %}
-				<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-gestion" href="#accordion-gestion-aspirante"><span class="icon-user"></span> Aspirante</a>
+				<div class="acc-heading">
+    				<a class="acc-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-aspirante"><span class="icon-user"></span> Aspirante</a>
     			</div>
-				<ul id="accordion-gestion-aspirante" class="accordion-body collapse">
-					<li class="accordion-inner"><a href="{{ path('aspirante_new') }}"><span class="icon-plus-sign"></span> Crear aspirante</a></li>
-					<li class="accordion-inner"><a href="{{ path('aspirante_index') }}"><span class="icon-eye-open"></span> Consultar aspirantes</a></li>
+				<ul id="acc-gestion-aspirante" class="acc-body collapse">
+					<li class="acc-inner"><a href="{{ path('aspirante_new') }}"><span class="icon-plus-sign"></span> Añadir aspirante</a></li>
+					<li class="acc-inner"><a href="{{ path('aspirante_index') }}"><span class="icon-eye-open"></span> Consultar aspirantes</a></li>
 				</ul>
-				<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-gestion" href="#accordion-gestion-alumno"><span class="icon-user"></span> Alumno</a>
+				<div class="acc-heading">
+    				<a class="acc-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-alumno"><span class="icon-user"></span> Alumno</a>
     			</div>
-				<ul id="accordion-gestion-alumno" class="accordion-body collapse">
-					<li class="accordion-inner"><a href="{{ path('alumno_new') }}"><span class="icon-plus-sign"></span> Crear alumno</a></li>
-					<li class="accordion-inner"><a href="{{ path('alumno_index') }}"><span class="icon-eye-open"></span> Consultar alumno</a></li>
+				<ul id="acc-gestion-aspirante" class="acc-body collapse">
+					<li class="acc-inner"><a href="{{ path('alumno_new') }}"><span class="icon-plus-sign"></span> Crear alumno</a></li>
+					<li class="acc-inner"><a href="{{ path('alumno_index') }}"><span class="icon-eye-open"></span> Consultar alumno</a></li>
 				</ul>
-    			<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-gestion" href="#accordion-gestion-materias"><span class="icon-book"></span> Materias</a>
+				{% endif %}
+    			<div class="acc-heading">
+    				<a class="acc-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-materias"><span class="icon-book"></span> Materias</a>
     			</div>
-				<ul id="accordion-gestion-materias" class="accordion-body collapse">
-					<li class="accordion-inner"><a href="{{path('materia_new')}}"><span class="icon-plus-sign"></span>Crear Materia </a></li>
-					<li class="accordion-inner"><a href="{{path('materia')}}"><span class="icon-eye-open"></span>Consultar materias </a></li>
-					<li class="accordion-inner"><a href=""><span class="icon-remove-sign"> </span></a></li>
-					<li class="accordion-inner"><a href=""><span class="icon-edit"></span> </a></li>
+				<ul id="acc-gestion-materias" class="acc-body collapse">
+					<li class="acc-inner"><a href=""><span class="icon-plus-sign"></span> </a></li>
+					<li class="acc-inner"><a href=""><span class="icon-eye-open"></span> </a></li>
+					<li class="acc-inner"><a href=""><span class="icon-remove-sign"> </span></a></li>
+					<li class="acc-inner"><a href=""><span class="icon-edit"></span> </a></li>
 				</ul>
-    			<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-gestion" href="#accordion-gestion-notas"><span class="icon-th-list"></span> Notas</a>
+    			<div class="acc-heading">
+    				<a class="acc-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-notas"><span class="icon-th-list"></span> Notas</a>
     			</div>
-				<ul id="accordion-gestion-notas" class="accordion-body collapse">
-					<li class="accordion-inner"><a href=""><span class="icon-plus-sign"></span> </a></li>
-					<li class="accordion-inner"><a href=""><span class="icon-eye-open"></span> </a></li>
-					<li class="accordion-inner"><a href=""><span class="icon-remove-sign"> </span></a></li>
-					<li class="accordion-inner"><a href=""><span class="icon-edit"></span> </a></li>
+				<ul id="acc-gestion-notas" class="acc-body collapse">
+					<li class="acc-inner"><a href=""><span class="icon-plus-sign"></span> </a></li>
+					<li class="acc-inner"><a href=""><span class="icon-eye-open"></span> </a></li>
+					<li class="acc-inner"><a href=""><span class="icon-remove-sign"> </span></a></li>
+					<li class="acc-inner"><a href=""><span class="icon-edit"></span> </a></li>
 				</ul>
-				<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-especialidad" href="#accordion-gestion-especialidad"><span class="icon-list-alt"></span> Especilidades</a>
+				{% if is_granted('ROLE_ACADEMIC') %}
+				<div class="acc-heading">
+    				<a class="acc-toggle" data-toggle="collapse" data-parent="#acc-especialidad" href="#acc-gestion-especialidad"><span class="icon-list-alt"></span> Especilidades</a>
     			</div>
-				<ul id="accordion-gestion-especialidad" class="accordion-body collapse">
-					<li class="accordion-inner"><a href="{{ path('especialidad_new') }}"><span class="icon-plus-sign"></span>Crear especialidad </a></li>
-					<li class="accordion-inner"><a href="{{path('especialidad_index')}}"><span class="icon-eye-open"></span>Consultar especialidades </a></li>
+				<ul id="acc-gestion-especialidad" class="acc-body collapse">
+					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
+					<li class="acc-inner"><a href="{{ path('especialidad_new') }}"><span class="icon-plus-sign"></span> Añadir especialidad</a></li>
+					{% endif %}
+					<li class="acc-inner"><a href="{{path('especialidad_index')}}"><span class="icon-eye-open"></span> Consultar especialidades</a></li>
 				</ul>
-    			<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-gestion" href="#accordion-gestion-periodos"><span class="icon-calendar"></span> Periodos</a>
+				{% endif %}
+    			<div class="acc-heading">
+    				<a class="acc-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-periodos"><span class="icon-calendar"></span> Periodos</a>
     			</div>
-				<ul id="accordion-gestion-periodos" class="accordion-body collapse">					
+				<ul id="acc-gestion-periodos" class="acc-body collapse">					
 					{#
-					<li class="accordion-inner"><a href="{{ path('periodo_new')}}">
+					<li class="acc-inner"><a href="{{ path('periodo_new')}}">
 					<span class="icon-plus-sign"> Abrir Periodo</span>
 					</a> </a></li>
-					<li class="accordion-inner"><a href="{{ path('periodo')}}"><span class="icon-eye-open"></span> Mostrar Periodos</a></li>
-					<li class="accordion-inner"><a href=""><span class="icon-remove-sign"> Cerrar Periodo </span></a></li>
+					<li class="acc-inner"><a href="{{ path('periodo')}}"><span class="icon-eye-open"></span> Mostrar Periodos</a></li>
+					<li class="acc-inner"><a href=""><span class="icon-remove-sign"> Cerrar Periodo </span></a></li>
 
 					#}
-					<li class="accordion-inner"><a href="{{ path('periodo')}}"><span class="icon-edit"></span>Abrir/Cerrar</a></li>
+					<li class="acc-inner"><a href="{{ path('periodo')}}"><span class="icon-edit"></span>Abrir/Cerrar</a></li>
 				</ul>
-    			<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion-gestion" href="#accordion-gestion-anhos"><span class="icon-calendar"></span> Años</a>
+    			<div class="acc-heading">
+    				<a class="acc-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-anhos"><span class="icon-calendar"></span> Años</a>
     			</div>
-				<ul id="accordion-gestion-anhos" class="accordion-body collapse">					
-					<li class="accordion-inner"><a href="{{ path('iniciar_anho')}}">
+				<ul id="acc-gestion-anhos" class="acc-body collapse">					
+					<li class="acc-inner"><a href="{{ path('iniciar_anho')}}">
 					<span class="icon-plus-sign"> Abrir Año </span>
 					</a> </a></li>
-					<li class="accordion-inner"><a href="{{ path('periodo')}}"><span class="icon-eye-open"></span> Mostrar Años </a></li>
-					<li class="accordion-inner"><a href=""><span class="icon-remove-sign"> Cerrar Año </span></a></li>
+					<li class="acc-inner"><a href="{{ path('periodo')}}"><span class="icon-eye-open"></span> Mostrar Años </a></li>
+					<li class="acc-inner"><a href=""><span class="icon-remove-sign"> Cerrar Año </span></a></li>
 {#
-					<li class="accordion-inner"><a href=""><span class="icon-edit"></span> </a></li>
+					<li class="acc-inner"><a href=""><span class="icon-edit"></span> </a></li>
 					#}
 				</ul>
 

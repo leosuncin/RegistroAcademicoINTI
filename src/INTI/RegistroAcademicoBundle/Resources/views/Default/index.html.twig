@@ -1,30 +1,108 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
-{% block breadcrumb %}
-<li class="active"><span class="divider">&gt;</span> Inicio</li>
-{% endblock %}
-
-{% block content %}
-<div class="hero-unit">
-<p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laborum officiis dicta delectus veritatis dolores asperiores deserunt vitae natus! Voluptas, temporibus consequuntur odit cumque ex illo earum doloribus ea quis ut.</p>
-<table class="table table-bordered table-hover">
-	<caption>table title and/or explanatory text</caption>
-	<thead>
-		<tr>
-			<th>nombre</th>
-			<th>valor</th>
-		</tr>
-	</thead>
-	<tbody>
-		<tr>
-			<td>a</td>
-			<td>1</td>
-		</tr>
-		<tr>
-			<td>b</td>
-			<td>2</td>
-		</tr>
-	</tbody>
-</table>
-</div>
+{% block main %}
+<section id="main" class="row-fluid">
+	<article class="row-fluid">
+		<ul class="breadcrumb">
+			<li class="active"><span class="divider">&gt;</span> Inicio</li>
+		</ul>
+	</article>
+	<article class="row-fluid" style="display: table;">
+		<h1 id="index-title" class="well">Opciones de Gestión del Sistema</h1>
+		{% if is_granted('ROLE_ACADEMIC') %}
+		<div class="span3 ig-grid">
+ 			<img class="ig-img" src="{{ asset('bundles/registroacademico/images/flat-icons/document.png') }}" />
+ 			<h3 class="ig-category">Gestionar</h3>
+ 			<h2 class="ig-title">Notas</h2>
+ 			<ul class="unstyled ig-options">
+ 				<li><a href="{# {{ path('nota_new') }} #}" class="badge badge-inverse"><span class="icon-plus-sign"></span> Ingresar notas</a></li>
+ 				<li><a href="{# {{ path('nota_index') }} #}" class="badge badge-inverse"><span class="icon-eye-open"></span> Consultar notas</a></li>
+ 			</ul>
+		</div>
+		{% endif %}
+		{% if is_granted('ROLE_ACADEMIC') %}
+		<div class="span3 ig-grid">
+ 			<img class="ig-img" src="{{ asset('bundles/registroacademico/images/flat-icons/contacts.png') }}" />
+ 			<h3 class="ig-category">Gestionar</h3>
+ 			<h2 class="ig-title">Materias</h2>
+ 			<ul class="unstyled ig-options">
+				{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
+ 				<li><a href="{# {{ path('materia_new') }} #}" class="badge badge-inverse"><span class="icon-plus-sign"></span> Añadir materia</a></li>
+				{% endif %}
+ 				<li><a href="{# {{ path('materia_index') }} #}" class="badge badge-inverse"><span class="icon-eye-open"></span> Consultar materias</a></li>
+ 			</ul>
+		</div>
+		{% endif %}
+		{% if is_granted('ROLE_ACADEMIC') %}
+		<div class="span3 ig-grid">
+ 			<img class="ig-img" src="{{ asset('bundles/registroacademico/images/flat-icons/check-list.png') }}" />
+ 			<h3 class="ig-category">Gestionar</h3>
+ 			<h2 class="ig-title">Alumnos</h2>
+ 			<ul class="unstyled ig-options">
+ 				<li><a href="{{ path('alumno_new') }}" class="badge badge-inverse"><span class="icon-plus-sign"></span> Añadir alumno</a></li>
+ 				<li><a href="{{ path('alumno_index') }}" class="badge badge-inverse"><span class="icon-eye-open"></span> Consultar alumnos</a></li>
+ 			</ul>
+		</div>
+		{% endif %}
+		{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
+		<div class="span3 ig-grid">
+ 			<img class="ig-img" src="{{ asset('bundles/registroacademico/images/flat-icons/controls.png') }}" />
+ 			<h3 class="ig-category">Gestionar</h3>
+ 			<h2 class="ig-title">Periodos</h2>
+ 			<ul class="unstyled ig-options">
+ 				<li>
+ 					<a href="" class="badge badge-inverse"><span class="icon-eye-open"></span> Consultar periodos</a>
+ 				</li>
+ 			</ul>
+		</div>
+		{% endif %}
+		{% if is_granted('ROLE_ACADEMIC') %}
+		<div class="span3 ig-grid">
+ 			<img class="ig-img" src="{{ asset('bundles/registroacademico/images/flat-icons/tag.png') }}" />
+ 			<h3 class="ig-category">Gestionar</h3>
+ 			<h2 class="ig-title">Especialidad</h2>
+ 			<ul class="unstyled ig-options">
+				{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
+ 				<li>
+ 					<a href="{{ path('especialidad_new') }}" class="badge badge-inverse"><span class="icon-plus-sign"></span> Añadir especialidad</a>
+ 				</li>
+				{% endif %}
+ 				<li>
+ 					<a href="{{ path('especialidad_index') }}" class="badge badge-inverse"><span class="icon-eye-open"></span> Consultar especialidades</a>
+ 				</li>
+ 			</ul>
+		</div>
+		{% endif %}
+		{% if is_granted('ROLE_ACADEMIC') %}
+		<div class="span3 ig-grid">
+ 			<img class="ig-img" src="{{ asset('bundles/registroacademico/images/flat-icons/layers.png') }}" />
+ 			<h3 class="ig-category">Gestionar</h3>
+ 			<h2 class="ig-title">Aspirantes</h2>
+ 			<ul class="unstyled ig-options">
+ 				<li>
+ 					<a href="{{ path('aspirante_new') }}" class="badge badge-inverse"><span class="icon-plus-sign"></span> Añadir aspirante</a>
+ 				</li>
+ 				<li>
+ 					<a href="{{ path('aspirante_index') }}" class="badge badge-inverse"><span class="icon-eye-open"></span> Consultar aspirantes</a>
+ 				</li>
+ 			</ul>
+		</div>
+		{% endif %}
+		{% if is_granted('ROLE_ADMIN') %}
+		<div class="span3 ig-grid">
+ 			<img class="ig-img" src="{{ asset('bundles/registroacademico/images/flat-icons/user.png') }}" />
+ 			<h3 class="ig-category">Gestionar</h3>
+ 			<h2 class="ig-title">Empleados</h2>
+ 			<ul class="unstyled ig-options">
+ 				<li>
+ 					<a href="{{ path('empleado_new') }}" class="badge badge-inverse"><span class="icon-plus-sign"></span> Añadir un empleado</a>
+ 				</li>
+ 				<li>
+ 					<a href="{{ path('empleado_index') }}" class="badge badge-inverse"><span class="icon-eye-open"></span> Consultar empleados</a>
+ 				</li>
+ 			</ul>
+		</div>
+		{% endif %}
+	</article>
+</section>
 {% endblock %}

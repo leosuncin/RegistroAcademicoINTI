@@ -8,7 +8,6 @@ var handleFileSelect = function(evt) {
         reader.onload = function(readerEvt) {
             var binaryString = readerEvt.target.result;
             var foto = document.getElementById("aspirantetype_foto") || document.getElementById("empleadotype_fotografia");
-			alert(foto);
             foto.value = btoa(binaryString);
         };
 

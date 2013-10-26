@@ -26,6 +26,7 @@ security:
 
         login:
             pattern: ^/login$
+            anonymous: true
             security: false
 
         #web_service:
@@ -41,10 +42,9 @@ security:
                 login_path: /login
                 check_path: /login_check
                 default_target_path: index
-                remember_me: true
             logout:
                 path: /logout
-                target: index
+                target: login
             remember_me:
                 key: %secret%
                 lifetime: 604800

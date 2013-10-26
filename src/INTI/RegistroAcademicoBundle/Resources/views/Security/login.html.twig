@@ -1,28 +1,16 @@
 {% extends "RegistroAcademicoBundle::base.html.twig" %}
 
-{% block style %}
-{{ parent() }}
-<style>
-	#logo {
-		width: 96px;
-		height: 96px;
-		float: right;
-		position: relative;
-	}
-</style>
-{% endblock %}
-
 {% block body %}
 <div class="container">
-	<header class="page-header">
+	<header id="header-bar" class="page-header">
 		<img id="logo" src="{{ asset('bundles/registroacademico/images/logo_inti.png') }}" alt="Logo INTI" />
 		<h1>
 		Instituto Nacional Técnico Industrial<br /><small>Sistema de registro académico</small>
 		</h1>
 	</header>
-	<div class="row-fluid">
-		<div class="span8">
-			<p class="lead" style="text-align: justify; padding-right: 1in;">
+	<div id="main" class="row-fluid">
+		<div class="span6">
+			<p class="lead hidden-phone" style="text-align: justify; padding-right: 1in; padding-left: 10px;">
 				<strong>Bienvenido al sistema</strong><br />
 				para poder ingresar debe identificarse con su usuario previamente asignado. Sino lo conoce póngase en contacto con el departamento de registro académico de la institución
 			</p>
@@ -52,7 +40,7 @@
 				{% if error %}
 				<div class="alert alert-block">
 					<button type="button" class="close" data-dismiss="alert">&times;</button>
-					{{ error.message }}
+					{{ error.message|trans }}
 				</div>
 				{% endif %}
 			</form>

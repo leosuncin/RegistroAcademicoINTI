@@ -1,35 +1,26 @@
-$.validator.addMethod("dui", function(value) {
-    regex = /^\d{8}-\d$/g;
-    return regex.test(value);
+$.validator.addMethod("dui", function (value) {
+    return /^\d{8}-\d$/.test(value);
 }, 'El DUI debe contener solo números e incluir el guion medio');
 
-$.validator.addMethod("codigo", function(value){
-	return /^[a-zA-Z]*$/.test(value);
-	}, 'El codigo solo debe contener letras');
-	
-$.validator.addMethod("nombre", function(value){
-	return /^[A-Za-z]+(\s[A-Za-z]+)*$/.test(value);
-	}, 'El nombre solo debe contener letras');
-	
-$.validator.addMethod("isss", function(value) {
-    return /^\d{9}$/g.test(value);
+$.validator.addMethod("isss", function (value) {
+    return /^\d{9}$/.test(value);
 }, 'El ISSS debe contener 9 números');
 
-$.validator.addMethod("nit", function(value) {
+$.validator.addMethod("nit", function (value) {
     return /^\d{4}-\d{6}-\d{3}-\d$/.test(value);
 }, 'El NIT debe contener solo números en incluir los guiones medios');
 
-$.validator.addMethod("nup", function(value) {
+$.validator.addMethod("nup", function (value) {
     return /^\d{12}$/.test(value);
 }, 'El NUP debe contener solo 12 números');
 
-$.validator.addMethod("telefono", function(value) {
+$.validator.addMethod("telefono", function (value) {
     return /^d{8}$/.test(value);
 }, 'El telefono debe contener solo 8 números');
 
-$.validator.addMethod("password", function(value) {
+$.validator.addMethod("password", function (value) {
     return /(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d){8,60}.+$)/.test(value);
-}, function(params, element) {
+}, function (params, element) {
     var passwd = element.value;
     var mensaje = "La contraseña por lo menos debe tener";
     if (!/(?=.*[a-z])/g.test(passwd))
@@ -47,8 +38,15 @@ $.validator.addMethod("fecha", function(value) {
 
 $.validator.addMethod("fechanac", function(value) {
     return Date.parseExact(value, "d/M/yyyy");
-    ;
 }, "Por favor digita la fecha siguiendo el formato dd/mm/yyyy.");
+
+$.validator.addMethod("codigo", function(value){
+	return /^[a-zA-Z]*$/.test(value);
+}, 'El codigo solo debe contener letras');
+
+$.validator.addMethod("nombre", function(value){
+	return /^[A-Za-z]+(\s[A-Za-z]+)*$/.test(value);
+}, 'El nombre solo debe contener letras');
 
 $(document).ready(function() {
     $("form").validate({
@@ -76,7 +74,7 @@ $(document).ready(function() {
                 fecha: true
             },
             "aspirantetype[lugarnac]": {
-                maxlength: 100
+                maxlength: 40
             },
             "aspirantetype[encargado][nombre]": {
                 minlength: 3,
@@ -155,7 +153,7 @@ $(document).ready(function() {
                     template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"><p class=\"error\"></p></div></div></div>"
                 });
                 _popover.data("popover").options.content = value.message;
-                return $(value.element).popover("show")
+                return $(value.element).popover("show");
             });
         }
     });
@@ -167,7 +165,6 @@ $(document).ready(function() {
             if (nombres.length > 1)
                 username.val(username.val().concat(nombres[0].split("")[0] + nombres[1].split("")[0] + apellidos[0]).toLowerCase());
             else
-                username.val(username.val().concat(nombres[0].split("")[0] + nombres[0].split("")[0] + apellidos[0]).toLowerCase())
-        }
+                username.val(username.val().concat(nombres[0].split("")[0] + nombres[0].split("")[0] + apellidos[0]).toLowerCase());        }
     });
 });
