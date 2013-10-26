@@ -16,15 +16,19 @@
         <thead>
             <tr>
                 <th>NIE</th>
-                <th>Aspirante</th>
+				<th>Nombre</th>
+				<th>Especialidad</th>
+				<th>Telefono</th>
             </tr>
         </thead>
         <tbody>
         {% for entity in entities %}
             <tr>
                 <td>{{ entity.nie }}</td>
-                <td>{{ entity.aspirante.id }}</td>
-                <td>
+				<td>{{ entity.aspirante.primerapellido~' '~entity.aspirante.segundoapellido~', '~entity.aspirante.nombres }}</td>
+                <td>{{ entity.aspirante.especialidad.nombre }}</td>
+				<td>{{ entity.aspirante.telefono }}</td>
+				<td>
                     <div class="btn-group btn-group-vertical">
                         <a class="btn btn-info" href="{{ path('alumno_show', { 'nie': entity.nie }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
                         <a class="btn btn-info" href="{{ path('alumno_edit', { 'nie': entity.nie }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>

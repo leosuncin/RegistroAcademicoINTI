@@ -11,7 +11,7 @@ use INTI\RegistroAcademicoBundle\Entity\Alumno;
 use INTI\RegistroAcademicoBundle\Form\AlumnoType;
 
 /**
- * Aspirante controller.
+ * Alumno controller.
  *
  * @Route("/alumno")
  */
@@ -37,7 +37,7 @@ class AlumnoController extends Controller
         );
     }
     /**
-     * Creates a new Aspirante entity.
+     * Creates a new Alumno entity.
      *
      * @Route("/", name="alumno_create")
      * @Method("POST")
@@ -66,7 +66,7 @@ class AlumnoController extends Controller
     }
 
     /**
-     * Displays a form to create a new Aspirante entity.
+     * Displays a form to create a new Alumno entity.
      *
      * @Route("/new", name="alumno_new")
      * @Method("GET")
@@ -134,7 +134,7 @@ class AlumnoController extends Controller
     }
 
     /**
-     * Edits an existing Aspirante entity.
+     * Edits an existing Alumno entity.
      *
      * @Route("/{nie}", name="alumno_update")
      * @Method("PUT")
@@ -168,7 +168,7 @@ class AlumnoController extends Controller
     }
 
     /**
-     * Deletes a Aspirante entity.
+     * Deletes a Alumo entity.
      * 
      * @Route("/{nie}/del", name="alumno_erase")
      * @Method("GET")
