@@ -3,6 +3,7 @@
 namespace INTI\RegistroAcademicoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Alumno
@@ -15,14 +16,10 @@ class Alumno
     /**
      * @var string
      *
-     * @ORM\Column(name="NIE", type="string", length=6, nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $nie;
-	
-	 /**
-     * @var string
+     * @Assert\Choice(
+     *     choices = {"CC", "CM", "R", "RI", "NI"},
+     *     message = "Escoja una condición valida"
+     * )
      *
      * @ORM\Column(name="condicion", type="string", length=2, nullable=false)
      */
@@ -31,22 +28,67 @@ class Alumno
     /**
      * @var \Aspirante
      *
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="NONE")
      * @ORM\OneToOne(targetEntity="Aspirante")
      * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Aspirante", referencedColumnName="id")
+     *   @ORM\JoinColumn(name="NIE", referencedColumnName="NIE")
      * })
      */
-    private $aspirante;
+    private $nie;
+
+    /**
+     * @var \CodigoEspecialidad
+     *
+     * @ORM\ManyToOne(targetEntity="CodigoEspecialidad")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Codigo_especialidad", referencedColumnName="codigo")
+     * })
+     */
+    private $codigoEspecialidad;
+
+    /**
+     * @var \Usuario
+     *
+     * @ORM\ManyToOne(targetEntity="Usuario")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Usuario", referencedColumnName="username")
+     * })
+     */
+    private $usuario;
 
 
 
     /**
-     * Set nie
+     * Set condicion
      *
-     * @param string $nie
+     * @param string $condicion
      * @return Alumno
      */
-    public function setNie($nie)
+    public function setCondicion($condicion)
+    {
+        $this->condicion = $condicion;
+    
+        return $this;
+    }
+
+    /**
+     * Get condicion
+     *
+     * @return string 
+     */
+    public function getCondicion()
+    {
+        return $this->condicion;
+    }
+
+    /**
+     * Set nie
+     *
+     * @param \INTI\RegistroAcademicoBundle\Entity\Aspirante $nie
+     * @return Alumno
+     */
+    public function setNie(\INTI\RegistroAcademicoBundle\Entity\Aspirante $nie)
     {
         $this->nie = $nie;
     
@@ -56,56 +98,56 @@ class Alumno
     /**
      * Get nie
      *
-     * @return string 
+     * @return \INTI\RegistroAcademicoBundle\Entity\Aspirante 
      */
     public function getNie()
     {
         return $this->nie;
     }
-	
-	/**
-     * Set condicion
-     *
-     * @param string $condicion
-     * @return Alumno
-     */
-    public function setCondicion($condicion)
-    {
-        $this->condicion = $condicion;
-
-        return $this;
-    }
 
     /**
-     * Get condicion
+     * Set codigoEspecialidad
      *
-     * @return string
-     */
-    public function getCondicion()
-    {
-        return $this->condicion;
-    }
-
-    /**
-     * Set aspirante
-     *
-     * @param \INTI\RegistroAcademicoBundle\Entity\Aspirante $aspirante
+     * @param \INTI\RegistroAcademicoBundle\Entity\CodigoEspecialidad $codigoEspecialidad
      * @return Alumno
      */
-    public function setAspirante(\INTI\RegistroAcademicoBundle\Entity\Aspirante $aspirante)
+    public function setCodigoEspecialidad(\INTI\RegistroAcademicoBundle\Entity\CodigoEspecialidad $codigoEspecialidad = null)
     {
-        $this->aspirante = $aspirante;
+        $this->codigoEspecialidad = $codigoEspecialidad;
     
         return $this;
     }
 
     /**
-     * Get aspirante
+     * Get codigoEspecialidad
      *
-     * @return \INTI\RegistroAcademicoBundle\Entity\Aspirante 
+     * @return \INTI\RegistroAcademicoBundle\Entity\CodigoEspecialidad 
      */
-    public function getAspirante()
+    public function getCodigoEspecialidad()
     {
-        return $this->aspirante;
+        return $this->codigoEspecialidad;
+    }
+
+    /**
+     * Set usuario
+     *
+     * @param \INTI\RegistroAcademicoBundle\Entity\Usuario $usuario
+     * @return Alumno
+     */
+    public function setUsuario(\INTI\RegistroAcademicoBundle\Entity\Usuario $usuario = null)
+    {
+        $this->usuario = $usuario;
+    
+        return $this;
+    }
+
+    /**
+     * Get usuario
+     *
+     * @return \INTI\RegistroAcademicoBundle\Entity\Usuario 
+     */
+    public function getUsuario()
+    {
+        return $this->usuario;
     }
 }

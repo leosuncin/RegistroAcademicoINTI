@@ -3,17 +3,27 @@
 namespace INTI\RegistroAcademicoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Empresa
  *
  * @ORM\Table(name="Empresa")
  * @ORM\Entity
+ * @UniqueEntity(fields = "nombre", message = "El nombre de la empresa ya esta registrado")
  */
 class Empresa
 {
     /**
      * @var string
+     *
+     * @Assert\Length(
+     *      min = "5",
+     *      max = "50",
+     *      minMessage = "El nombre por lo menos debe tener {{ limit }} caracteres de largo",
+     *      maxMessage = "El nombre no puede tener más de {{ limit }} caracteres de largo"
+     * )
      *
      * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
      * @ORM\Id
@@ -24,12 +34,24 @@ class Empresa
     /**
      * @var string
      *
+     * @Assert\Length(
+     *      min = "3",
+     *      max = "80",
+     *      minMessage = "El nombre del contacto por lo menos debe tener {{ limit }} caracteres de largo",
+     *      maxMessage = "El nombre del contacto no puede tener más de {{ limit }} caracteres de largo"
+     * )
+     *
      * @ORM\Column(name="contacto", type="string", length=80, nullable=false)
      */
     private $contacto;
 
     /**
      * @var string
+     *
+     * @Assert\Regex(
+     *     pattern = "/^\d{8}$/",
+     *     message = "El telefono debe contener solo 8 números"
+     * )
      *
      * @ORM\Column(name="telefono", type="string", length=8, nullable=false)
      */
@@ -38,12 +60,20 @@ class Empresa
     /**
      * @var string
      *
+     * @Assert\NotBlank(message = "Debe especificar una dirección")
+     * 
      * @ORM\Column(name="direccion", type="text", nullable=false)
      */
     private $direccion;
 
     /**
      * @var string
+     *
+     * @Assert\Email(
+     *     message = "El correo '{{ value }}' no es una dirección valida",
+     *     checkMX = true,
+     *     checkHost = true
+     * )
      *
      * @ORM\Column(name="email", type="string", length=40, nullable=true)
      */

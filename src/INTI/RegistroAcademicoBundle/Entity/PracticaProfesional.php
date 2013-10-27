@@ -3,12 +3,20 @@
 namespace INTI\RegistroAcademicoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use INTI\RegistroAcademicoBundle\Validator\Constraints as RegistroAcademicoAssert;
 
 /**
  * PracticaProfesional
  *
  * @ORM\Table(name="Practica_profesional")
  * @ORM\Entity
+ * @ORM\OrderBy({"empresa" = "ASC"})
+ * @UniqueEntity(
+ *     fields = {"alumno", "empresa"},
+ *     message = "Ya existe un registro de esta practica profesional"
+ * )
  */
 class PracticaProfesional
 {
@@ -17,14 +25,19 @@ class PracticaProfesional
      *
      * @ORM\Column(name="id", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
+     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
     private $id;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="horario", type="string", length=10, nullable=false)
+     * @Assert\Choice(
+     *     choices = {"M", "V"},
+     *     message = "Escoja un turno valido"
+     * )
+     *
+     * @ORM\Column(name="horario", type="string", length=1, nullable=false)
      */
     private $horario;
 
@@ -45,6 +58,8 @@ class PracticaProfesional
     /**
      * @var float
      *
+     * @RegistroAcademicoAssert\Nota
+     *
      * @ORM\Column(name="evaluacion", type="float", nullable=true)
      */
     private $evaluacion;
@@ -52,9 +67,7 @@ class PracticaProfesional
     /**
      * @var \Alumno
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Alumno")
+     * @ORM\ManyToOne(targetEntity="Alumno")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="Alumno", referencedColumnName="NIE")
      * })
@@ -64,29 +77,12 @@ class PracticaProfesional
     /**
      * @var \Empresa
      *
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     * @ORM\OneToOne(targetEntity="Empresa")
+     * @ORM\ManyToOne(targetEntity="Empresa")
      * @ORM\JoinColumns({
      *   @ORM\JoinColumn(name="Empresa", referencedColumnName="nombre")
      * })
      */
     private $empresa;
-
-
-
-    /**
-     * Set id
-     *
-     * @param integer $id
-     * @return PracticaProfesional
-     */
-    public function setId($id)
-    {
-        $this->id = $id;
-    
-        return $this;
-    }
 
     /**
      * Get id
@@ -107,14 +103,14 @@ class PracticaProfesional
     public function setHorario($horario)
     {
         $this->horario = $horario;
-    
+
         return $this;
     }
 
     /**
      * Get horario
      *
-     * @return string 
+     * @return string
      */
     public function getHorario()
     {
@@ -130,14 +126,14 @@ class PracticaProfesional
     public function setInicio($inicio)
     {
         $this->inicio = $inicio;
-    
+
         return $this;
     }
 
     /**
      * Get inicio
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getInicio()
     {
@@ -153,14 +149,14 @@ class PracticaProfesional
     public function setFin($fin)
     {
         $this->fin = $fin;
-    
+
         return $this;
     }
 
     /**
      * Get fin
      *
-     * @return \DateTime 
+     * @return \DateTime
      */
     public function getFin()
     {
@@ -176,14 +172,14 @@ class PracticaProfesional
     public function setEvaluacion($evaluacion)
     {
         $this->evaluacion = $evaluacion;
-    
+
         return $this;
     }
 
     /**
      * Get evaluacion
      *
-     * @return float 
+     * @return float
      */
     public function getEvaluacion()
     {
@@ -196,17 +192,17 @@ class PracticaProfesional
      * @param \INTI\RegistroAcademicoBundle\Entity\Alumno $alumno
      * @return PracticaProfesional
      */
-    public function setAlumno(\INTI\RegistroAcademicoBundle\Entity\Alumno $alumno)
+    public function setAlumno(\INTI\RegistroAcademicoBundle\Entity\Alumno $alumno = null)
     {
         $this->alumno = $alumno;
-    
+
         return $this;
     }
 
     /**
      * Get alumno
      *
-     * @return \INTI\RegistroAcademicoBundle\Entity\Alumno 
+     * @return \INTI\RegistroAcademicoBundle\Entity\Alumno
      */
     public function getAlumno()
     {
@@ -219,17 +215,17 @@ class PracticaProfesional
      * @param \INTI\RegistroAcademicoBundle\Entity\Empresa $empresa
      * @return PracticaProfesional
      */
-    public function setEmpresa(\INTI\RegistroAcademicoBundle\Entity\Empresa $empresa)
+    public function setEmpresa(\INTI\RegistroAcademicoBundle\Entity\Empresa $empresa = null)
     {
         $this->empresa = $empresa;
-    
+
         return $this;
     }
 
     /**
      * Get empresa
      *
-     * @return \INTI\RegistroAcademicoBundle\Entity\Empresa 
+     * @return \INTI\RegistroAcademicoBundle\Entity\Empresa
      */
     public function getEmpresa()
     {

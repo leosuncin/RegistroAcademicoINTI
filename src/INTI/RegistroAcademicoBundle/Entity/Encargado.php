@@ -17,8 +17,8 @@ class Encargado
      * @var string
      *
      * @Assert\Regex(
-     *     pattern="/^\d{8}-\d$/",
-     *     message="El DUI debe contener solo números e incluir el guion medio"
+     *     pattern = "/^\d{8}-\d$/",
+     *     message = "El DUI debe contener solo números e incluir el guion medio"
      * )
      *
      * @ORM\Column(name="DUI", type="string", length=10, nullable=false)
@@ -54,8 +54,8 @@ class Encargado
      * @var string
      *
      * @Assert\Regex(
-     *     pattern="/^\d{8}$/",
-     *     message="El telefono debe contener solo 8 números"
+     *     pattern = "/^\d{8}$/",
+     *     message = "El telefono debe contener solo 8 números"
      * )
      *
      * @ORM\Column(name="telefono", type="string", length=8, nullable=false)

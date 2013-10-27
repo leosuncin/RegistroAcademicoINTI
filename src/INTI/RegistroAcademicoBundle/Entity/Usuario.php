@@ -16,8 +16,8 @@ class Usuario implements AdvancedUserInterface, \Serializable
 {
     /**
      * @var string
-	 *
-	 * @Assert\Length(
+	   *
+	   * @Assert\Length(
      *     min = "6",
      *     max = "50",
      *     minMessage = "El nombre de usuario por lo menos debe tener {{ limit }} caracteres de largo",
@@ -44,8 +44,8 @@ class Usuario implements AdvancedUserInterface, \Serializable
      *      maxMessage = "La contraseña del usuario no puede tener más de {{ limit }} caracteres de largo"
      * )
      * @Assert\Regex(
-     *     pattern="/(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d){8,60}.+$)/",
-     *     message="La contraseña de usuario debe contener por lo menos una letra en mayúscula, una letra en minúscula y un numero para ser segura"
+     *     pattern = "/(^(?=.*[a-z])(?=.*[A-Z])(?=.*\d){8,60}.+$)/",
+     *     message = "La contraseña de usuario debe contener por lo menos una letra en mayúscula, una letra en minúscula y un numero para ser segura"
      * )
      *
      * @ORM\Column(name="password", type="string", length=255, nullable=false)

@@ -4,23 +4,25 @@ namespace INTI\RegistroAcademicoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * Aspirante
  *
  * @ORM\Table(name="Aspirante")
  * @ORM\Entity
+ * @UniqueEntity(fields = "nie", message = "El NIE ya esta registrado")
  */
 class Aspirante
 {
     /**
      * @var integer
      *
-     * @ORM\Column(name="id", type="integer", nullable=false)
+     * @ORM\Column(name="NIE", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $id;
+    private $nie;
 
     /**
      * @var string
@@ -32,12 +34,26 @@ class Aspirante
     /**
      * @var string
      *
+     * @Assert\Length(
+     *      min = "3",
+     *      max = "15",
+     *      minMessage = "El apellido por lo menos debe tener {{ limit }} caracteres de largo",
+     *      maxMessage = "El apellido no puede tener más de {{ limit }} caracteres de largo"
+     * )
+     *
      * @ORM\Column(name="primerApellido", type="string", length=15, nullable=false)
      */
     private $primerapellido;
 
     /**
      * @var string
+     *
+     * @Assert\Length(
+     *      min = "3",
+     *      max = "15",
+     *      minMessage = "El apellido por lo menos debe tener {{ limit }} caracteres de largo",
+     *      maxMessage = "El apellido no puede tener más de {{ limit }} caracteres de largo"
+     * )
      *
      * @ORM\Column(name="segundoApellido", type="string", length=15, nullable=true)
      */
@@ -46,6 +62,13 @@ class Aspirante
     /**
      * @var string
      *
+     * @Assert\Length(
+     *      min = "3",
+     *      max = "50",
+     *      minMessage = "Los nombres por lo menos debe tener {{ limit }} caracteres de largo",
+     *      maxMessage = "Los nombres no puede tener más de {{ limit }} caracteres de largo"
+     * )
+     *
      * @ORM\Column(name="nombres", type="string", length=50, nullable=false)
      */
     private $nombres;
@@ -53,7 +76,12 @@ class Aspirante
     /**
      * @var string
      *
-     * @ORM\Column(name="direccion", type="string", length=100, nullable=false)
+     * @Assert\Length(
+     *      max = "100",
+     *      maxMessage = "La dirección no puede tener más de {{ limit }} caracteres de largo"
+     * )
+     *
+     * @ORM\Column(name="direccion", type="text", nullable=false)
      */
     private $direccion;
 
@@ -78,42 +106,33 @@ class Aspirante
     /**
      * @var string
      *
-     * @ORM\Column(name="lugarNac", type="string", length=100, nullable=false)
+     * @Assert\Length(
+     *      max = "40",
+     *      maxMessage = "La dirección no puede tener más de {{ limit }} caracteres de largo"
+     * )
+     *
+     * @ORM\Column(name="lugarNac", type="string", length=40, nullable=false)
      */
     private $lugarnac;
 
     /**
      * @var string
      *
+     * @Assert\Choice(
+     *     choices = {"M", "F"},
+     *     message = "Escoja un sexo valido"
+     * )
+     *
      * @ORM\Column(name="sexo", type="string", length=1, nullable=false)
      */
     private $sexo;
-	
-	/**
-     * @var integer
-     *
-     * @ORM\Column(name="anhoAplicacion", type="integer", nullable=false)
-     */
-    private $anhoAplicacion;
-	
-	/**
+
+    /**
      * @var string
      *
      * @ORM\Column(name="estado", type="string", length=1, nullable=false)
      */
     private $estado;
-
-    /**
-     * @var \Encargado
-     *
-     * @Assert\Valid
-     *
-     * @ORM\ManyToOne(targetEntity="Encargado")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Encargado", referencedColumnName="DUI")
-     * })
-     */
-    private $encargado;
 
     /**
      * @var \Especialidad
@@ -125,16 +144,42 @@ class Aspirante
      */
     private $especialidad;
 
+    /**
+     * @var \Encargado
+     *
+     * @ORM\ManyToOne(targetEntity="Encargado")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Encargado", referencedColumnName="DUI")
+     * })
+     */
+    private $encargado;
 
+    function __construct() {
+        $ahora = new DateTime("now");
+        $this->nie = $ahora->format("U");
+    }
 
     /**
-     * Get id
+     * Set nie
      *
-     * @return integer
+     * @param integer $nie
+     * @return Aspirante
      */
-    public function getId()
+    public function setNie($nie)
     {
-        return $this->id;
+        $this->nie = $nie;
+
+        return $this;
+    }       
+
+    /**
+     * Get nie
+     *
+     * @return integer 
+     */
+    public function getNie()
+    {
+        return $this->nie;
     }
 
     /**
@@ -278,7 +323,7 @@ class Aspirante
     /**
      * Set fechanac
      *
-     * @param \Date $fechanac
+     * @param \DateTime $fechanac
      * @return Aspirante
      */
     public function setFechanac($fechanac)
@@ -291,7 +336,7 @@ class Aspirante
     /**
      * Get fechanac
      *
-     * @return \Date
+     * @return \DateTime
      */
     public function getFechanac()
     {
@@ -343,31 +388,8 @@ class Aspirante
     {
         return $this->sexo;
     }
-	
-	/**
-     * Set anhoAplicacion
-     *
-     * @param string $anhoAplicacion
-     * @return Aspirante
-     */
-    public function setAnhoAplicacion($anhoAplicacion)
-    {
-        $this->anhoAplicacion = $anhoAplicacion;
-
-        return $this;
-    }
 
     /**
-     * Get anhoAplicacion
-     *
-     * @return integer
-     */
-    public function getAnhoAplicacion()
-    {
-        return $this->anhoAplicacion;
-    }
-	
-	/**
      * Set estado
      *
      * @param string $estado
@@ -376,43 +398,20 @@ class Aspirante
     public function setEstado($estado)
     {
         $this->estado = $estado;
-
+    
         return $this;
     }
 
     /**
      * Get estado
      *
-     * @return string
+     * @return string 
      */
     public function getEstado()
     {
         return $this->estado;
     }
 
-    /**
-     * Set encargado
-     *
-     * @param \INTI\RegistroAcademicoBundle\Entity\Encargado $encargado
-     * @return Aspirante
-     */
-    public function setEncargado(\INTI\RegistroAcademicoBundle\Entity\Encargado $encargado = null)
-    {
-        $this->encargado = $encargado;
-
-        return $this;
-    }
-
-    /**
-     * Get encargado
-     *
-     * @return \INTI\RegistroAcademicoBundle\Entity\Encargado
-     */
-    public function getEncargado()
-    {
-        return $this->encargado;
-    }
-	
     /**
      * Set especialidad
      *
@@ -422,7 +421,7 @@ class Aspirante
     public function setEspecialidad(\INTI\RegistroAcademicoBundle\Entity\Especialidad $especialidad = null)
     {
         $this->especialidad = $especialidad;
-
+    
         return $this;
     }
 
@@ -434,5 +433,28 @@ class Aspirante
     public function getEspecialidad()
     {
         return $this->especialidad;
+    }
+
+    /**
+     * Set encargado
+     *
+     * @param \INTI\RegistroAcademicoBundle\Entity\Encargado $encargado
+     * @return Aspirante
+     */
+    public function setEncargado(\INTI\RegistroAcademicoBundle\Entity\Encargado $encargado = null)
+    {
+        $this->encargado = $encargado;
+    
+        return $this;
+    }
+
+    /**
+     * Get encargado
+     *
+     * @return \INTI\RegistroAcademicoBundle\Entity\Encargado 
+     */
+    public function getEncargado()
+    {
+        return $this->encargado;
     }
 }

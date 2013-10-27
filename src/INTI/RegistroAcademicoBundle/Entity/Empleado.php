@@ -11,10 +11,10 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="Empleado")
  * @ORM\Entity
- * @UniqueEntity(fields="dui", message="El DUI ya esta registrado")
- * @UniqueEntity(fields="isss", message="El ISSS ya esta registrado")
- * @UniqueEntity(fields="nit", message="El NIT ya esta registrado")
- * @UniqueEntity(fields="nup", message="El NUP ya esta registrado")
+ * @UniqueEntity(fields = "dui", message = "El DUI ya esta registrado")
+ * @UniqueEntity(fields = "isss", message = "El ISSS ya esta registrado")
+ * @UniqueEntity(fields = "nit", message = "El NIT ya esta registrado")
+ * @UniqueEntity(fields = "nup", message = "El NUP ya esta registrado")
  */
 class Empleado
 {
@@ -22,8 +22,8 @@ class Empleado
      * @var string
      *
      * @Assert\Regex(
-     *     pattern="/^\d{8}-\d$/",
-     *     message="El DUI debe contener solo números e incluir el guion medio"
+     *     pattern = "/^\d{8}-\d$/",
+     *     message = "El DUI debe contener solo números e incluir el guion medio"
      * )
      *
      * @ORM\Column(name="DUI", type="string", length=10, nullable=false)
@@ -75,7 +75,7 @@ class Empleado
     /**
      * @var string
      *
-     * @ORM\Column(name="fotografia", type="blob", nullable=true)
+     * @ORM\Column(name="fotografia", type="text", nullable=true)
      */
     private $fotografia;
 
@@ -136,6 +136,17 @@ class Empleado
      * })
      */
     private $usuario;
+
+    /**
+     * @var \Especialidad
+     *
+     * @ORM\ManyToOne(targetEntity="Especialidad")
+     * @ORM\JoinColumns({
+     *   @ORM\JoinColumn(name="Responsabilidad", referencedColumnName="codigo")
+     * })
+     */
+    private $responsabilidad;
+
 
     /**
      * Set dui
@@ -365,5 +376,28 @@ class Empleado
     public function getUsuario()
     {
         return $this->usuario;
+    }
+
+    /**
+     * Set responsabilidad
+     *
+     * @param \INTI\RegistroAcademicoBundle\Entity\Especialidad $responsabilidad
+     * @return Empleado
+     */
+    public function setResponsabilidad(\INTI\RegistroAcademicoBundle\Entity\Especialidad $responsabilidad = null)
+    {
+        $this->responsabilidad = $responsabilidad;
+    
+        return $this;
+    }
+
+    /**
+     * Get responsabilidad
+     *
+     * @return \INTI\RegistroAcademicoBundle\Entity\Especialidad 
+     */
+    public function getResponsabilidad()
+    {
+        return $this->responsabilidad;
     }
 }

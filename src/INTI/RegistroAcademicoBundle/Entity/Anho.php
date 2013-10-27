@@ -3,32 +3,23 @@
 namespace INTI\RegistroAcademicoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
- * Periodo
+ * Anho
  *
- * @ORM\Table(name="Periodo")
+ * @ORM\Table(name="Anho")
  * @ORM\Entity
  */
-class Periodo
+class Anho
 {
     /**
      * @var integer
      *
-     * @Assert\Range(
-     *      min = "1",
-     *      max = "5",
-     *      minMessage = "El periodo no debe ser menor que {{ limit }}",
-     *      maxMessage = "El periodo no debe ser mayor que {{ limit }}"
-     * )
-     *
-     * @ORM\Column(name="periodo", type="integer", nullable=false)
+     * @ORM\Column(name="anho", type="integer", nullable=false)
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
+     * @ORM\GeneratedValue(strategy="NONE")
      */
-    private $periodo;
+    private $anho;
 
     /**
      * @var \DateTime
@@ -51,37 +42,28 @@ class Periodo
      */
     private $encurso;
 
-    /**
-     * @var \Anho
-     *
-     * @ORM\ManyToOne(targetEntity="Anho")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Anho", referencedColumnName="anho")
-     * })
-     */
-    private $anho;
-
 
 
     /**
-     * Get periodo
+     * Get anho
      *
      * @return integer 
      */
-    public function getPeriodo()
+    public function getAnho()
     {
-        return $this->periodo;
+        return $this->anho;
     }
 
     /**
      * Set inicio
      *
      * @param \DateTime $inicio
-     * @return Periodo
+     * @return Anho
      */
     public function setInicio($inicio)
     {
         $this->inicio = $inicio;
+        $this->anho = $inicio->format("Y");
     
         return $this;
     }
@@ -89,7 +71,7 @@ class Periodo
     /**
      * Get inicio
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getInicio()
     {
@@ -100,14 +82,11 @@ class Periodo
      * Set fin
      *
      * @param \DateTime $fin
-     * @return Periodo
+     * @return Anho
      */
     public function setFin($fin)
     {
-        if($fin > $this->inicio)
-            $this->fin = null;
-        else
-            $this->fin = $fin;
+        $this->fin = $fin;
     
         return $this;
     }
@@ -115,7 +94,7 @@ class Periodo
     /**
      * Get fin
      *
-     * @return \DateTime
+     * @return \DateTime 
      */
     public function getFin()
     {
@@ -126,7 +105,7 @@ class Periodo
      * Set encurso
      *
      * @param boolean $encurso
-     * @return Periodo
+     * @return Anho
      */
     public function setEncurso($encurso)
     {
@@ -143,28 +122,5 @@ class Periodo
     public function getEncurso()
     {
         return $this->encurso;
-    }
-
-    /**
-     * Set anho
-     *
-     * @param \INTI\RegistroAcademicoBundle\Entity\Anho $anho
-     * @return Periodo
-     */
-    public function setAnho(\INTI\RegistroAcademicoBundle\Entity\Anho $anho = null)
-    {
-        $this->anho = $anho;
-    
-        return $this;
-    }
-
-    /**
-     * Get anho
-     *
-     * @return \INTI\RegistroAcademicoBundle\Entity\Anho 
-     */
-    public function getAnho()
-    {
-        return $this->anho;
     }
 }
