@@ -2,7 +2,7 @@
 
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span><a href="{{ path('alumno_index') }}">Alumnos</a></li>
+<li><span class="divider">&gt;</span><a href="{{ path('alumno_index') }}">Alumno</a></li>
 <li class="active"><span class="divider">&gt;</span> Consultar</li>
 {% endblock %}
 
@@ -18,77 +18,65 @@
 </ul>
 <ul id="tabContent" class="tab-content">
     <li id="tabInformacion" class="tab-pane fade in active">
-        <table class="record_properties table">
+        <table class="record_properties">
             <tbody>
                 <tr>
                     <th>Foto</th>
-                    <td><img src="data:image/jpg;base64,{{ entity.aspirante.foto|default('iVBORw0KGgoAAAANSUhEUgAAADAAAAAwCAMAAABg3Am1AAAAAXNSR0IArs4c6QAAAmdQTFRFExASEhETFBIUFhMWFxYYGhcZGhcaGRgaHBkbHRodHRseHhwfHx4hIR4gIh8hISAiIyAjIyElJSIkJyQnKCUnKicrKSgqKSgrLCgrLSksLCosLiwvMC4xMTAzNDAzMzI0NTE1NjI1NzM2NTQ2NzU3OTY4PDc7PTc8Ozk8Pjg9PTo8PTw+Pj0+Pj0/Pz0/QTs/QDw/Pz5AQT5AQD9AQj9BQj9DRT9DQUBCQ0BCREFDREFEREJERUJERUNERUJFRUNFRkJFRkNFR0JHRkNHR0VGR0RHR0RISEVISUZJSUdJSUZKSUdKSkdLSklKSklLS0pLTElMTUpMTEtMTUpNTEtNTUxOT0xOTk1PT01PUE5PUE9RU1FTVFFTVFJUVVNVV1VYWVdaWVhZWVhaW1lbW1pcXFlcXltdXVxeXlxeXl1fYF1fYV5gYmBhYWBiYmFjY2JkZWNlZ2VnaGRnaGVnaWVoaGZoaGdoaGdqaWhqamlqampra2ttbWtsbGtubm1ucG5vb2xwcW5wcXBydXV2eXh6e3p8fXx+fn1+gn+BgoGChIGDhoWHhoaHiIaIiYeJjImLjIuLjoyOj42PkY+RkZCRlpWWl5WWlpaXl5aXmJeYmZiZnJucpKSlpqWmqKeoqqmrr62vsK+wsrKys7Ozs7O0tLS0tbW1tra3t7e3t7a4uLi4ubm5u7u7vLu8vb29wL/AwMDAxMTExcTFx8fHycjJy8rLy8vLzMvMzs3Oz8/P0dDR0tHS0tLS1NTU2NjY3Nzc3d3d3t3e4eHh4+Pj6Ojo7+/v8PDw8/Lz8/Pz9PP09PT09/f3////xQEUXQAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wIFgw4ChJ6mfcAAAKnSURBVEjHxZbvSxphHMDd6XUi3WRTKms2YgvDF8c2VvfiGMIRu1fVi/bCzZ16hHLlWYNAlFGRK/qBY6wfL9rPJgVOyEXiJoiF1YR+/FF7nvO01HrOvdk+3+d5vt/n+/DhRHiO05z/JZr/JBS3Yp9yjQuH4Rtk6028OZJrSDjcMHf2dVk6bX2d+uGcqlCk8Da7SaPRYBhmemQzfFYTFnrZLh1W5lafOYEW9rpITIvJhhbTAmwsWnhtxXW4TqfDcS1IsOpJIIUpgiBwEATR1FQqyA2kMK0nDHo4CUOTASQDoZ9EChlDHWH0v2Qna5lGC4KRNF5AksbmdbQgmYwm0+0ycPMLKaQjplreIYWv980tNbxBCjl7e7vF0tbR0drSXsKCfsJ5Rx0f0YLnziWsVrB8Rwsf7l7CCseByn0I3atGVL1x3VV8KaoKfI+MvZSy6nd6jqLsdgoAlofUgbqQpBmafvCYonsZhhls5DXz6qnDwbKMw8Gxg98aENafM8zAADfgdDpo57q6sDn1kgW/hXlCUyw7NLapJpzMTjr7uX6WoRkHxw1PzpyghR3fzDCE47ghuZgd2bleKKwJoZjLKfMMBMQVC3nXClcKqag4937O/aIGN2iK0VSdsCWGY7Gwh3cBeCWU2gNP/PEqIR+Ori5I7jI8z7tB8JW9tLAaDecvhB+RlfkRz3V4wXT751ciu2UhMxsLeAVvNUJtI/A2mlGExaWRKxD8gpx8Ahg+H6iWFhVh2V+PKIpK4R+rNJcVITTaICFFGA2UkLM0Wqmr+nJWhKAEGAcDEJCCsAqCFcwg7AeD8BDOsjCOQKraVYSJErAHk1yMw/1E+azUU4Sz09/HR4X9fDaT3ttNJZPJxHY8vhXfTiSSqdTuXvpnNr9fODounp79k4+TPzGyOKi1a4jBAAAAAElFTkSuQmCC') }}" alt="Fotografia" class="profile_id img-polaroid" /></td>
-                </tr>
-				<tr>
-                    <th>NIE</th>
-                    <td>{{ entity.nie }}</td>
-                </tr>
-				<tr>
-                    <th>N° de Aspirante</th>
-                    <td>{{ entity.aspirante.id }}</td>
+                    <td><img src="data:image/jpg;base64,{{ entity.foto|default('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') }}" alt="Fotografia" class="profile_id img-polaroid" /></td>
                 </tr>
                 <tr>
                     <th>Nombre completo</th>
-                    <td>{{ entity.aspirante.primerapellido~' '~entity.aspirante.segundoapellido~', '~entity.aspirante.nombres }}</td>
+                    <td>{{ entity.primerapellido~' '~entity.segundoapellido~', '~entity.nombres }}</td>
                 </tr>
                 <tr>
                     <th>Especialidad</th>
-                    <td>{{ entity.aspirante.especialidad.nombre }}</td>
+                    <td>{{ entity.especialidad.nombre }}</td>
                 </tr>
                 <tr>
                     <th>Direccion</th>
-                    <td>{{ entity.aspirante.direccion }}</td>
+                    <td>{{ entity.direccion }}</td>
                 </tr>
                 <tr>
                     <th>Telefono</th>
-                    <td>{{ entity.aspirante.telefono }}</td>
+                    <td>{{ entity.telefono }}</td>
                 </tr>
                 <tr>
                     <th>Fechanac</th>
-                    <td>{{ entity.aspirante.fechanac|date('d-m-Y') }}</td>
+                    <td>{{ entity.fechanac|date('d-m-Y') }}</td>
                 </tr>
                 <tr>
                     <th>Lugarnac</th>
-                    <td>{{ entity.aspirante.lugarnac }}</td>
+                    <td>{{ entity.lugarnac }}</td>
                 </tr>
                 <tr>
                     <th>Sexo</th>
-                    <td>{{ entity.aspirante.sexo }}</td>
-                </tr>
-				<tr>
-                    <th>Condicion</th>
-                    <td>{{ entity.condicion }}</td>
+                    <td>{{ entity.sexo }}</td>
                 </tr>
             </tbody>
         </table>
         <div class="form-actions">
-          <a href="{{ path('alumno_edit', { 'nie': entity.nie}) }}" class="btn btn-info">Modificar</a>
-          <a href="{{ path('alumno_erase', { 'nie': entity.nie }) }}" class="btn btn-danger">Eliminar</a>
-          <a href="{{ path('alumno_index') }}" class="btn">Regresar</a>
+          <a href="{{ path('aspirante_edit', { 'id': entity.id }) }}" class="btn btn-info">Modificar</a>
+          <a href="{{ path('aspirante_erase', { 'id': entity.id }) }}" class="btn btn-danger">Eliminar</a>
+          <a href="{{ path('aspirante_index') }}" class="btn">Regresar</a>
         </div>
     </li>
     <li id="tabEncargado" class="tab-pane fade">
-        <table class="record_properties table">
+        <table class="record_properties">
             <tr>
                 <th>Nombre completo</th>
-                <td>{{ entity.aspirante.encargado.nombre }}</td>
+                <td>{{ entity.encargado.nombre }}</td>
             </tr>
             <tr>
                 <th>Parentesco</th>
-                <td>{{ entity.aspirante.encargado.parentesco }}</td>
+                <td>{{ entity.encargado.parentesco }}</td>
             </tr>
             <tr>
                 <th>DUI</th>
-                <td>{{ entity.aspirante.encargado.dui }}</td>
+                <td>{{ entity.encargado.dui }}</td>
             </tr>
             <tr>
                 <th>Teléfono</th>
-                <td>{{ entity.aspirante.encargado.telefono }}</td>
+                <td>{{ entity.encargado.telefono }}</td>
             </tr>
         </table>
     </li>

@@ -28,14 +28,7 @@
 
 {% block javascript %}
 {{ parent() }}
-<script src="{{ asset('assets/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
-<script src="{{ asset('assets/jquery-validation/dist/jquery.validate.js') }}"></script>
-<script src="{{ asset('assets/jquery-validation/localization/messages_es.js') }}"></script>
-<script src="{{ asset('assets/jquery-mask/jquery.mask.js') }}"></script>
-<script src="{{ asset('bundles/registroacademico/js/fotografia_base64.js') }}"></script>
-<script src="{{ asset('bundles/registroacademico/js/validacion-formularios.js') }}"></script>
 <script>
-    $('.datepicker').datepicker();
     $('#aspirantetype_telefono').mask("99999999");
     $('#aspirantetype_encargado_dui').mask("99999999-9");
     $('#aspirantetype_encargado_telefono').mask("99999999");

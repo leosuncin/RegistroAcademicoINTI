@@ -27,6 +27,17 @@
         <script type="text/javascript" src="{{ asset('assets/jquery/jquery.js') }}"></script>
         <script src="{{ asset('js/bootstrap.js') }}"></script>
         <!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+        {% if form_script|default(0) %}
+        <script src="{{ asset('assets/jquery-validation/dist/jquery.validate.js') }}"></script>
+        <script src="{{ asset('assets/jquery-validation/localization/messages_es.js') }}"></script>
+        <script src="{{ asset('assets/jquery-mask/jquery.mask.js') }}"></script>
+        {% if form_script == 2 %}
+        <script src="{{ asset('assets/bootstrap-datepicker/js/locales/bootstrap-datepicker.es.js') }}"></script>
+        <script src="{{ asset('assets/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+        {% endif %}
+        <script src="{{ asset('bundles/registroacademico/js/fotografia_base64.js') }}"></script>
+        <script src="{{ asset('bundles/registroacademico/js/validacion-formularios.js') }}"></script>
+        {% endif %}
         {% endblock %}
 	</body>
 </html>

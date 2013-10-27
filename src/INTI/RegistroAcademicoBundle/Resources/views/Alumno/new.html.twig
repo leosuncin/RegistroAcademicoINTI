@@ -13,18 +13,11 @@
 {% endblock %}
 
 {% block content %}
-<form id="newAlumnoForm" action="{{ path('alumno_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-	<div style="border:solid 1px #000;padding:15px"><h3>Buscar Aspirante:</h3> <input type='text' id='search' placeholder='Nombre o N° de Aspirante'> Año: <input type="number" id='anho' class='span1'> Especialidad: <select id='esp'></select>
-	<div id='resultTable'></div></div>
-	<br>
-	<table>
-		<tr><td>N° de Aspirante:</td><td><input type='number' id='nAspirante' name='nAspirante'></td></tr>
-		<tr><td>NIE:</td><td><input type='text' id='nie' name='nie'></td></tr>
-		<tr><td>Condicion de Matricula:</td><td><select id='cond' name='cond'><option value='CC'>Condicionado Conducta</option><option value='CM'>Condicionado Matricula</option><option value='RE'>Repetidor</option><option value='RI'>Reingreso</option><option value='NI' selected>Nuevo Ingreso</option></select></td></tr>
-	</table>
-	<div class="form-actions">
-        <input type="button" value="Crear" class="btn btn-primary" />
-        <a href="{{ path('aspirante_index') }}" class="btn">Regresar</a>
+<form action="{{ path('alumno_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+    {{ form_widget(form, {'form_type': 'horizontal'}) }}
+    <div class="form-actions">
+        <input type="submit" value="Crear" class="btn btn-primary" />
+        <a href="{{ path('alumno_index') }}" class="btn">Regresar</a>
     </div>
     <div class="control-group error">
         {{ form_errors(form) }}
@@ -35,33 +28,5 @@
 {% block javascript %}
 {{ parent() }}
 <script src="{{ asset('assets/jquery-ui/js/jquery-ui.js') }}"></script>
-<script>
-	$(document).ready(init);
-	function init(){
-		getEspecialidades();
-		showTable();
-		$("#search").keyup(showTable);
-		$("#esp").change(showTable);
-		$("#anho").change(showTable);
-		$("input[value='Crear']").click(saveAlumno);
-	}
-	function saveAlumno(){
-		$.get("{{ path('alumnoInsertAjax') }}", {"nie":$("#nie").val(), "nAspirante":$("#nAspirante").val(), "cond":$("#cond").val()}, function(e){
-			document.location.href=e;
-		});
-	}
-	function getEspecialidades(){
-		$.get("{{ path('especialidadAjax') }}", {}, function(e){
-			$("#esp").html(e);
-		});
-	}
-	function showTable(){
-		$.get("{{ path('aspiranteAjax') }}", {"searchValue":$("#search").val(), "anho":$("#anho").val(), "esp":$("#esp").val()}, function(e){
-			$("#resultTable").html(e);
-			$("tr.aspirante").click(function(){
-				$("#nAspirante").val($(this).find("td.n_asp").attr('value'));
-			});
-		});
-	}
-</script>
+<script src="{{ asset('bundles/registroacademico/js/fotografia_base64.js') }}"></script>
 {% endblock %}

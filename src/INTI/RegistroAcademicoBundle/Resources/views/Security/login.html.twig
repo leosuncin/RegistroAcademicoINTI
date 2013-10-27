@@ -1,39 +1,39 @@
 {% extends "RegistroAcademicoBundle::base.html.twig" %}
 
 {% block body %}
-<div class="container">
-	<header id="header-bar" class="page-header">
-		<img id="logo" src="{{ asset('bundles/registroacademico/images/logo_inti.png') }}" alt="Logo INTI" />
-		<h1>
-		Instituto Nacional Técnico Industrial<br /><small>Sistema de registro académico</small>
-		</h1>
-	</header>
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span12">
+			<header id="header-bar" class="page-header">
+				<img id="logo" src="{{ asset('bundles/registroacademico/images/logo_inti.png') }}" alt="Logo INTI" />
+				<h1>Instituto Nacional Técnico Industrial<br /><small>Sistema de registro académico</small></h1>
+			</header>
+		</div>
+	</div>
 	<div id="main" class="row-fluid">
 		<div class="span6">
-			<p class="lead hidden-phone" style="text-align: justify; padding-right: 1in; padding-left: 10px;">
+			<p class="lead hidden-phone" style="text-align: justify; padding-right: 1in;">
 				<strong>Bienvenido al sistema</strong><br />
 				para poder ingresar debe identificarse con su usuario previamente asignado. Sino lo conoce póngase en contacto con el departamento de registro académico de la institución
 			</p>
 		</div>
-		<div class="span4">
-			<form id="login_form" action="{{ path('login_check') }}" method="post" class="form-horizontal">
-			    <div class="control-group">
-    			    <label for="username">Usuario:</label>
-    			    <div class="control">
-    				    <input id="username" type="text" name="_username" value="{{ last_username }}" />
-    				</div>
+		<div class="span6">
+			<form action="{{ path('login_check') }}" method="post" class="form-horizontal">
+				<div class="control-group">
+					 <label class="control-label" for="username">Usuario</label>
+					<div class="controls">
+						<input id="username" type="text" name="_username" value="{{ last_username }}" />
+					</div>
 				</div>
 				<div class="control-group">
-    				<label for="password">Contraseña:</label>
-    				<div class="control">
-    				    <input id="password" type="password" name="_password" />
-    				</div>
+					 <label class="control-label" for="password">Contraseña</label>
+					<div class="controls">
+						<input id="password" type="password" name="_password" />
+					</div>
 				</div>
-				<div class="control">
-				    <label for="remember_me"><input type="checkbox" id="remember_me" name="_remember_me" checked /> Mantener conectado</label>
-				</div>
-			    <div class="control-group">
-					<div class="form-actions">
+				<div class="control-group">
+					<div class="controls">
+						 <label class="checkbox"><input type="checkbox" id="remember_me" name="_remember_me" /> Mantener conectado</label>
 						<input type="submit" value="Acceder" class="btn btn-primary" />
 					</div>
 				</div>
@@ -46,13 +46,15 @@
 			</form>
 		</div>
 	</div>
-	<footer class="row-fluid">
-		<address>
-			<strong>Instituto Nacional Técnico Industrial</strong><br />
-			Colonia Roma, Bulevar Arturo Castellanos, San Salvador, El Salvador, C. A.<br />
-			<abbr title="Telefono">Tel:</abbr> <a href="tel:503-2224-6946">(503) 2224-6946</a>, <a href="tel:503-2223-3156">(503) 2223-3156</a><br />
-			<abbr title="Correo electronico">email:</abbr><a href="mailto:intidirec@gmail.com">intidirec@gmail.com</a>
-		</address>
-	</footer>
+	<div class="row-fluid">
+		<footer class="span12">
+			<address>
+				<strong>Instituto Nacional Técnico Industrial</strong><br />
+				Colonia Roma, Bulevar Arturo Castellanos, San Salvador, El Salvador, C. A.<br />
+				<abbr title="Telefono">Tel:</abbr> <a href="tel:503-2224-6946">(503) 2224-6946</a>, <a href="tel:503-2223-3156">(503) 2223-3156</a><br />
+				<abbr title="Correo electronico">email:</abbr><a href="mailto:intidirec@gmail.com">intidirec@gmail.com</a>
+			</address>
+		</footer>
+	</div>
 </div>
 {% endblock %}
