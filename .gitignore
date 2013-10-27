@@ -11,7 +11,9 @@
 /composer.phar
 /composer.lock
 /.travis.yml
+*.bak
 *.back
+*.backup.*
 *~
 *.tmp
 /.project

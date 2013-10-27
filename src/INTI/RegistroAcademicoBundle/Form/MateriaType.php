@@ -5,8 +5,9 @@ namespace INTI\RegistroAcademicoBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use INTI\RegistroAcademicoBundle\Form\ProfesorType;
 
-class EncargadoType extends AbstractType
+class MateriaType extends AbstractType
 {
 	/**
 	 * @param FormBuilderInterface $builder
@@ -15,20 +16,17 @@ class EncargadoType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('nombre', 'text', array('label' => 'Nombre completo'))
-			->add('parentesco', 'text', array('label' => 'Parentesco'))
-			->add('dui', 'text', array(
-				'label'      => 'DUI',
-				'max_length' => 10,
-				'attr'       => array(
-					'placeholder' => 'Por ejemplo: 12345678-9'
-				)))
-			->add('telefono', 'text', array(
-				'label'      => 'Teléfono',
-				'max_length' => 8,
-				'attr'       => array(
-					'placeholder' => 'Por ejemplo: 23253526'
-				)));
+			->add('nombre',
+				'text',
+				array(
+					'label'      => 'Nombre de la materia',
+					'max_length' => 60
+				))
+			->add('profesor',
+				new ProfesorType(),
+				array('label' => null)
+			)
+		;
 	}
 
 	/**
@@ -37,7 +35,8 @@ class EncargadoType extends AbstractType
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
 		$resolver->setDefaults(array(
-			'data_class' => 'INTI\RegistroAcademicoBundle\Entity\Encargado'
+			'data_class'         => 'INTI\RegistroAcademicoBundle\Entity\Materia',
+			'cascade_validation' => true
 		));
 	}
 
@@ -46,6 +45,6 @@ class EncargadoType extends AbstractType
 	 */
 	public function getName()
 	{
-		return 'encargadotype';
+		return 'materiatype';
 	}
 }

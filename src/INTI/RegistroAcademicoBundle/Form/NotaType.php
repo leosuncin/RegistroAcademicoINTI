@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class EncargadoType extends AbstractType
+class NotaType extends AbstractType
 {
 	/**
 	 * @param FormBuilderInterface $builder
@@ -15,20 +15,17 @@ class EncargadoType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('nombre', 'text', array('label' => 'Nombre completo'))
-			->add('parentesco', 'text', array('label' => 'Parentesco'))
-			->add('dui', 'text', array(
-				'label'      => 'DUI',
-				'max_length' => 10,
-				'attr'       => array(
-					'placeholder' => 'Por ejemplo: 12345678-9'
-				)))
-			->add('telefono', 'text', array(
-				'label'      => 'Teléfono',
-				'max_length' => 8,
-				'attr'       => array(
-					'placeholder' => 'Por ejemplo: 23253526'
-				)));
+			->add('valor',
+				'number',
+				array(
+					'label'     => null,
+					'precision' => 2,
+					'invalid_message' => 'Digite un número decimal valido'
+					'attr'  => array(
+						'min' => 0,
+						'max' => 10
+			))
+		;
 	}
 
 	/**
@@ -37,7 +34,7 @@ class EncargadoType extends AbstractType
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
 		$resolver->setDefaults(array(
-			'data_class' => 'INTI\RegistroAcademicoBundle\Entity\Encargado'
+			'data_class' => 'INTI\RegistroAcademicoBundle\Entity\Nota'
 		));
 	}
 
@@ -46,6 +43,6 @@ class EncargadoType extends AbstractType
 	 */
 	public function getName()
 	{
-		return 'encargadotype';
+		return 'notatype';
 	}
 }

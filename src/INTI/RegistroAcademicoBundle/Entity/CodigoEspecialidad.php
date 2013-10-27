@@ -49,7 +49,7 @@ class CodigoEspecialidad
      * @var string
      *
      * @Assert\Choice(
-     *     choices = {"A", "B", "C", "D", "E", "F"},
+     *     choices = {"A", "B", "C", "D", "E"},
      *     message = "Escoja una sección valida"
      * )
      *
@@ -72,7 +72,7 @@ class CodigoEspecialidad
     /**
      * Get codigo
      *
-     * @return string 
+     * @return string
      */
     public function getCodigo()
     {
@@ -88,14 +88,14 @@ class CodigoEspecialidad
     public function setAnho($anho)
     {
         $this->anho = $anho;
-    
+
         return $this;
     }
 
     /**
      * Get anho
      *
-     * @return integer 
+     * @return integer
      */
     public function getAnho()
     {
@@ -111,14 +111,14 @@ class CodigoEspecialidad
     public function setSeccion($seccion)
     {
         $this->seccion = $seccion;
-    
+
         return $this;
     }
 
     /**
      * Get seccion
      *
-     * @return string 
+     * @return string
      */
     public function getSeccion()
     {
@@ -134,14 +134,14 @@ class CodigoEspecialidad
     public function setEspecialidad(\INTI\RegistroAcademicoBundle\Entity\Especialidad $especialidad = null)
     {
         $this->especialidad = $especialidad;
-    
+
         return $this;
     }
 
     /**
      * Get especialidad
      *
-     * @return \INTI\RegistroAcademicoBundle\Entity\Especialidad 
+     * @return \INTI\RegistroAcademicoBundle\Entity\Especialidad
      */
     public function getEspecialidad()
     {

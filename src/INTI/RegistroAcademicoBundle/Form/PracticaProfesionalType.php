@@ -6,23 +6,23 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class PeriodoType extends AbstractType
+class PracticaProfesionalType extends AbstractType
 {
-	/**
-	 * @param FormBuilderInterface $builder
-	 * @param array $options
-	 */
+		/**
+	* @param FormBuilderInterface $builder
+	* @param array $options
+	*/
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
-			->add('periodo',
-				'integer',
+			->add('horario',
+				'choice',
 				array(
-					'label' => 'Número de perido',
-					'attr'  => array(
-						'min' => 1,
-						'max' => 5
-			))
+					'label'  => 'Horario',
+					'choice' => array(
+						'M'    => 'Matutino',
+						'V'    => 'Vespertino'
+				)))
 			->add('inicio',
 				'date',
 				array(
@@ -31,46 +31,55 @@ class PeriodoType extends AbstractType
 					'format'          => 'dd/MM/yyyy',
 					'invalid_message' => 'La fecha debe tener mel formato dd/mm/yyyy',
 					'attr'            => array(
-						'placeholder'      => 'Por ejemplo: 02/02/2010',
+					'placeholder'     => 'Por ejemplo: 17/10/1990',
 						'class'            => 'date',
 						'data-provide'     => 'datepicker',
 						'data-date-format' => 'dd/mm//yyyy',
 						'data-language'    => 'es'
-			)))
-			->add(
-				'fin',
+				)))
+			->add('fin',
 				'date',
 				array(
-					'label'           => 'Fecha de cierre',
+					'label'           => 'Fecha en que finalizo',
 					'widget'          => 'single_text',
 					'format'          => 'dd/MM/yyyy',
 					'invalid_message' => 'La fecha debe tener mel formato dd/mm/yyyy',
 					'attr'            => array(
-					'placeholder'         => 'Por ejemplo: 17/11/1990',
+					'placeholder'     => 'Por ejemplo: 17/11/1990',
 						'class'            => 'date',
 						'required'         => false,
 						'data-provide'     => 'datepicker',
 						'data-date-format' => 'dd/mm//yyyy',
 						'data-language'    => 'es'
-			)))
-		;
+				)))
+			->add('evaluacion',
+				'number',
+				array(
+					'label'           => 'Evaluación',
+					'precision'       => 2,
+					'read_only'       => true,
+					'invalid_message' => 'Ingrese un numero decimal valido',
+					array(
+						'placeholder' => 'por ejemplo: 10.00'
+				)))
+			;
 	}
 
 	/**
-	 * @param OptionsResolverInterface $resolver
-	 */
+	* @param OptionsResolverInterface $resolver
+	*/
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
 		$resolver->setDefaults(array(
-			'data_class' => 'INTI\RegistroAcademicoBundle\Entity\Periodo'
+			'data_class' => 'INTI\RegistroAcademicoBundle\Entity\PracticaProfesional'
 		));
 	}
 
 	/**
-	 * @return string
-	 */
+	* @return string
+	*/
 	public function getName()
 	{
-		return 'periodotype';
+		return 'practicaprofesionaltype';
 	}
 }
