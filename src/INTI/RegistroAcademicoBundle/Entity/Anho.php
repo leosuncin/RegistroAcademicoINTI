@@ -45,6 +45,7 @@ class Anho
     public function __construct() {
         $this->inicio = new \DateTime("now");
         $this->anho = $this->inicio->format("Y");
+        $this->encurso = TRUE;
     }
 
     /**

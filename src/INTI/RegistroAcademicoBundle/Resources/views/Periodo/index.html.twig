@@ -2,69 +2,99 @@
 
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span><a href="#">Periodos</a></li>
-<li class="active"><span class="divider">&gt;</span>Consultar</li>
+<li class="active"><span class="divider">&gt;</span>Periodos</li>
 {% endblock %}
 
 {% block content %}
-    <h1>Listado de Periodos</h1>
-
-    <table class="table">
-        <thead>
+{% if entity is defined %}
+    {% for anho in entity %}
+        <table>
             <tr>
-				{# <th>Id</th> #}
-                <th>Numero del Periodo</th>
-                <th>Año</th>
-                <th>Estado del Periodo</th>
-                <th>Acciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-				{# <td>{{ entity.id }}</td> #}
-			<td> <a href="{{ path('periodo_show', { 'id': entity.id }) }}"></a>
-				{% if entity.numPeriodo==1 %}
-				Primero
-				{% elseif entity.numPeriodo==2 %}	
-				Segundo
-				{% elseif entity.numPeriodo==3 %}	
-				Tercer
-				{% elseif entity.numPeriodo==4 %}	
-				Cuarto
-				{% elseif entity.numPeriodo==5 %}	
-				Quinto
-				{% endif %}
-				{#		{{ entity.numPeriodo }} #}
-
-			</td>
-                <td>{{ entity.anhoCorriente }}</td>
-				<td>
-					{% if entity.estaAbierto == 1 %}
-					Abierto
-					{% else %}
-					Cerrado
-					{% endif %}
-					{# {{ entity.estaAbierto }} #}
-				</td>
                 <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('periodo_edit', { 'id': entity.id }) }}">Cambiar Estado</a>
-                    </li>
-                </ul>
+                    <h2>Año escolar {{ anho.anho }}</h2>
+                </td>
+                <td>
+                    <div class="slideThree">    
+                        <input type="checkbox" value="{{ anho.encurso }}" id="start" name="start" />
+                        <label class="control-label" for="start"></label>
+                    </div>
+                </td>
+                <td>
+                    Fecha de inicio: {{ anho.inicio|date('d M Y') }}
                 </td>
             </tr>
-        {% endfor %}
-        </tbody>
+        </table>
+    {% endfor %}
+    {% if periodos is defined %}
+        
+    {% else %}
+        
+    {% endif %}
+{% else %}
+    <div class="alert alert-info">
+        <h4>No se ha iniciado el año escolar</h4>
+        Inicie un nuevo año escolar para poder continuar
+    </div>
+    <table>
+        <tr>
+            <td>
+                <h2>Año escolar <span id="current">{{ "now"|date('Y') }}</span></h2>
+            </td>
+            <td>&emsp;
+                <div class="slideThree" id="checkAnho">    
+                    <input type="checkbox" id="start" name="start" />
+                    <label class="control-label" for="start"></label>
+                </div>&emsp;
+            </td>
+            <td>
+                <h2 id="inicio"></h2>
+            </td>
+        </tr>
     </table>
-{% for flashMessage in app.session.flashbag.get('notice') %}
-<div class="alert alert-success">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    {{ flashMessage }}
+{% endif %}
+<div id="confirmDelete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteTitle" aria-hidden="true">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3 id="confirmDeleteTitle">Confirmar eliminar empleado</h3>
+    </div>
+    <div class="modal-body">
+        <p><strong>Cuidado</strong> si elimina al empleado, se eliminará ademas su usuario.<br />
+        <em>Esta operación no se puede revertir</em></p>
+        </div>
+        <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+        <button id="eliminarEmpleado" class="btn btn-primary">Confirmar</button>
+    </div>
 </div>
+{% endblock %}
 
-{% endfor %}
-
-	{% endblock %}
-
+{% block javascript %}
+{{ parent() }}
+<script>
+$(document).ready(function() {
+    $('#start').change(function() {
+        if($(this).is(":checked")) {
+            $.ajax({
+                url: "{{ url('anho_start') }}",
+                method: "POST",
+                success: function(data) {
+                    var respuesta = $.parseJSON(data);
+                    alert(respuesta.inicio);
+                    $('#current').text(respuesta.current);
+                    $('#inicio').text('Iniciado en: ' + respuesta.inicio);
+                }
+            });
+        } else {
+            $.ajax({
+                url: "{{ url('anho_close') }}",
+                method: "POST",
+                data: { current: $('#current').val() },
+                success: function(data) {
+                    var respuesta = $.parseJSON(data);
+                }
+            });
+        }
+    });
+});
+</script>
+{% endblock %}
