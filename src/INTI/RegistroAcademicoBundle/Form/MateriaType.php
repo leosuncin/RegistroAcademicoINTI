@@ -23,8 +23,7 @@ class MateriaType extends AbstractType
 					'max_length' => 60
 				))
 			->add('profesor',
-				new ProfesorType(),
-				array('label' => null)
+				new ProfesorType()
 			)
 		;
 	}
