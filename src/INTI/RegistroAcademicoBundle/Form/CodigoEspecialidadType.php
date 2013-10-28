@@ -36,7 +36,7 @@ class CodigoEspecialidadType extends AbstractType
 						array(
 							'label'   => 'Sección',
 							'choices' => array(
-								'A' => 'Masculino',
+								'A' => 'A',
 								'B' => 'B',
 								'C' => 'C',
 								'D' => 'D',
@@ -57,7 +57,7 @@ class CodigoEspecialidadType extends AbstractType
 		public function setDefaultOptions(OptionsResolverInterface $resolver)
 		{
 			$resolver->setDefaults(array(
-				'data_class'         => 'INTI\RegistroAcademicoBundle\Entity\CodigoEspecialdad',
+				'data_class'         => 'INTI\RegistroAcademicoBundle\Entity\CodigoEspecialidad',
 				'cascade_validation' => true
 			));
 		}

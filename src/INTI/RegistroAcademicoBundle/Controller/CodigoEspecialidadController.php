@@ -7,21 +7,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use INTI\RegistroAcademicoBundle\Entity\Especialidad;
-use INTI\RegistroAcademicoBundle\Form\EspecialidadType;
+use INTI\RegistroAcademicoBundle\Entity\CodigoEspecialidad;
+use INTI\RegistroAcademicoBundle\Form\CodigoEspecialidadType;
 /**
  * Especialidad controller.
  *
- * @Route("/expediente/especialidad")
+ * @Route("/expediente/codigoespecialidad")
  */
-class EspecialidadController extends Controller
+class CodigoEspecialidadController extends Controller
 {
 
 
     /**
      * Lists all Especialidad entities.
      *
-     * @Route("/", name="especialidad_index")
+     * @Route("/", name="codigoespecialidad_index")
      * @Method("GET")
      * @Template()
      */
@@ -29,7 +29,7 @@ class EspecialidadController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
+        $entities = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
 
         return array(
             'entities' => $entities,
@@ -38,14 +38,14 @@ class EspecialidadController extends Controller
     /**
      * Creates a new Especialidad entity.
      *
-     * @Route("/", name="especialidad_create")
+     * @Route("/", name="codigoespecialidad_create")
      * @Method("POST")
-     * @Template("RegistroAcademicoBundle:Especialidad:new.html.twig")
+     * @Template("RegistroAcademicoBundle:CodigoEspecialidad:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity  = new Especialidad();
-        $form = $this->createForm(new EspecialidadType(), $entity);
+        $entity  = new CodigoEspecialidad();
+        $form = $this->createForm(new CodigoEspecialidadType(), $entity);
         $form->submit($request);
 
         if ($form->isValid()) {
@@ -55,7 +55,7 @@ class EspecialidadController extends Controller
             $em->persist($entity);
             $em->flush();
 			$this->get('session')->getFlashBag()->add('notice', 'Se inserto correctamente');
-            return $this->redirect($this->generateUrl('especialidad_show', array('id' => $entity->getCodigo())));
+            return $this->redirect($this->generateUrl('codigoespecialidad_show', array('id' => $entity->getCodigo())));
         }
 
         return array(
@@ -66,16 +66,16 @@ class EspecialidadController extends Controller
     }
 
     /**
-     * Displays a form to create a new Especialidad entity.
+     * Displays a form to create a new CodigoEspecialidad entity.
      *
-     * @Route("/new", name="especialidad_new")
+     * @Route("/new", name="codigoespecialidad_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new Especialidad();
-        $form   = $this->createForm(new EspecialidadType(), $entity);
+        $entity = new CodigoEspecialidad();
+        $form   = $this->createForm(new CodigoEspecialidadType(), $entity);
 
         return array(
             'entity' => $entity,
@@ -84,9 +84,9 @@ class EspecialidadController extends Controller
     }
 
     /**
-     * Finds and displays a Especialidad entity.
+     * Finds and displays a CodigoEspecialidad entity.
      *
-     * @Route("/{id}", name="especialidad_show")
+     * @Route("/{id}", name="codigoespecialidad_show")
      * @Method("GET")
      * @Template()
      */
@@ -94,10 +94,10 @@ class EspecialidadController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('RegistroAcademicoBundle:Especialidad')->find($id);
+        $entity = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Especialidad entity.');
+            throw $this->createNotFoundException('Unable to find CodigoEspecialidad entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -109,9 +109,9 @@ class EspecialidadController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Especialidad entity.
+     * Displays a form to edit an existing CodigoEspecialidad entity.
      *
-     * @Route("/{id}/edit", name="especialidad_edit")
+     * @Route("/{id}/edit", name="codigoespecialidad_edit")
      * @Method("GET")
      * @Template()
      */
@@ -119,13 +119,13 @@ class EspecialidadController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('RegistroAcademicoBundle:Especialidad')->find($id);
+        $entity = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Especialidad entity.');
+            throw $this->createNotFoundException('Unable to find CodigoEspecialidad entity.');
         }
 
-        $editForm = $this->createForm(new EspecialidadType(), $entity);
+        $editForm = $this->createForm(new CodigoEspecialidadType(), $entity);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -136,31 +136,31 @@ class EspecialidadController extends Controller
     }
 
     /**
-     * Edits an existing Especialidad entity.
+     * Edits an existing CodigoEspecialidad entity.
      *
-     * @Route("/{id}", name="especialidad_update")
+     * @Route("/{id}", name="codigoespecialidad_update")
      * @Method("PUT")
-     * @Template("RegistroAcademicoBundle:Especialidad:edit.html.twig")
+     * @Template("RegistroAcademicoBundle:CodigoEspecialidad:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('RegistroAcademicoBundle:Especialidad')->find($id);
+        $entity = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Especialidad entity.');
+            throw $this->createNotFoundException('Unable to find CodigoEspecialidad entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new EspecialidadType(), $entity);
+        $editForm = $this->createForm(new CodigoEspecialidadType(), $entity);
         $editForm->submit($request);
 
         if ($editForm->isValid()) {
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('especialidad_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('codigoespecialidad_edit', array('id' => $id)));
         }
 
         return array(
@@ -170,9 +170,9 @@ class EspecialidadController extends Controller
         );
     }
     /**
-     * Deletes a Especialidad entity.
+     * Deletes a CodigoEspecialidad entity.
      *
-     * @Route("/{id}", name="especialidad_delete")
+     * @Route("/{id}", name="codigoespecialidad_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -182,21 +182,21 @@ class EspecialidadController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('RegistroAcademicoBundle:Especialidad')->find($id);
+            $entity = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Especialidad entity.');
+                throw $this->createNotFoundException('Unable to find CodigoEspecialidad entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('especialidad_index'));
+        return $this->redirect($this->generateUrl('codigoespecialidad_index'));
     }
 
     /**
-     * Creates a form to delete a Especialidad entity by id.
+     * Creates a form to delete a CodigoEspecialidad entity by id.
      *
      * @param mixed $id The entity id
      *

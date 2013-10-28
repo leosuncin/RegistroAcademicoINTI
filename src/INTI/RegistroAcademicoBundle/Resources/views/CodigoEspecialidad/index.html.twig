@@ -1,0 +1,52 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block style %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Lista de codigo especialidades</h1>
+
+    <table id="tabla" class="table table-hover">
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Año</th>
+				<th>Sección</th>
+				<th>Especialidad</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('codigoespecialidad_index', { 'codigo': entity.codigo }) }}">{{ entity.codigo }}</a></td>
+                
+                <td>{{ entity.anho }}</td>
+				<td>{{ entity.seccion }}</td>
+				<td>{{ entity.especialidad.codigo }}</td>
+                <td>
+                <ul>
+                   
+                        <a class="btn btn-info" href="{{ path('codigoespecialidad_show', { 'id': entity.codigo }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
+                   
+                        <a class="btn btn-info" href="{{ path('codigoespecialidad_edit', { 'id': entity.codigo }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+               
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+       
+            <a class="btn btn-primary" href="{{ path('codigoespecialidad_new') }}">
+                {{ '.icon-plus-sign Ingresar un nuevo codigo de especialidad'|parse_icons('white') }}
+            </a>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/watable/jquery.watable.js') }}"></script>
+{% endblock %}

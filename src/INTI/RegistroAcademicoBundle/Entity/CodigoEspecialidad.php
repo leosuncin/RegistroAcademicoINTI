@@ -9,9 +9,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * CodigoEspecialidad
  *
- * @ORM\Table(name="Codigo_especialidad")
+ * @ORM\Table(name="codigo_especialidad")
  * @ORM\Entity
- * @UniqueEntity(fields = "codigo", message = "El código ya esta registrado")
+ * @UniqueEntity(fields = {"codigo"}, message = "El código ya esta registrado")
  */
 class CodigoEspecialidad
 {
@@ -25,7 +25,7 @@ class CodigoEspecialidad
      *      maxMessage = "El código no puede tener más de {{ limit }} caracteres de largo"
      * )
      *
-     * @ORM\Column(name="codigo", type="string", length=5, nullable=false)
+     * @ORM\Column(name="codigo", type="string", length=5, nullable=false, unique=true)
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="NONE")
      */
