@@ -27,9 +27,9 @@
  			<h2 class="ig-title">Materias</h2>
  			<ul class="unstyled ig-options">
 				{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
- 				<li><a href="{# {{ path('materia_new') }} #}" class="badge badge-inverse"><span class="icon-plus-sign"></span> Añadir materia</a></li>
+ 				<li><a href=" {{ path('materia_new') }} " class="badge badge-inverse"><span class="icon-plus-sign"></span> Añadir materia</a></li>
 				{% endif %}
- 				<li><a href="{# {{ path('materia_index') }} #}" class="badge badge-inverse"><span class="icon-eye-open"></span> Consultar materias</a></li>
+ 				<li><a href=" {{ path('materia') }} " class="badge badge-inverse"><span class="icon-eye-open"></span> Consultar materias</a></li>
  			</ul>
 		</div>
 		{% endif %}
