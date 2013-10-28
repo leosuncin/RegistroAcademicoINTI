@@ -14,18 +14,18 @@ class NotaType extends AbstractType
 	 */
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
-		$builder
-			->add('valor',
-				'number',
-				array(
-					'label'     => null,
-					'precision' => 2,
-					'invalid_message' => 'Digite un número decimal valido'
-					'attr'  => array(
-						'min' => 0,
-						'max' => 10
-			))
-		;
+            $builder
+                ->add('valor',
+                    'number',
+                    array(
+                        'label'     => null,
+                        'precision' => 2,
+                        'invalid_message' => 'Digite un número decimal valido',
+                        'attr'  => array(
+                            'min' => 0,
+                            'max' => 10
+                    )))
+            ;
 	}
 
 	/**
@@ -33,9 +33,9 @@ class NotaType extends AbstractType
 	 */
 	public function setDefaultOptions(OptionsResolverInterface $resolver)
 	{
-		$resolver->setDefaults(array(
-			'data_class' => 'INTI\RegistroAcademicoBundle\Entity\Nota'
-		));
+            $resolver->setDefaults(array(
+                'data_class' => 'INTI\RegistroAcademicoBundle\Entity\Nota'
+            ));
 	}
 
 	/**
@@ -43,6 +43,6 @@ class NotaType extends AbstractType
 	 */
 	public function getName()
 	{
-		return 'notatype';
+            return 'notatype';
 	}
 }

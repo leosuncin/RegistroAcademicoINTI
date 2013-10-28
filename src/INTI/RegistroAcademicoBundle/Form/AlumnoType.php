@@ -33,7 +33,7 @@ class AlumnoType extends AbstractType
 				array(
 					'label' => null
 				))
-		->add('codigo',
+		->add('codigoEspecialidad',
 			'entity',
 			array(
 				'label'    => 'Código de especialidad',

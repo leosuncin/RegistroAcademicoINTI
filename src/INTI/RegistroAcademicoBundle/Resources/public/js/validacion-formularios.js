@@ -128,17 +128,14 @@ $(document).ready(function() {
             "usuariotype[enabled]": {
                 required: false
             },
-			"especialidadtype[codigo]":{
-				codigo: true,
-				minlength: 2,
-				maxlength: 5
-			
-			
-			},
-			"especialidadtype[nombre]":{
-				nombre: true
-				
-			},
+            "especialidadtype[codigo]":{
+                codigo: true,
+                minlength: 2,
+                maxlength: 5
+            },
+            "especialidadtype[nombre]":{
+                nombre: true
+            }
         },
         showErrors: function(errorMap, errorList) {
             $.each(this.successList, function(index, value) {

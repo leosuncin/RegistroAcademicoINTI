@@ -22,7 +22,7 @@ class PeriodoType extends AbstractType
 					'attr'  => array(
 						'min' => 1,
 						'max' => 5
-			))
+			)))
 			->add('inicio',
 				'date',
 				array(

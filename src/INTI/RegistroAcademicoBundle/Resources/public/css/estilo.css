@@ -1,4 +1,4 @@
-body {
+html, body {
   background: rgb(63,76,107); /* Old browsers */
   background: -moz-linear-gradient(top, rgba(63,76,107,1) 0%, rgba(63,76,107,1) 100%); /* FF3.6+ */
   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(63,76,107,1)), color-stop(100%,rgba(63,76,107,1))); /* Chrome,Safari4+ */
@@ -234,7 +234,7 @@ footer address {
   width: 115px;
   height: 26px;
   background: #333;
-  margin: 20px auto;
+  display: inline-block;
 
   -webkit-border-radius: 50px;
   -moz-border-radius: 50px;
