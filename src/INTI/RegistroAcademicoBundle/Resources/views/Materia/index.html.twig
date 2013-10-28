@@ -1,0 +1,47 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block style %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}">
+{% endblock %}
+
+{% block content%}
+    <h1>Lista de materias</h1>
+
+    <table id="tabla" class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nombre</th>
+                <th>Profesor</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('materia_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.nombre }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('materia_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('materia_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+       <a class="btn btn-primary" href="{{ path('materia_new') }}">
+                {{ '.icon-plus-sign Ingresar un nueva materia'|parse_icons('white') }}
+            </a>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/watable/jquery.watable.js') }}"></script>
+{% endblock %}
