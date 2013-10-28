@@ -27,8 +27,8 @@
 				<div class="acc-heading">
     				<a class="acc-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-alumno"><span class="icon-user"></span> Alumno</a>
     			</div>
-				<ul id="acc-gestion-aspirante" class="acc-body collapse">
-					<li class="acc-inner"><a href="{{ path('alumno_new') }}"><span class="icon-plus-sign"></span> Crear alumno</a></li>
+				<ul id="acc-gestion-alumno" class="acc-body collapse">
+					<li class="acc-inner"><a href="{{ path('alumno_new') }}"><span class="icon-plus-sign"></span> Matricular alumno</a></li>
 					<li class="acc-inner"><a href="{{ path('alumno_index') }}"><span class="icon-eye-open"></span> Consultar alumno</a></li>
 				</ul>
 				{% endif %}
@@ -64,7 +64,7 @@
     			<div class="acc-heading">
     				<a class="acc-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-periodos"><span class="icon-calendar"></span> Periodos</a>
     			</div>
-				<ul id="acc-gestion-periodos" class="acc-body collapse">
+				<ul id="acc-gestion-periodos" class="acc-body collapse">					
 					{#
 					<li class="acc-inner"><a href="{{ path('periodo_new')}}">
 					<span class="icon-plus-sign"> Abrir Periodo</span>
@@ -78,7 +78,7 @@
     			<div class="acc-heading">
     				<a class="acc-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-anhos"><span class="icon-calendar"></span> Años</a>
     			</div>
-				<ul id="acc-gestion-anhos" class="acc-body collapse">
+				<ul id="acc-gestion-anhos" class="acc-body collapse">					
 					<li class="acc-inner"><a href="{{ path('iniciar_anho')}}">
 					<span class="icon-plus-sign"> Abrir Año </span>
 					</a> </a></li>
@@ -88,6 +88,9 @@
 					<li class="acc-inner"><a href=""><span class="icon-edit"></span> </a></li>
 					#}
 				</ul>
+
+
+				{% endif %}
     		</div>
     	</div>
     </li>

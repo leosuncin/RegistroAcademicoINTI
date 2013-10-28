@@ -13,14 +13,14 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * EspecialidadForAjax controller.
  *
- * @Route("/espAjax")
+ * @Route("/ComboEspecialidad")
  */
-class EspecialidadForAjax extends Controller
+class ComboEspecialidadAjax extends Controller
 {
     /**
      * Lists all Especialidad entities.
      *
-     * @Route("/", name="especialidadAjax")
+     * @Route("/", name="ComboEspecialidadAjax")
      * @Method("GET")
      */
     public function indexAction()

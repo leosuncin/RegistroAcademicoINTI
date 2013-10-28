@@ -8,8 +8,29 @@
 
 {% block content -%}
 <form action="{{ path('alumno_update', { 'nie': entity.nie }) }}" method="POST" {{ form_enctype(edit_form) }} class="form-horizontal">
-    {{ form_label(edit_form.aspirante.foto) }}
-	<input type="file" id="filePicker" class="btn"/>
+    <table class='table'>
+		<tr><td colspan='2'><b>Informacion del Alumno</b></td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.foto) }}</td><td><input type="file" id="filePicker" class="btn"/></td></tr>
+		<tr><td>{{ form_label(edit_form.nie) }}</td><td>{{ form(edit_form.nie) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.id) }}</td><td>{{ form(edit_form.aspirante.id) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.nombres) }}</td><td>{{ form(edit_form.aspirante.nombres) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.primerapellido) }}</td><td>{{ form(edit_form.aspirante.primerapellido) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.segundoapellido) }}</td><td>{{ form(edit_form.aspirante.segundoapellido) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.condicion) }}</td><td>{{ form(edit_form.condicion) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.especialidad) }}</td><td>{{ form(edit_form.aspirante.especialidad) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.direccion) }}</td><td>{{ form(edit_form.aspirante.direccion) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.telefono) }}</td><td>{{ form(edit_form.aspirante.telefono) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.fechanac) }}</td><td>{{ form(edit_form.aspirante.fechanac) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.lugarnac) }}</td><td>{{ form(edit_form.aspirante.lugarnac) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.sexo) }}</td><td>{{ form(edit_form.aspirante.sexo) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.estado) }}</td><td>{{ form(edit_form.aspirante.estado) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.anhoAplicacion) }}</td><td>{{ form(edit_form.aspirante.anhoAplicacion) }}</td></tr>
+		<tr><td colspan='2'><b>Informacion del Encargado</b></td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.encargado.nombre) }}</td><td>{{ form(edit_form.aspirante.encargado.nombre) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.encargado.parentesco) }}</td><td>{{ form(edit_form.aspirante.encargado.parentesco) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.encargado.dui) }}</td><td>{{ form(edit_form.aspirante.encargado.dui) }}</td></tr>
+		<tr><td>{{ form_label(edit_form.aspirante.encargado.telefono) }}</td><td>{{ form(edit_form.aspirante.encargado.telefono) }}</td></tr>
+	</table>
 	<input type="hidden" name="_method" value="PUT" />
     {{ form_widget(edit_form, {'form_type': 'horizontal'}) }}
     <div class="form-actions">
@@ -18,4 +39,12 @@
         <a href="{{ path('alumno_erase', {'nie':entity.nie}) }}" class="btn btn-danger">Eliminar</a>
     </div>
 </form>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/jquery-validation/dist/jquery.validate.js') }}"></script>
+<script src="{{ asset('assets/jquery-validation/localization/messages_es.js') }}"></script>
+<script src="{{ asset('bundles/registroacademico/js/fotografia_base64.js') }}"></script>
+<script src="{{ asset('bundles/registroacademico/js/validacion-formularios.js') }}"></script>
 {% endblock %}

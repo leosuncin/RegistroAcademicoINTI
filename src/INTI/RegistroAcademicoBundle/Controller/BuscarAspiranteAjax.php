@@ -12,17 +12,17 @@ use INTI\RegistroAcademicoBundle\Form\AlumnoType;
 use Symfony\Component\HttpFoundation\Response;
 
 /**
- * alumnoAjax controller.
+ * BuscarAspirante controller.
  *
- * @Route("/ajax")
+ * @Route("/BuscarAspirante")
  */
 
-class AspiranteForAjax extends Controller
+class BuscarAspiranteAjax extends Controller
 {
 	/**
-     * Lists Aspirantes seleccionados entities.
+     * List Aspirantes Aprobados entities.
      *
-     * @Route("/", name="aspiranteAjax")
+     * @Route("/", name="BuscarAspiranteAjax")
      * @Method("GET")
      */
     function listAspiranteSelect()
@@ -39,11 +39,10 @@ class AspiranteForAjax extends Controller
 			$dql.=" AND p.especialidad = :especialidad";
 		}
 		if($_REQUEST['anho']!=""){
-			$parameters['especialidad']=$_REQUEST['esp'];
-			$dql.=" AND p.especialidad=:especialidad";
+			$parameters['anhoAplicacion']=$_REQUEST['anho'];
+			$dql.=" AND p.anhoAplicacion=:anhoAplicacion";
 		}
-		$query=$em->createQuery($dql)
-			->setParameters($parameters);
+		$query=$em->createQuery($dql)->setParameters($parameters);
 		try{
 			$aspirante = $query->getResult();
 			$text="<br><table class='table table-hover'>";
@@ -51,7 +50,7 @@ class AspiranteForAjax extends Controller
 			if(count($aspirante)>0){
 				for($i=0;$i<count($aspirante) and $i<10;$i++){
 					$text.="<tr class='aspirante'><td class='n_asp' value='".$aspirante[$i]->getId()."'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $aspirante[$i]->getId())."</td>";
-					$text.="<td>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $aspirante[$i]->getNombres()." ".$aspirante[$i]->getPrimerapellido()." ".$aspirante[$i]->getSegundoapellido())."</td>";
+					$text.="<td class='aspName'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $aspirante[$i]->getNombres()." ".$aspirante[$i]->getPrimerapellido()." ".$aspirante[$i]->getSegundoapellido())."</td>";
 					$text.="<td>".$aspirante[$i]->getEspecialidad()->getNombre()."</td>";
 					$text.='<td><div class="btn-group btn-group-horizontal">';
 					$text.="<a class='btn btn-info' href='../aspirante/".$aspirante[$i]->getId()."'><span class='icon-eye-open icon-white'></span></a>";
