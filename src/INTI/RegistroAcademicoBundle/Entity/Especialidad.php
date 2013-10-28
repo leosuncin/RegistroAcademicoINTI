@@ -12,7 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * @ORM\Table(name="Especialidad")
  * @ORM\Entity
  * @UniqueEntity(
- *     fields = "código",
+ *     fields = "codigo",
  *     message = "Este código ya existe"
  * )
  */

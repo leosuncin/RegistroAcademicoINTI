@@ -67,7 +67,7 @@ class AspiranteType extends AbstractType
 						'placeholder' => 'Por ejemplo: 17/10/1990',
 						'class' => 'date',
 						'data-provide' => 'datepicker',
-						'data-date-format' => 'dd/mm//yyyy',
+						'data-date-format' => 'dd/mm/yyyy',
 						'data-viewmode' => 'years',
 						'data-language' => 'es'
 			)))
@@ -88,7 +88,7 @@ class AspiranteType extends AbstractType
 			->add('estado',
 					'choice',
 					array(
-						'label'   => 'Estado Aplicacion',
+						'label'   => 'Estado de la aplicación',
 						'choices' => array(
 							'P' => 'Pendiente',
 							'A' => 'Aprobado',

@@ -19,7 +19,7 @@ class UsuarioType extends AbstractType
 				'label'      => 'Nombre de usuario',
 				'max_length' => 50,
 				'attr'       => array(
-					'placeholder' => 'Por ejemplo: secretaria_direccion',
+					'placeholder' => 'Por ejemplo: secReg1',
 					'help_block'  => 'Escriba el nombre del usuario sin espacios'
 				)))
 			->add('password', 'password', array(

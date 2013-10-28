@@ -9,9 +9,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 /**
  * CodigoEspecialidad
  *
- * @ORM\Table(name="codigo_especialidad")
+ * @ORM\Table(name="Codigo_especialidad")
  * @ORM\Entity
- * @UniqueEntity(fields = {"codigo"}, message = "El código ya esta registrado")
+ * @UniqueEntity(fields = "codigo", message = "El código ya esta registrado")
  */
 class CodigoEspecialidad
 {

@@ -2,7 +2,7 @@
 
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span><a href="#">Empleados</a></li>
+<li><span class="divider">&gt;</span><a href="{{ path('empleado_index') }}">Empleados</a></li>
 <li class="active"><span class="divider">&gt;</span> Modificar</li>
 {% endblock %}
 
@@ -23,8 +23,5 @@
 
 {% block javascript %}
 {{ parent() }}
-<script src="{{ asset('assets/jquery-validation/dist/jquery.validate.js') }}"></script>
-<script src="{{ asset('assets/jquery-validation/localization/messages_es.js') }}"></script>
-<script src="{{ asset('bundles/registroacademico/js/fotografia_base64.js') }}"></script>
-<script src="{{ asset('bundles/registroacademico/js/validacion-formularios.js') }}"></script>
+{{ load.script({ form: true, foto: true }) }}
 {% endblock %}

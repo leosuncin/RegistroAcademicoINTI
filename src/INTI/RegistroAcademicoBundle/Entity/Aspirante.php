@@ -155,7 +155,7 @@ class Aspirante
     private $encargado;
 
     function __construct() {
-        $ahora = new DateTime("now");
+        $ahora = new \DateTime("now");
         $this->nie = $ahora->format("U");
     }
 

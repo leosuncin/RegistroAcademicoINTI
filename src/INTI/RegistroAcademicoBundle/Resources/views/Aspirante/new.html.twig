@@ -20,18 +20,10 @@
         <input type="submit" value="Crear" class="btn btn-primary" />
         <a href="{{ path('aspirante_index') }}" class="btn">Regresar</a>
     </div>
-    <div class="control-group error">
-        {{ form_errors(form) }}
-    </div>
 </form>
 {% endblock %}
 
 {% block javascript %}
 {{ parent() }}
-<script>
-    $('#aspirantetype_telefono').mask("99999999");
-    $('#aspirantetype_encargado_dui').mask("99999999-9");
-    $('#aspirantetype_encargado_telefono').mask("99999999");
-    $('.date').mask("99/99/9999");
-</script>
+{{ load.script({ form: true, foto: true, calendar: true })}}
 {% endblock %}

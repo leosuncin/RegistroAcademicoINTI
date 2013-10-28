@@ -93,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `Empleado` (
   `NUP` VARCHAR(12) NOT NULL,
   `sexo` CHAR(1) NOT NULL,
   `Usuario` VARCHAR(50) NOT NULL,
-  `Responsabilidad` VARCHAR(5) NOT NULL,
+  `Responsabilidad` VARCHAR(5) NULL,
   INDEX `idx_Empleado_Usuario` (`Usuario` ASC),
   PRIMARY KEY (`DUI`),
   UNIQUE INDEX `ISSS_UNIQUE` (`ISSS` ASC),
@@ -268,7 +268,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Materia` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(60) NOT NULL,
-  `Profesor` INT NOT NULL,
+  `Profesor` INT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Materia_Profesor1_idx` (`Profesor` ASC),
   CONSTRAINT `fk_Materia_Profesor`

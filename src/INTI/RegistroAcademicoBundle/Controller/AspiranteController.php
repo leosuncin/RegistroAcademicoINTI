@@ -56,7 +56,7 @@ class AspiranteController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('aspirante_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('aspirante_show', array('id' => $entity->getNie())));
         }
 
         return array(

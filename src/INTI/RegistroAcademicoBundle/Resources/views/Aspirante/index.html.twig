@@ -2,45 +2,49 @@
 
 {% block style %}
 {{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}">
+{{ load.sheet({ watable: true }) }}
 {% endblock %}
 
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span><a href="#">Aspirantes</a></li>
+<li><span class="divider">&gt;</span><a href="{{ path('aspirante_index') }}">Aspirantes</a></li>
 <li class="active"><span class="divider">&gt;</span> Consultar</li>
 {% endblock %}
 
 {% block content %}
-    <table id="tabla" class="table table-hover">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Especialidad</th>
-                <th>Sexo</th>
-                <th>Opciones</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ entity.primerapellido~' '~entity.segundoapellido~', '~entity.nombres }}</td>
-                <td>{{ entity.especialidad.nombre }}</td>
-                <td>{{ entity.sexo }}</td>
-                <td>
-                    <div class="btn-group btn-group-vertical">
-                        <a class="btn btn-info" href="{{ path('aspirante_show', { 'id': entity.id }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
-                        <a class="btn btn-info" href="{{ path('aspirante_edit', { 'id': entity.id }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+<table id="tabla" class="table table-hover">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Especialidad</th>
+            <th>Sexo</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for entity in entities %}
+        <tr>
+            <td>{{ entity.primerapellido~' '~entity.segundoapellido~', '~entity.nombres }}</td>
+            <td>{{ entity.especialidad.nombre }}</td>
+            <td>{% if entity.sexo == 'M' %}
+                        Masculino
+                    {% else %}
+                        Femenino
+                    {% endif %}</td>
+            <td>
+                <div class="btn-group btn-group-vertical">
+                    <a class="btn btn-info btn-mini" href="{{ path('aspirante_show', { 'id': entity.nie }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
+                    <a class="btn btn-info btn-mini" href="{{ path('aspirante_edit', { 'id': entity.nie }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
 <a class="btn btn-primary" href="{{ path('aspirante_new') }}">{{ '.icon-plus-sign Ingresar un nuevo aspirante'|parse_icons('white') }}</a>
 {% endblock %}
 
 {% block javascript %}
 {{ parent() }}
-<script src="{{ asset('assets/watable/jquery.watable.js') }}"></script>
+{{ load.script({ form: false, watable: true }) }}
 {% endblock %}

@@ -1,5 +1,10 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
+{% block style %}
+{{ parent() }}
+{{ load.sheet({ watable: true }) }}
+{% endblock %}
+
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
 <li class="active"><span class="divider">&gt;</span> Empleados</li>
@@ -52,4 +57,9 @@
     </tbody>
 </table>
 <a class="btn btn-primary" href="{{ path('empleado_new') }}">{{ '.icon-plus-sign Ingresar un nuevo empleado'|parse_icons('white') }}</a>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+{{ load.script({ watable: true }) }}
 {% endblock %}

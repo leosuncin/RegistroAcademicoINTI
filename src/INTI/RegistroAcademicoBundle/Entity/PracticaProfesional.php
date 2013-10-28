@@ -12,7 +12,6 @@ use INTI\RegistroAcademicoBundle\Validator\Constraints as RegistroAcademicoAsser
  *
  * @ORM\Table(name="Practica_profesional")
  * @ORM\Entity
- * @ORM\OrderBy({"empresa" = "ASC"})
  * @UniqueEntity(
  *     fields = {"alumno", "empresa"},
  *     message = "Ya existe un registro de esta practica profesional"
@@ -87,7 +86,7 @@ class PracticaProfesional
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {

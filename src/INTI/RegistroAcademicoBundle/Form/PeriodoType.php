@@ -34,7 +34,7 @@ class PeriodoType extends AbstractType
 						'placeholder'      => 'Por ejemplo: 02/02/2010',
 						'class'            => 'date',
 						'data-provide'     => 'datepicker',
-						'data-date-format' => 'dd/mm//yyyy',
+						'data-date-format' => 'dd/mm/yyyy',
 						'data-language'    => 'es'
 			)))
 			->add(
@@ -50,7 +50,7 @@ class PeriodoType extends AbstractType
 						'class'            => 'date',
 						'required'         => false,
 						'data-provide'     => 'datepicker',
-						'data-date-format' => 'dd/mm//yyyy',
+						'data-date-format' => 'dd/mm/yyyy',
 						'data-language'    => 'es'
 			)))
 		;

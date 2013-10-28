@@ -21,10 +21,8 @@ class EmpleadoType extends AbstractType
 						'text',
 						array(
 							'label'      => 'Nombres',
-							'max_length' => 10,
-							'attr'       => array(
-								'placeholder' => 'Por ejemplo: 12345678-9'
-               )))
+							'max_length' => 80
+					))
 				->add('apellidos',
 						'text',
 						array(

@@ -3,25 +3,25 @@
 namespace INTI\RegistroAcademicoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use INTI\RegistroAcademicoBundle\Entity\CodigoEspecialidad;
 use INTI\RegistroAcademicoBundle\Form\CodigoEspecialidadType;
+
 /**
- * Especialidad controller.
+ * Codigo Especialidad controller
  *
- * @Route("/expediente/codigoespecialidad")
+ * @Route("/codigo/especialidad")
  */
 class CodigoEspecialidadController extends Controller
 {
-
-
     /**
      * Lists all Especialidad entities.
      *
-     * @Route("/", name="codigoespecialidad_index")
+     * @Route("/", name="codigo-especialidad_index")
      * @Method("GET")
      * @Template()
      */
