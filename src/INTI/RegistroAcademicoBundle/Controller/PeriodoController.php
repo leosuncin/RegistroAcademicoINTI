@@ -75,7 +75,25 @@ class PeriodoController extends Controller {
      * @Method("POST")
      */
     public function closeAnhoAction(Request $request) {
-        
+        $em = $this->getDoctrine()->getManager();
+        $anho = $em->getRepository("RegistroAcademicoBundle:Anho")
+                ->findBy(array("anho" => 2013));
+        if($anho){
+            $anho->setFin(new \DateTime("NOW"));
+            
+//            $em->persist($anho);
+//            $em->flush();
+            
+            $respuesta = new JsonResponse(json_encode(array('fin' => $anho->getFin())));
+            $respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
+            
+            return $respuesta;
+        } else {
+            $respuesta = new JsonResponse(json_encode(array('error' => 'El año ya esta cerrado')));
+            $respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
+            
+            return $respuesta;
+        }
     }
 
     /**

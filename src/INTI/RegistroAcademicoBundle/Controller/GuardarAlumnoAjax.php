@@ -26,21 +26,22 @@ class GuardarAlumnoAjax extends Controller
      */
     function crearAlumno()
     {
-		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p WHERE p.id=:id";
+		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p WHERE p.nie=:nie";
 		$em = $this->getDoctrine()->getManager();
-		$query=$em->createQuery($dql)->setParameter("id", $_REQUEST['nAspirante'])->setMaxResults(1);
+		$query=$em->createQuery($dql)->setParameter("nie", $_REQUEST['nie'])->setMaxResults(1);
 		try{
 			$aspirante = $query->getSingleResult();
 			if($aspirante->getEstado()=="A"){
+				$dql2="SELECT p FROM RegistroAcademicoBundle:CodigoEspecialidad p WHERE p.codigo=:codigo";
+				$query2=$em->createQuery($dql2)->setParameter("codigo", $_REQUEST['cod_esp'])->setMaxResults(1);
+				$codigoEspecialidad = $query2->getSingleResult();
 				$entity  = new Alumno();
-				$entity->setNie($_REQUEST['nie']);
 				$entity->setCondicion($_REQUEST['cond']);
-				
+				$entity->setCondicion($_REQUEST['cond']);
 				$aspirante->setEstado('M');
-				
-				$entity->setAspirante($aspirante);
-
-				$em->persist($entity->getAspirante());
+				$entity->setNie($aspirante);
+				$entity->setCodigoEspecialidad($codigoEspecialidad);
+				$em->persist($entity->getNIE());
 				$em->persist($entity);
 
 				$em->flush();

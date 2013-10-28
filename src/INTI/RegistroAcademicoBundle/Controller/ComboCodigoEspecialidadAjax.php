@@ -13,23 +13,23 @@ use Symfony\Component\HttpFoundation\Response;
 /**
  * EspecialidadForAjax controller.
  *
- * @Route("/ComboEspecialidad")
+ * @Route("/ComboCodigoEspecialidad")
  */
-class ComboEspecialidadAjax extends Controller
+class ComboCodigoEspecialidadAjax extends Controller
 {
     /**
-     * Lists all Especialidad entities.
+     * Lists all CodigoEspecialidad entities.
      *
-     * @Route("/", name="ComboEspecialidadAjax")
+     * @Route("/", name="ComboCodigoEspecialidadAjax")
      * @Method("GET")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
-		$text="<option value='todas'>Todas</option>";
+        $entities = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
+		$text="";
 		for($i=0;$i<count($entities);$i++){
-			$text.="<option value='".$entities[$i]->getCodigo()."'>".$entities[$i]->getNombre()."</option>";
+			$text.="<option value='".$entities[$i]->getCodigo()."'>".$entities[$i]->getCodigo()."</option>";
 		}
         return new response($text);
     }

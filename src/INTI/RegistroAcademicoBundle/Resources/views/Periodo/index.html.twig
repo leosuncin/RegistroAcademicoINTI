@@ -14,13 +14,16 @@
                     <h2>Año escolar {{ anho.anho }}</h2>
                 </td>
                 <td>
-                    <div class="slideThree">    
-                        <input type="checkbox" value="{{ anho.encurso }}" id="start" name="start" />
+                    &emsp;<div class="slideThree">    
+                        <input type="checkbox" checked="{{ anho.encurso }}" id="start" name="start" />
                         <label class="control-label" for="start"></label>
-                    </div>
+                    </div>&emsp;
                 </td>
                 <td>
-                    Fecha de inicio: {{ anho.inicio|date('d M Y') }}
+                    <h4 id="inicio">Fecha de inicio: {{ anho.inicio|date('d M Y') }}</h4>
+                </td>
+                <td>
+                    <h4 id="fin"></h4>
                 </td>
             </tr>
         </table>
@@ -28,7 +31,24 @@
     {% if periodos is defined %}
         
     {% else %}
-        
+        <div class="alert alert-info">
+            <h4>No se ha iniciado periodos escolares</h4>
+            Inicie un nuevo periodo escolar para poder continuar
+        </div>
+        <table>
+            <tr>
+                <td>
+                    <h3>Periodo escolar <span id="periodo"></span></h3>
+                </td>
+                <td>&emsp;
+                    <div class="slideThree">    
+                        <input type="checkbox" id="periodo" name="periodo" />
+                        <label class="control-label" for="periodo"></label>
+                    </div>&emsp;
+                </td>
+                <td></td>
+            </tr>
+        </table>
     {% endif %}
 {% else %}
     <div class="alert alert-info">
@@ -52,18 +72,17 @@
         </tr>
     </table>
 {% endif %}
-<div id="confirmDelete" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteTitle" aria-hidden="true">
+<div id="confirmClose" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="confirmCloseTitle" aria-hidden="true">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3 id="confirmDeleteTitle">Confirmar eliminar empleado</h3>
+        <h3 id="confirmCloseTitle">Confirmar cerrar periodo</h3>
     </div>
     <div class="modal-body">
-        <p><strong>Cuidado</strong> si elimina al empleado, se eliminará ademas su usuario.<br />
-        <em>Esta operación no se puede revertir</em></p>
+        <p>¿Esta seguro de querer cerrar el periodo escolar seleccionado?</em></p>
         </div>
         <div class="modal-footer">
         <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
-        <button id="eliminarEmpleado" class="btn btn-primary">Confirmar</button>
+        <button id="cerrarPeriodo" class="btn btn-primary">Confirmar</button>
     </div>
 </div>
 {% endblock %}
@@ -79,21 +98,24 @@ $(document).ready(function() {
                 method: "POST",
                 success: function(data) {
                     var respuesta = $.parseJSON(data);
-                    alert(respuesta.inicio);
                     $('#current').text(respuesta.current);
                     $('#inicio').text('Iniciado en: ' + respuesta.inicio);
                 }
             });
         } else {
-            $.ajax({
-                url: "{{ url('anho_close') }}",
-                method: "POST",
-                data: { current: $('#current').val() },
-                success: function(data) {
-                    var respuesta = $.parseJSON(data);
-                }
-            });
+            $('#confirmClose').modal();
         }
+    });
+    $('#cerrarPeriodo').click(function() {
+        $.ajax({
+            url: "{{ url('anho_close') }}",
+            method: "POST",
+            data: { current: $('#current').val() },
+            success: function(data) {
+                var respuesta = $.parseJSON(data);
+                $('#fin').text('Cerrado el ' + respuesta.fin);
+            }
+        });
     });
 });
 </script>

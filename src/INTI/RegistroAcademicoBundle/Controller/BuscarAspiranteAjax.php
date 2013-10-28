@@ -30,31 +30,27 @@ class BuscarAspiranteAjax extends Controller
 		$search=$_REQUEST['searchValue'];
 		$parameters=Array(
 				'nombres'=>"%".$search."%",
-				'id'=>$search."%",
+				'nie'=>$search."%",
 			);
         $em = $this->getDoctrine()->getManager();
-		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p WHERE p.estado='A' AND CONCAT(CONCAT(CONCAT(CONCAT(p.nombres,' '),p.primerapellido),' '),p.segundoapellido) LIKE :nombres or p.id LIKE :id";
-		if($_REQUEST['esp']!="todas"){
+		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p JOIN p.especialidad u WHERE p.estado='A' AND CONCAT(CONCAT(CONCAT(CONCAT(p.nombres,' '),p.primerapellido),' '),p.segundoapellido) LIKE :nombres or p.nie LIKE :nie";
+		if(($_REQUEST['esp']!="todas")&&($_REQUEST['esp']!="")){
 			$parameters['especialidad']=$_REQUEST['esp'];
-			$dql.=" AND p.especialidad = :especialidad";
-		}
-		if($_REQUEST['anho']!=""){
-			$parameters['anhoAplicacion']=$_REQUEST['anho'];
-			$dql.=" AND p.anhoAplicacion=:anhoAplicacion";
+			$dql.=" AND u.codigo=:especialidad";
 		}
 		$query=$em->createQuery($dql)->setParameters($parameters);
 		try{
 			$aspirante = $query->getResult();
 			$text="<br><table class='table table-hover'>";
-			$text.="<tr class='header'><th>N° Aspirante</th><th>Nombre Completo</th><th>Especialidad</th><th>Opciones</th></tr>";
+			$text.="<tr class='header'><th>NIE</th><th>Nombre Completo</th><th>Especialidad</th><th>Opciones</th></tr>";
 			if(count($aspirante)>0){
 				for($i=0;$i<count($aspirante) and $i<10;$i++){
-					$text.="<tr class='aspirante'><td class='n_asp' value='".$aspirante[$i]->getId()."'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $aspirante[$i]->getId())."</td>";
+					$text.="<tr class='aspirante'><td class='n_nie' value='".$aspirante[$i]->getNie()."'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $aspirante[$i]->getNie())."</td>";
 					$text.="<td class='aspName'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $aspirante[$i]->getNombres()." ".$aspirante[$i]->getPrimerapellido()." ".$aspirante[$i]->getSegundoapellido())."</td>";
 					$text.="<td>".$aspirante[$i]->getEspecialidad()->getNombre()."</td>";
 					$text.='<td><div class="btn-group btn-group-horizontal">';
-					$text.="<a class='btn btn-info' href='../aspirante/".$aspirante[$i]->getId()."'><span class='icon-eye-open icon-white'></span></a>";
-                    $text.="<a class='btn btn-info' href='../aspirante/".$aspirante[$i]->getId()."/edit'><span class='icon-edit icon-white'></span></a></div></td></tr>";
+					$text.="<a class='btn btn-info' href='../aspirante/".$aspirante[$i]->getNie()."'><span class='icon-eye-open icon-white'></span></a>";
+                    $text.="<a class='btn btn-info' href='../aspirante/".$aspirante[$i]->getNie()."/edit'><span class='icon-edit icon-white'></span></a></div></td></tr>";
 				}
 			}else{
 				$text.="<tr><td colspan='4'>No se encuentra el aspirante</td></tr>";

@@ -7,40 +7,50 @@
 
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span><span class="divider">&gt;</span> Alumnos</li>
+<li><span class="divider">&gt;</span><a href="#">Alumno</a></li>
+<li class="active"><span class="divider">&gt;</span> Consultar</li>
 {% endblock %}
 
 {% block content %}
-    <table id="tabla" class="table table-hover">
-        <thead>
-            <tr>
-                <th>NIE</th>
-				<th>Nombre</th>
-				<th>Especialidad</th>
-				<th>Telefono</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td>{{ entity.nie }}</td>
-				<td>{{ entity.aspirante.primerapellido~' '~entity.aspirante.segundoapellido~', '~entity.aspirante.nombres }}</td>
-                <td>{{ entity.aspirante.especialidad.nombre }}</td>
-				<td>{{ entity.aspirante.telefono }}</td>
-				<td>
-                    <div class="btn-group btn-group-vertical">
-                        <a class="btn btn-info" href="{{ path('alumno_show', { 'nie': entity.nie }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
-                        <a class="btn btn-info" href="{{ path('alumno_edit', { 'nie': entity.nie }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
-                    </div>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+	<form class="form-inline">
+		<table style='width:100%'><tr><td>Buscar: <input type='text' placeholder='Ingrese Nombre o NIE' id='search'></td><td style='text-align:right'>Numero de Resultados: <select id='nResults' class='span2'><option value='10'>10</option><option value='20'>20</option></select></td></table>
+		<div id="tableResult" style='padding-top:20px;'></div>
+	</form>
 <a class="btn btn-primary" href="{{ path('alumno_new') }}">{{ '.icon-plus-sign Ingresar un nuevo alumno'|parse_icons('white') }}</a>
 {% endblock %}
 
 {% block javascript %}
 {{ parent() }}
-<script src="{{ asset('assets/watable/jquery.watable.js') }}"></script>
+<script>
+	var order_field, sence, actual;
+	$(document).ready(function(){
+		order_field="u.nie";
+		sence="ASC";
+		actual=1;
+		generateTable(actual, actual);
+		$("#search").keyup(function(){generateTable(actual,actual);});
+		$("#nResults").change(function(){generateTable(actual,actual);});
+	});
+	function generateTable(actual, anterior){
+		$.get("{{ path('IndexAlumnoAjax') }}", {"order_field":order_field, "search":$("#search").val() ,"sence":sence, "n_result":$("#nResults").val(), "actual":actual, "anterior":anterior}, function(e){
+			$("#tableResult").html(e);
+			actual=$(".actual").attr('value');
+			$("tr.header th").click(function(){
+				if($(this).attr('name')==order_field){
+					if(sence=="ASC")
+						sence="DESC";
+					else
+						sence="ASC";
+				}else{
+					order_field=$(this).attr('name');
+					sence="ASC";
+				}
+				generateTable(actual,actual);
+			});
+			$(".pag").click(function(){
+				generateTable($(this).attr('value'),actual);
+			});
+		});
+	}
+</script>
 {% endblock %}

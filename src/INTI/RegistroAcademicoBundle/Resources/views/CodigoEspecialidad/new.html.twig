@@ -8,12 +8,7 @@
 
 {% block content %}
 
-
-
-
 <h1>Creacion de una especialidad</h1>
-  
-  
 
 <form action="{{ path('especialidad_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 	
@@ -23,17 +18,32 @@
        <input  type="submit" value="Crear" class="btn btn-primary" />
         <a href="{{ path('especialidad_index') }}" class="btn">Regresar</a>
     </div>
-    <div class="control-group error">
-        {{ form_errors(form) }}
-    </div>
 </form>
 
 {% endblock %}
 
 {% block javascript %}
 {{ parent() }}
-<script src="{{ asset('assets/jquery-validation/dist/jquery.validate.js') }}"></script>
-<script src="{{ asset('bundles/registroacademico/js/validacion-formularios.js') }}"></script>
-<script src="{{ asset('assets/jquery-validation/localization/messages_es.js') }}"></script>
-
+{{ load.script({form: true})}}
+<script>
+    $('select').change(function(){
+        var e = $('#codigoespecialidadtype_especialidad :selected').val();
+        var a = $('#codigoespecialidadtype_anho :selected').val();
+        var s = $('#codigoespecialidadtype_seccion :selected').val();
+        switch(e) {
+            case 'AUTO':
+                $('#codigoespecialidadtype_codigo').val('A'+a+s);
+                break;
+            case 'ELCA':
+                $('#codigoespecialidadtype_codigo').val('EL'+a+s);
+                break;
+            case 'ELTIA':
+                $('#codigoespecialidadtype_codigo').val('ELT'+a+s);
+                break;
+            case 'MECA':
+                $('#codigoespecialidadtype_codigo').val('M'+a+s);
+                break;
+        }
+    });
+</script>
 {% endblock %}

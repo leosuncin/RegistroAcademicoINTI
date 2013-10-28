@@ -27,9 +27,9 @@ class BuscarAspiranteEspecificoAjax extends Controller
      */
     function searchAspirante()
     {
-		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p WHERE p.id=:id";
+		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p WHERE p.nie=:nie";
 		$em = $this->getDoctrine()->getManager();
-		$query=$em->createQuery($dql)->setParameter("id", $_REQUEST['nAspirante']);
+		$query=$em->createQuery($dql)->setParameter("nie", $_REQUEST['nie']);
 		$text="";
 		try{
 			$aspirante = $query->getSingleResult();
