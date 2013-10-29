@@ -29,6 +29,7 @@ class Especialidad
      * )
      * @Assert\Regex(
      *     pattern = "/^[a-zA-Z]*$/",
+     *     match = false,
      *     message = "El código solo debe contener letras"
      * )
      * @ORM\Column(name="codigo", type="string", length=5, nullable=false, unique=true)
@@ -48,6 +49,7 @@ class Especialidad
      * )
      * @Assert\Regex(
      *      pattern = "/^[A-Za-z]+(\s[A-Za-z]+)*$/",
+     *      match = false,
 	 *      message = "El nombre solo debe contener letras"
      * )
      * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
