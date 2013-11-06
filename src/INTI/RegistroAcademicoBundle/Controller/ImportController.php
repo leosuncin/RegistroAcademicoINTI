@@ -14,29 +14,28 @@ use INTI\RegistroAcademicoBundle\Form\DocumentType;
  */
 class ImportController extends Controller
 {
-    /**
-     * @Route("/notas")
-     * @Template()
-     */
-    public function importNotasAction()
-    {
-        $document = new DocumentUploaded();
-        $form = $this->container->get('form.factory')->create(new DocumentType(), $document);
-        $request = $this->container->get('request');
-        
-        if ($request->getMethod() == 'POST') {
-            if ($form->isValid()) {
-                $document->processFile();
-            }
-        }
-    }
+	/**
+	 * @Route("/notas")
+	 * @Template()
+	 */
+	public function importNotasAction()
+	{
+		$document = new DocumentUploaded();
+		$form = $this->container->get('form.factory')->create(new DocumentType(), $document);
+		$request = $this->container->get('request');
+		
+		if ($request->getMethod() == 'POST') {
+			if ($form->isValid()) {
+				$document->processFile();
+			}
+		}
+	}
 
-    /**
-     * @Route("/alumnos")
-     * @Template()
-     */
-    public function importAlumnosAction()
-    {
-    }
-
+	/**
+	 * @Route("/alumnos")
+	 * @Template()
+	 */
+	public function importAlumnosAction()
+	{
+	}
 }

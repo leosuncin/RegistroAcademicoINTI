@@ -10,19 +10,19 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
  */
 class DefaultController extends Controller
 {
-    /**
-     * @Route("/", name="index")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        return array('title' => 'Pagina principal');
-    }
+	/**
+	 * @Route("/", name="index")
+	 * @Template()
+	 */
+	public function indexAction()
+	{
+		return array('title' => 'Pagina principal');
+	}
 
-    /**
-	* @Route("/construction/{modulo}", name="under_constrution")
-	* @Template()
-	*/
+	/**
+	 * @Route("/construction/{modulo}", name="under_constrution")
+	 * @Template()
+	 */
 	public function underConstructionAction($module)
 	{
 		return array('module' => $module);
