@@ -4,7 +4,7 @@ namespace INTI\RegistroAcademicoBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
-class ProfesorControllerTest extends WebTestCase
+class EmpresaControllerTest extends WebTestCase
 {
     /*
     public function testCompleteScenario()
@@ -13,13 +13,13 @@ class ProfesorControllerTest extends WebTestCase
         $client = static::createClient();
 
         // Create a new entry in the database
-        $crawler = $client->request('GET', '/profesor/');
-        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /profesor/");
+        $crawler = $client->request('GET', '/empresa/');
+        $this->assertEquals(200, $client->getResponse()->getStatusCode(), "Unexpected HTTP status code for GET /empresa/");
         $crawler = $client->click($crawler->selectLink('Create a new entry')->link());
 
         // Fill in the form and submit it
         $form = $crawler->selectButton('Create')->form(array(
-            'inti_registroacademicobundle_profesortype[field_name]'  => 'Test',
+            'inti_registroacademicobundle_empresatype[field_name]'  => 'Test',
             // ... other fields to fill
         ));
 
@@ -33,7 +33,7 @@ class ProfesorControllerTest extends WebTestCase
         $crawler = $client->click($crawler->selectLink('Edit')->link());
 
         $form = $crawler->selectButton('Edit')->form(array(
-            'inti_registroacademicobundle_profesortype[field_name]'  => 'Foo',
+            'inti_registroacademicobundle_empresatype[field_name]'  => 'Foo',
             // ... other fields to fill
         ));
 

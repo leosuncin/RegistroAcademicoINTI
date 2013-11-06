@@ -19,13 +19,10 @@
         "sensio/framework-extra-bundle": "2.3.*",
         "sensio/generator-bundle": "2.3.*",
         "incenteev/composer-parameter-handler": "~2.0",
-        "braincrafted/bootstrap-bundle": "dev-master",
+        "braincrafted/bootstrap-bundle": "1.4.*",
         "ee/dataexporter-bundle": "dev-master",
         "jms/di-extra-bundle": "dev-master",
         "jms/serializer-bundle": "dev-master",
-        "knplabs/knp-menu": "dev-master",
-        "knplabs/knp-menu-bundle": "dev-master",
-        "knplabs/knp-paginator-bundle": "dev-master",
         "leafo/lessphp": "dev-master",
         "liuggio/excelbundle": ">=1.0.4",
         "slik/dompdf-bundle": "dev-master",
@@ -33,8 +30,8 @@
         "components/jquery": "1.9.*",
         "components/modernizr": "dev-master",
         "components/font-awesome": "3.2.*",
-        "components/normalize.css": "dev-master",
-        "nelmio/security-bundle": "~1.0"
+        "components/bootstrap": "2.3.*",
+        "friendsofsymfony/jsrouting-bundle": "~1.1"
     },
     "scripts": {
         "post-install-cmd": [

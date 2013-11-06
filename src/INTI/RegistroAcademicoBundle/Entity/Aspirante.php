@@ -15,446 +15,416 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Aspirante
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="NIE", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $nie;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="NIE", type="integer", nullable=false)
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="NONE")
+	 */
+	private $nie;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="foto", type="text", nullable=false)
-     */
-    private $foto;
+	/**
+	 * @var string
+	 *
+	 * @ORM\Column(name="foto", type="text", nullable=false)
+	 */
+	private $foto;
 
-    /**
-     * @var string
-     *
-     * @Assert\Length(
-     *      min = "3",
-     *      max = "15",
-     *      minMessage = "El apellido por lo menos debe tener {{ limit }} caracteres de largo",
-     *      maxMessage = "El apellido no puede tener más de {{ limit }} caracteres de largo"
-     * )
-     *
-     * @ORM\Column(name="primerApellido", type="string", length=15, nullable=false)
-     */
-    private $primerapellido;
+	/**
+	 * @var string
+	 *
+	 * @Assert\Length(
+	 *      min = "3",
+	 *      max = "15",
+	 *      minMessage = "El apellido por lo menos debe tener {{ limit }} caracteres de largo",
+	 *      maxMessage = "El apellido no puede tener más de {{ limit }} caracteres de largo"
+	 * )
+	 *
+	 * @ORM\Column(name="primer_apellido", type="string", length=15, nullable=false)
+	 */
+	private $primerApellido;
 
-    /**
-     * @var string
-     *
-     * @Assert\Length(
-     *      min = "3",
-     *      max = "15",
-     *      minMessage = "El apellido por lo menos debe tener {{ limit }} caracteres de largo",
-     *      maxMessage = "El apellido no puede tener más de {{ limit }} caracteres de largo"
-     * )
-     *
-     * @ORM\Column(name="segundoApellido", type="string", length=15, nullable=true)
-     */
-    private $segundoapellido;
+	/**
+	 * @var string
+	 *
+	 * @Assert\Length(
+	 *      min = "3",
+	 *      max = "15",
+	 *      minMessage = "El apellido por lo menos debe tener {{ limit }} caracteres de largo",
+	 *      maxMessage = "El apellido no puede tener más de {{ limit }} caracteres de largo"
+	 * )
+	 *
+	 * @ORM\Column(name="segundo_apellido", type="string", length=15, nullable=true)
+	 */
+	private $segundoApellido;
 
-    /**
-     * @var string
-     *
-     * @Assert\Length(
-     *      min = "3",
-     *      max = "50",
-     *      minMessage = "Los nombres por lo menos debe tener {{ limit }} caracteres de largo",
-     *      maxMessage = "Los nombres no puede tener más de {{ limit }} caracteres de largo"
-     * )
-     *
-     * @ORM\Column(name="nombres", type="string", length=50, nullable=false)
-     */
-    private $nombres;
+	/**
+	 * @var string
+	 *
+	 * @Assert\Length(
+	 *      min = "3",
+	 *      max = "50",
+	 *      minMessage = "Los nombres por lo menos debe tener {{ limit }} caracteres de largo",
+	 *      maxMessage = "Los nombres no puede tener más de {{ limit }} caracteres de largo"
+	 * )
+	 *
+	 * @ORM\Column(name="nombres", type="string", length=50, nullable=false)
+	 */
+	private $nombres;
 
-    /**
-     * @var string
-     *
-     * @Assert\Length(
-     *      max = "100",
-     *      maxMessage = "La dirección no puede tener más de {{ limit }} caracteres de largo"
-     * )
-     *
-     * @ORM\Column(name="direccion", type="text", nullable=false)
-     */
-    private $direccion;
+	/**
+	 * @var string
+	 *
+	 * @Assert\Length(
+	 *      max = "100",
+	 *      maxMessage = "La dirección no puede tener más de {{ limit }} caracteres de largo"
+	 * )
+	 *
+	 * @ORM\Column(name="direccion", type="text", nullable=false)
+	 */
+	private $direccion;
 
-    /**
-     * @var string
-     *
-     * @Assert\Regex(
-     *     pattern="/^\d{8}$/",
-     *     message="El telefono debe contener solo 8 números")
-     * 
-     * @ORM\Column(name="telefono", type="string", length=8, nullable=false)
-     */
-    private $telefono;
+	/**
+	 * @var string
+	 *
+	 * @Assert\Regex(
+	 *     pattern="/^\d{8}$/",
+	 *     message="El telefono debe contener solo 8 números")
+	 *
+	 * @ORM\Column(name="telefono", type="string", length=8, nullable=false)
+	 */
+	private $telefono;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fechaNac", type="date", nullable=false)
-     */
-    private $fechanac;
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="fecha_nac", type="date", nullable=false)
+	 */
+	private $fechaNac;
 
-    /**
-     * @var string
-     *
-     * @Assert\Length(
-     *      max = "40",
-     *      maxMessage = "La dirección no puede tener más de {{ limit }} caracteres de largo"
-     * )
-     *
-     * @ORM\Column(name="lugarNac", type="string", length=40, nullable=false)
-     */
-    private $lugarnac;
+	/**
+	 * @var string
+	 *
+	 * @Assert\Length(
+	 *      max = "40",
+	 *      maxMessage = "La dirección no puede tener más de {{ limit }} caracteres de largo"
+	 * )
+	 *
+	 * @ORM\Column(name="lugar_nac", type="string", length=40, nullable=false)
+	 */
+	private $lugarNac;
 
-    /**
-     * @var string
-     *
-     * @Assert\Choice(
-     *     choices = {"M", "F"},
-     *     message = "Escoja un sexo valido"
-     * )
-     *
-     * @ORM\Column(name="sexo", type="string", length=1, nullable=false)
-     */
-    private $sexo;
+	/**
+	 * @var string
+	 *
+	 * @Assert\Choice(
+	 *     choices = {"M", "F"},
+	 *     message = "Escoja un sexo valido"
+	 * )
+	 *
+	 * @ORM\Column(name="sexo", type="string", length=1, nullable=false)
+	 */
+	private $sexo;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="estado", type="string", length=1, nullable=false)
-     */
-    private $estado;
+	/**
+	 * @var \Encargado
+	 *
+	 * @ORM\ManyToOne(targetEntity="Encargado")
+	 * @ORM\JoinColumns({
+	 *   @ORM\JoinColumn(name="Encargado", referencedColumnName="DUI")
+	 * })
+	 */
+	private $encargado;
 
-    /**
-     * @var \Especialidad
-     *
-     * @ORM\ManyToOne(targetEntity="Especialidad")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Especialidad", referencedColumnName="codigo")
-     * })
-     */
-    private $especialidad;
+	/**
+	 * @var \Especialidad
+	 *
+	 * @ORM\ManyToOne(targetEntity="Especialidad")
+	 * @ORM\JoinColumns({
+	 *   @ORM\JoinColumn(name="Especialidad", referencedColumnName="codigo")
+	 * })
+	 */
+	private $especialidad;
 
-    /**
-     * @var \Encargado
-     *
-     * @ORM\ManyToOne(targetEntity="Encargado")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Encargado", referencedColumnName="DUI")
-     * })
-     */
-    private $encargado;
+	function __construct() {
+		$ahora = new \DateTime("now");
+		$this->nie = $ahora->format("U");
+	}
 
-    function __construct() {
-        $ahora = new \DateTime("now");
-        $this->nie = $ahora->format("U");
-    }
+	/**
+	 * Set nie
+	 *
+	 * @param integer $nie
+	 * @return Aspirante
+	 */
+	public function setNie($nie)
+	{
+		$this->nie = $nie;
 
-    /**
-     * Set nie
-     *
-     * @param integer $nie
-     * @return Aspirante
-     */
-    public function setNie($nie)
-    {
-        $this->nie = $nie;
+		return $this;
+	}
 
-        return $this;
-    }       
+	/**
+	 * Get nie
+	 *
+	 * @return integer
+	 */
+	public function getNie()
+	{
+		return $this->nie;
+	}
 
-    /**
-     * Get nie
-     *
-     * @return integer 
-     */
-    public function getNie()
-    {
-        return $this->nie;
-    }
+	/**
+	 * Set foto
+	 *
+	 * @param string $foto
+	 * @return Aspirante
+	 */
+	public function setFoto($foto)
+	{
+		$this->foto = $foto;
 
-    /**
-     * Set foto
-     *
-     * @param string $foto
-     * @return Aspirante
-     */
-    public function setFoto($foto)
-    {
-        $this->foto = $foto;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get foto
+	 *
+	 * @return string
+	 */
+	public function getFoto()
+	{
+		return $this->foto;
+	}
 
-    /**
-     * Get foto
-     *
-     * @return string
-     */
-    public function getFoto()
-    {
-        return $this->foto;
-    }
+	/**
+	 * Set primerApellido
+	 *
+	 * @param string $primerApellido
+	 * @return Aspirante
+	 */
+	public function setPrimerApellido($primerApellido)
+	{
+		$this->primerApellido = $primerApellido;
 
-    /**
-     * Set primerapellido
-     *
-     * @param string $primerapellido
-     * @return Aspirante
-     */
-    public function setPrimerapellido($primerapellido)
-    {
-        $this->primerapellido = $primerapellido;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get primerApellido
+	 *
+	 * @return string
+	 */
+	public function getPrimerApellido()
+	{
+		return $this->primerApellido;
+	}
 
-    /**
-     * Get primerapellido
-     *
-     * @return string
-     */
-    public function getPrimerapellido()
-    {
-        return $this->primerapellido;
-    }
+	/**
+	 * Set segundoApellido
+	 *
+	 * @param string $segundoApellido
+	 * @return Aspirante
+	 */
+	public function setSegundoApellido($segundoApellido)
+	{
+		$this->segundoApellido = $segundoApellido;
 
-    /**
-     * Set segundoapellido
-     *
-     * @param string $segundoapellido
-     * @return Aspirante
-     */
-    public function setSegundoapellido($segundoapellido)
-    {
-        $this->segundoapellido = $segundoapellido;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get segundoApellido
+	 *
+	 * @return string
+	 */
+	public function getSegundoApellido()
+	{
+		return $this->segundoApellido;
+	}
 
-    /**
-     * Get segundoapellido
-     *
-     * @return string
-     */
-    public function getSegundoapellido()
-    {
-        return $this->segundoapellido;
-    }
+	/**
+	 * Set nombres
+	 *
+	 * @param string $nombres
+	 * @return Aspirante
+	 */
+	public function setNombres($nombres)
+	{
+		$this->nombres = $nombres;
 
-    /**
-     * Set nombres
-     *
-     * @param string $nombres
-     * @return Aspirante
-     */
-    public function setNombres($nombres)
-    {
-        $this->nombres = $nombres;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get nombres
+	 *
+	 * @return string
+	 */
+	public function getNombres()
+	{
+		return $this->nombres;
+	}
 
-    /**
-     * Get nombres
-     *
-     * @return string
-     */
-    public function getNombres()
-    {
-        return $this->nombres;
-    }
+	/**
+	 * Set direccion
+	 *
+	 * @param string $direccion
+	 * @return Aspirante
+	 */
+	public function setDireccion($direccion)
+	{
+		$this->direccion = $direccion;
 
-    /**
-     * Set direccion
-     *
-     * @param string $direccion
-     * @return Aspirante
-     */
-    public function setDireccion($direccion)
-    {
-        $this->direccion = $direccion;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get direccion
+	 *
+	 * @return string
+	 */
+	public function getDireccion()
+	{
+		return $this->direccion;
+	}
 
-    /**
-     * Get direccion
-     *
-     * @return string
-     */
-    public function getDireccion()
-    {
-        return $this->direccion;
-    }
+	/**
+	 * Set telefono
+	 *
+	 * @param string $telefono
+	 * @return Aspirante
+	 */
+	public function setTelefono($telefono)
+	{
+		$this->telefono = $telefono;
 
-    /**
-     * Set telefono
-     *
-     * @param string $telefono
-     * @return Aspirante
-     */
-    public function setTelefono($telefono)
-    {
-        $this->telefono = $telefono;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get telefono
+	 *
+	 * @return string
+	 */
+	public function getTelefono()
+	{
+		return $this->telefono;
+	}
 
-    /**
-     * Get telefono
-     *
-     * @return string
-     */
-    public function getTelefono()
-    {
-        return $this->telefono;
-    }
+	/**
+	 * Set fechaNac
+	 *
+	 * @param \DateTime $fechaNac
+	 * @return Aspirante
+	 */
+	public function setFechaNac($fechaNac)
+	{
+		$this->fechaNac = $fechaNac;
 
-    /**
-     * Set fechanac
-     *
-     * @param \DateTime $fechanac
-     * @return Aspirante
-     */
-    public function setFechanac($fechanac)
-    {
-        $this->fechanac = $fechanac;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get fechaNac
+	 *
+	 * @return \DateTime
+	 */
+	public function getFechaNac()
+	{
+		return $this->fechaNac;
+	}
 
-    /**
-     * Get fechanac
-     *
-     * @return \DateTime
-     */
-    public function getFechanac()
-    {
-        return $this->fechanac;
-    }
+	/**
+	 * Set lugarNac
+	 *
+	 * @param string $lugarNac
+	 * @return Aspirante
+	 */
+	public function setLugarNac($lugarNac)
+	{
+		$this->lugarNac = $lugarNac;
 
-    /**
-     * Set lugarnac
-     *
-     * @param string $lugarnac
-     * @return Aspirante
-     */
-    public function setLugarnac($lugarnac)
-    {
-        $this->lugarnac = $lugarnac;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get lugarNac
+	 *
+	 * @return string
+	 */
+	public function getLugarNac()
+	{
+		return $this->lugarNac;
+	}
 
-    /**
-     * Get lugarnac
-     *
-     * @return string
-     */
-    public function getLugarnac()
-    {
-        return $this->lugarnac;
-    }
+	/**
+	 * Set sexo
+	 *
+	 * @param string $sexo
+	 * @return Aspirante
+	 */
+	public function setSexo($sexo)
+	{
+		$this->sexo = $sexo;
 
-    /**
-     * Set sexo
-     *
-     * @param string $sexo
-     * @return Aspirante
-     */
-    public function setSexo($sexo)
-    {
-        $this->sexo = $sexo;
+		return $this;
+	}
 
-        return $this;
-    }
+	/**
+	 * Get sexo
+	 *
+	 * @return string
+	 */
+	public function getSexo()
+	{
+		return $this->sexo;
+	}
 
-    /**
-     * Get sexo
-     *
-     * @return string
-     */
-    public function getSexo()
-    {
-        return $this->sexo;
-    }
+	/**
+	 * Set encargado
+	 *
+	 * @param \INTI\RegistroAcademicoBundle\Entity\Encargado $encargado
+	 * @return Aspirante
+	 */
+	public function setEncargado(\INTI\RegistroAcademicoBundle\Entity\Encargado $encargado = null)
+	{
+		$this->encargado = $encargado;
 
-    /**
-     * Set estado
-     *
-     * @param string $estado
-     * @return Aspirante
-     */
-    public function setEstado($estado)
-    {
-        $this->estado = $estado;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get estado
-     *
-     * @return string 
-     */
-    public function getEstado()
-    {
-        return $this->estado;
-    }
+	/**
+	 * Get encargado
+	 *
+	 * @return \INTI\RegistroAcademicoBundle\Entity\Encargado
+	 */
+	public function getEncargado()
+	{
+		return $this->encargado;
+	}
 
-    /**
-     * Set especialidad
-     *
-     * @param \INTI\RegistroAcademicoBundle\Entity\Especialidad $especialidad
-     * @return Aspirante
-     */
-    public function setEspecialidad(\INTI\RegistroAcademicoBundle\Entity\Especialidad $especialidad = null)
-    {
-        $this->especialidad = $especialidad;
-    
-        return $this;
-    }
+	/**
+	 * Set especialidad
+	 *
+	 * @param \INTI\RegistroAcademicoBundle\Entity\Especialidad $especialidad
+	 * @return Aspirante
+	 */
+	public function setEspecialidad(\INTI\RegistroAcademicoBundle\Entity\Especialidad $especialidad = null)
+	{
+		$this->especialidad = $especialidad;
 
-    /**
-     * Get especialidad
-     *
-     * @return \INTI\RegistroAcademicoBundle\Entity\Especialidad 
-     */
-    public function getEspecialidad()
-    {
-        return $this->especialidad;
-    }
+		return $this;
+	}
 
-    /**
-     * Set encargado
-     *
-     * @param \INTI\RegistroAcademicoBundle\Entity\Encargado $encargado
-     * @return Aspirante
-     */
-    public function setEncargado(\INTI\RegistroAcademicoBundle\Entity\Encargado $encargado = null)
-    {
-        $this->encargado = $encargado;
-    
-        return $this;
-    }
-
-    /**
-     * Get encargado
-     *
-     * @return \INTI\RegistroAcademicoBundle\Entity\Encargado 
-     */
-    public function getEncargado()
-    {
-        return $this->encargado;
-    }
+	/**
+	 * Get especialidad
+	 *
+	 * @return \INTI\RegistroAcademicoBundle\Entity\Especialidad
+	 */
+	public function getEspecialidad()
+	{
+		return $this->especialidad;
+	}
 }

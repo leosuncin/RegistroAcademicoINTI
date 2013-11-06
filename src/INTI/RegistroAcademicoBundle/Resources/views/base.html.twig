@@ -11,24 +11,27 @@
 		{% if title is not defined %}{% set title = 'Sistema de registro académico' %}{% endif %}
 		<title>{{ title }}</title>
 		{% import _self as load %}
-		{% block style %}
-		<link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}" />
+		<link rel="stylesheet" href="{{ asset('assets/bootstrap/css/bootstrap.css') }}" />
 		<link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome.min.css') }}" />
 		<!--[if IE 7]><link rel="stylesheet" href="{{ asset('assets/font-awesome/css/font-awesome-ie7.min.css') }}"><![endif]-->
-		<link rel="stylesheet" href="{{ asset('assets/normalize-css/normalize.css') }}" />
 		<link rel="stylesheet" href="{{ asset('bundles/registroacademico/css/estilo.css') }}" />
-		{% endblock %}
+		{% block style %}{% endblock %}
 	</head>
 	<body>
 		<!--[if lt IE 7]>
 		<p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
 		<![endif]-->
 		{% block body %}{% endblock %}
-		{% block javascript %}
 		<script type="text/javascript" src="{{ asset('assets/jquery/jquery.js') }}"></script>
-		<script src="{{ asset('js/bootstrap.js') }}"></script>
-		<!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
-		{% endblock %}
+		<script src="{{ asset('assets/bootstrap/js/bootstrap.js') }}"></script>
+		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+		<!--[if lt IE 9]>
+				<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+				<script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+			<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+		{% block javascript %}{% endblock %}
 	</body>
 </html>
 
@@ -55,10 +58,13 @@
 		<script src="{{ asset('assets/select2/select2_locale_es.js') }}"></script>
 	{% endif %}
 {% endmacro %}
-{% macro sheet(css) %}
-	{% if css.watable|default(false) %}
+
+{% macro css(sheet) %}
+	{% if sheet.calendar|default(false) %}
+		<link rel="stylesheet" href="{{ asset('assets/bootstrap-datepicker/css/datepicker.css') }}" />
+	{% elseif sheet.watable|default(false) %}
 		<link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}" />
-	{% elseif css.select2|default(false) %}
+	{% elseif sheet.select2|default(false) %}
 		<link rel="stylesheet" href="{{ asset('bundles/registroacademico/css/select2-bootstrap.css') }}">
 	{% endif %}
 {% endmacro %}

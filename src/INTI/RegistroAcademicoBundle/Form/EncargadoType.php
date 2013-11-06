@@ -21,12 +21,14 @@ class EncargadoType extends AbstractType
 				'label'      => 'DUI',
 				'max_length' => 10,
 				'attr'       => array(
+                    'class'       => 'dui',
 					'placeholder' => 'Por ejemplo: 12345678-9'
 				)))
 			->add('telefono', 'text', array(
 				'label'      => 'Teléfono',
 				'max_length' => 8,
 				'attr'       => array(
+                    'class'       => 'telefono',
 					'placeholder' => 'Por ejemplo: 23253526'
 				)));
 	}

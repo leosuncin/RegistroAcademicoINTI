@@ -54,6 +54,7 @@ footer address {
   height: 96px;
   float: right;
   position: relative;
+  padding-right: 30px;
 }
 
 .profile_id {
@@ -201,7 +202,7 @@ footer address {
 }
 
 .ig-grid:hover .ig-title {
-  padding-right: 5px; 
+  padding-right: 5px;
 }
 
 .ig-grid:hover .ig-category {
@@ -306,4 +307,53 @@ footer address {
 
 .slideThree input[type=checkbox] {
   visibility: hidden;
+}
+
+.form-signin {
+  max-width: 330px;
+  padding: 15px;
+  margin: 0 auto;
+  background: rgb(238, 238, 238);
+  border-radius: 5px;
+}
+
+.form-signin .form-signin-heading,
+.form-signin .checkbox {
+  margin-bottom: 10px;
+}
+
+.form-signin-heading {
+  max-width: 100%;
+}
+
+.form-signin .checkbox {
+  font-weight: normal;
+}
+
+.form-signin .form-control {
+  position: relative;
+  font-size: 16px;
+  height: auto;
+  padding: 10px;
+  -webkit-box-sizing: border-box;
+     -moz-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+.form-signin .form-control:focus {
+  z-index: 2;
+}
+
+.form-signin input[type="text"] {
+  margin-bottom: -1px;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  width: 100%;
+}
+
+.form-signin input[type="password"] {
+  margin-bottom: 10px;
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  width: 100%;
 }

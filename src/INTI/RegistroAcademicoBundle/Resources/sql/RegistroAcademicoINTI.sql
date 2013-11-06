@@ -34,21 +34,20 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Aspirante` (
   `NIE` INT NOT NULL,
   `foto` TEXT NOT NULL,
-  `primerApellido` VARCHAR(15) NOT NULL,
-  `segundoApellido` VARCHAR(15) NULL,
+  `primer_apellido` VARCHAR(15) NOT NULL,
+  `segundo_apellido` VARCHAR(15) NULL,
   `nombres` VARCHAR(50) NOT NULL,
   `direccion` TEXT NOT NULL,
   `telefono` VARCHAR(8) NOT NULL,
-  `fechaNac` DATE NOT NULL,
-  `lugarNac` VARCHAR(40) NOT NULL,
-  `sexo` CHAR(1) NOT NULL,
-  `estado` CHAR NOT NULL,
+  `fecha_nac` DATE NOT NULL,
+  `lugar_nac` VARCHAR(40) NOT NULL,
+  `sexo` CHAR NOT NULL,
   `Especialidad` VARCHAR(5) NOT NULL,
   `Encargado` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`NIE`),
-  INDEX `1erApellido` (`primerApellido` ASC),
-  INDEX `2doApellido` (`segundoApellido` ASC),
-  INDEX `apellidos` (`segundoApellido` ASC, `primerApellido` ASC),
+  INDEX `1erApellido` (`primer_apellido` ASC),
+  INDEX `2doApellido` (`segundo_apellido` ASC),
+  INDEX `apellidos` (`segundo_apellido` ASC, `primer_apellido` ASC),
   INDEX `idx_Aspirante_Especialidad` (`Especialidad` ASC),
   INDEX `fk_Aspirante_Encargado1_idx` (`Encargado` ASC),
   CONSTRAINT `fk_Aspirante_Especialidad`
@@ -181,12 +180,14 @@ ENGINE = InnoDB;
 -- Table `Empresa`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Empresa` (
-  `nombre` VARCHAR(50) NOT NULL,
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(100) NOT NULL,
   `contacto` VARCHAR(80) NOT NULL,
   `telefono` VARCHAR(8) NOT NULL,
   `direccion` TEXT NOT NULL,
   `email` VARCHAR(40) NULL,
-  PRIMARY KEY (`nombre`))
+  UNIQUE INDEX `nombre_UNIQUE` (`nombre` ASC),
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -197,7 +198,7 @@ CREATE TABLE IF NOT EXISTS `Anho` (
   `anho` INT NOT NULL,
   `inicio` DATE NOT NULL,
   `fin` DATE NULL,
-  `enCurso` TINYINT(1) NOT NULL,
+  `en_curso` TINYINT(1) NOT NULL,
   PRIMARY KEY (`anho`))
 ENGINE = InnoDB;
 
@@ -209,7 +210,7 @@ CREATE TABLE IF NOT EXISTS `Periodo` (
   `periodo` INT NOT NULL,
   `inicio` DATE NOT NULL,
   `fin` DATE NULL,
-  `enCurso` TINYINT(1) NOT NULL,
+  `en_curso` TINYINT(1) NOT NULL,
   `Anho` INT NOT NULL,
   PRIMARY KEY (`periodo`),
   INDEX `fk_Periodo_Anho1_idx` (`Anho` ASC),
@@ -229,36 +230,26 @@ COLLATE = ucs2_spanish2_ci;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Practica_profesional` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `horario` VARCHAR(10) NOT NULL,
+  `horario` CHAR NOT NULL,
   `inicio` DATE NOT NULL,
   `fin` DATE NULL,
   `evaluacion` DOUBLE(2,2) NULL,
   `Alumno` INT NOT NULL,
-  `Empresa` VARCHAR(50) NOT NULL,
+  `Empresa` INT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `fk_Practica_profesional_Alumno1_idx` (`Alumno` ASC),
-  INDEX `fk_Practica_profesional_Empresa1_idx` (`Empresa` ASC),
   UNIQUE INDEX `UNIQUE` (`Alumno` ASC, `Empresa` ASC),
-  CONSTRAINT `fk_Practica_profesional_Alumno1`
+  INDEX `fk_Practica_profesional_Empresa1_idx` (`Empresa` ASC),
+  CONSTRAINT `fk_Practica_profesional_Alumno`
     FOREIGN KEY (`Alumno`)
     REFERENCES `Alumno` (`NIE`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
-  CONSTRAINT `fk_Practica_profesional_Empresa1`
+  CONSTRAINT `fk_Practica_profesional_Empresa`
     FOREIGN KEY (`Empresa`)
-    REFERENCES `Empresa` (`nombre`)
+    REFERENCES `Empresa` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION)
-ENGINE = InnoDB;
-
-
--- -----------------------------------------------------
--- Table `Profesor`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Profesor` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nombre` VARCHAR(80) NOT NULL,
-  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -268,14 +259,8 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Materia` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nombre` VARCHAR(60) NOT NULL,
-  `Profesor` INT NULL,
-  PRIMARY KEY (`id`),
-  INDEX `fk_Materia_Profesor1_idx` (`Profesor` ASC),
-  CONSTRAINT `fk_Materia_Profesor`
-    FOREIGN KEY (`Profesor`)
-    REFERENCES `Profesor` (`id`)
-    ON DELETE RESTRICT
-    ON UPDATE CASCADE)
+  `profesor` VARCHAR(80) NOT NULL,
+  PRIMARY KEY (`id`))
 ENGINE = InnoDB;
 
 
@@ -307,7 +292,65 @@ CREATE TABLE IF NOT EXISTS `Nota` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+-- -----------------------------------------------------
+-- Table `Servicio_social`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Servicio_social` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `horas_realizadas` DOUBLE NOT NULL,
+  `Alumno` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Servicio_social_Alumno1_idx` (`Alumno` ASC),
+  CONSTRAINT `fk_Servicio_social_Alumno`
+    FOREIGN KEY (`Alumno`)
+    REFERENCES `Alumno` (`NIE`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Encargado_proyecto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Encargado_proyecto` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(80) NOT NULL,
+  `rol` VARCHAR(20) NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `Proyecto`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Proyecto` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(60) NOT NULL,
+  `descripcion` TINYTEXT NULL,
+  `Encargado` INT NOT NULL,
+  `Servicio_social` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  INDEX `fk_Proyecto_Encargado_proyecto1_idx` (`Encargado` ASC),
+  INDEX `fk_Proyecto_Servicio_social1_idx` (`Servicio_social` ASC),
+  CONSTRAINT `fk_Proyecto_Encargado_proyecto`
+    FOREIGN KEY (`Encargado`)
+    REFERENCES `Encargado_proyecto` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_Proyecto_Servicio_social`
+    FOREIGN KEY (`Servicio_social`)
+    REFERENCES `Servicio_social` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
 USE `registro` ;
+
+-- -----------------------------------------------------
+-- Placeholder table for view `Alumno_inscrito`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Alumno_inscrito` (`nie` INT, `foto` INT, `nombre_completo` INT, `direccion` INT, `telefono` INT, `edad` INT, `lugar_nac` INT, `sexo` INT, `codigo` INT);
 
 -- -----------------------------------------------------
 -- procedure bloquear_usuario
@@ -356,6 +399,38 @@ BEGIN
 	UNTIL hecho END REPEAT;
 	CLOSE bloqueos;
 END$$
+
+-- -----------------------------------------------------
+-- function edad
+-- -----------------------------------------------------
+
+DELIMITER $$
+USE `registro`$$
+CREATE FUNCTION `edad` (fecha DATE) RETURNS INT DETERMINISTIC
+	RETURN DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW()) - TO_DAYS(fecha)), '%Y') + 0;$$
+
+-- -----------------------------------------------------
+-- View `Alumno_inscrito`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `Alumno_inscrito`;
+USE `registro`;
+CREATE  OR REPLACE VIEW `Alumno_inscrito` AS
+SELECT
+	ap.nie,
+	ap.foto,
+	CONCAT_WS(' ', ap.nombres, ap.primer_apellido, ap.segundo_apellido) AS nombre_completo,
+	ap.direccion,
+	ap.telefono,
+	edad(ap.fecha_nac) AS edad,
+	ap.lugar_nac,
+	ap.sexo,
+	cd.codigo
+FROM
+	Aspirante ap,
+	Alumno al,
+	Codigo_especialidad cd
+WHERE
+	al.NIE = ap.NIE;
 CREATE USER 'academico' IDENTIFIED BY 'R1N9ts!ru040ct3dc3nm1€0l';
 
 GRANT DELETE, INSERT, SELECT, UPDATE ON TABLE `registro`.`Aspirante` TO 'academico';

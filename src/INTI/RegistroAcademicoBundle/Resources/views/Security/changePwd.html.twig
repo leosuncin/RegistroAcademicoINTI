@@ -2,8 +2,8 @@
 
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span> <a href="{{ path('user_info', { 'username':usuario.username }) }} ">Usuario</a></li>
-<li class="active"><span class="divider">&gt;</span> Principal</li>
+<li><span class="divider">&gt;</span> <a href="{{ path('user_info', { 'username': usuario.username }) }} ">Usuario</a></li>
+<li class="active"><span class="divider">&gt;</span> Cambiar contraseña</li>
 {% endblock %}
 
 {% block content %}
@@ -23,4 +23,8 @@
         {{ form_errors(form)|label_important }}
     </div>
 </form>
+{% endblock %}
+
+{% block javascript %}
+{{ load.script({form: true}) }}
 {% endblock %}

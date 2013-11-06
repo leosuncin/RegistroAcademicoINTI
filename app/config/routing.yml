@@ -2,3 +2,6 @@ registro_academico:
     resource: "@RegistroAcademicoBundle/Controller/"
     type:     annotation
     prefix:   /
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"

@@ -19,13 +19,11 @@ class AppKernel extends Kernel
             new JMS\AopBundle\JMSAopBundle(),
             new JMS\DiExtraBundle\JMSDiExtraBundle($this),
             new JMS\SerializerBundle\JMSSerializerBundle(),
-            new Knp\Bundle\MenuBundle\KnpMenuBundle(),
-            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Bc\Bundle\BootstrapBundle\BcBootstrapBundle(),
             new EE\DataExporterBundle\EEDataExporterBundle(),
             new Slik\DompdfBundle\SlikDompdfBundle(),
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
-            new Nelmio\SecurityBundle\NelmioSecurityBundle(),
+            new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new INTI\RegistroAcademicoBundle\RegistroAcademicoBundle(),
         );
 

@@ -1,8 +1,7 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
 {% block style %}
-{{ parent() }}
-<link rel="stylesheet" href="{{ asset('assets/bootstrap-datepicker/css/datepicker.css') }}" />
+{{ load.css({ calendar: true }) }}
 {% endblock %}
 
 {% block breadcrumb %}
@@ -24,6 +23,5 @@
 {% endblock %}
 
 {% block javascript %}
-{{ parent() }}
 {{ load.script({ form: true, foto: true, calendar: true })}}
 {% endblock %}

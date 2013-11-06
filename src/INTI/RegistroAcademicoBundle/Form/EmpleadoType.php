@@ -56,6 +56,7 @@ class EmpleadoType extends AbstractType
 							'label'      => 'DUI',
 							'max_length' => 10,
 							'attr'       => array(
+                                'class'       => 'dui',
 								'placeholder' => 'Por ejemplo: 12345678-9'
 					)))
 				->add('isss',
@@ -64,6 +65,7 @@ class EmpleadoType extends AbstractType
 							'label'      => 'ISSS',
 							'max_length' => 9,
 							'attr'       => array(
+                                'class'       => 'isss',
 								'placeholder' => 'Por ejemplo: 123456789'
 					)))
 				->add('nit',
@@ -72,6 +74,7 @@ class EmpleadoType extends AbstractType
 							'label'      => 'NIT',
 							'max_length' => 17,
 							'attr'       => array(
+                                'class'       => 'nit',
 								'placeholder' => 'Por ejemplo: 1234-010190-123-6'
 					)))
 				->add('nup',
@@ -80,9 +83,10 @@ class EmpleadoType extends AbstractType
 							'label'      => 'NUP',
 							'max_length' => 12,
 							'attr'       => array(
+                                'class'       => 'nup',
 								'placeholder' => 'Por ejemplo: 1234123412341234'
 					)))
-				->add('usuario', new UsuarioType());
+				->add('usuario', new UsuarioType(), array('label' => false));
 		}
 
 		/**

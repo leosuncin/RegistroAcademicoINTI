@@ -1,13 +1,17 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
+{% block style %}
+{{ load.css({ calendar: true }) }}
+{% endblock %}
+
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span><a href="{{ path('aspirante_index') }}">Aspirante</a></li>
+<li><span class="divider">&gt;</span><a href="{{ path('aspirante_index') }}">Aspirantes</a></li>
 <li class="active"><span class="divider">&gt;</span>Modificar</li>
 {% endblock %}
 
-{% block content -%}
-<form action="{{ path('aspirante_update', { 'id': entity.nie  }) }}" method="POST" {{ form_enctype(edit_form) }} class="form-horizontal">
+{% block content %}
+<form action="{{ path('aspirante_update', { 'nie': aspirante.nie  }) }}" method="POST" {{ form_enctype(edit_form) }} class="form-horizontal">
     {{ form_label(edit_form.foto) }}
     <input type="file" id="filePicker" class="btn"/>
     <input type="hidden" name="_method" value="PUT" />
@@ -15,12 +19,11 @@
     <div class="form-actions">
         <input type="submit" value="Modificar" class="btn btn-primary" />
         <a class="btn" href="{{ path('aspirante_index') }}">Cancelar</a>
-        <a href="{{ path('aspirante_erase', { 'id': entity.nie }) }}" class="btn btn-danger">Eliminar</a>
+        <a href="{{ path('aspirante_erase', { 'nie': aspirante.nie }) }}" class="btn btn-danger">Eliminar</a>
     </div>
 </form>
 {% endblock %}
 
 {% block javascript %}
-{{ parent() }}
 {{ load.script({ form: true, foto: true, calendar: true }) }}
 {% endblock %}

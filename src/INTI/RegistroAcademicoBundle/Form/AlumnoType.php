@@ -31,7 +31,7 @@ class AlumnoType extends AbstractType
 			->add('nie',
 				new AspiranteType(),
 				array(
-					'label' => null
+					'label' => false
 				))
 		->add('codigoEspecialidad',
 			'entity',

@@ -5,7 +5,6 @@ namespace INTI\RegistroAcademicoBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use INTI\RegistroAcademicoBundle\Form\ProfesorType;
 
 class MateriaType extends AbstractType
 {
@@ -23,8 +22,11 @@ class MateriaType extends AbstractType
 					'max_length' => 60
 				))
 			->add('profesor',
-				new ProfesorType()
-			)
+				'text',
+                array(
+                    'label'      => 'Profesor encargado',
+                    'max_length' => 80
+			))
 		;
 	}
 

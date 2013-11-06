@@ -15,171 +15,197 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Empresa
 {
-    /**
-     * @var string
-     *
-     * @Assert\Length(
-     *      min = "5",
-     *      max = "50",
-     *      minMessage = "El nombre por lo menos debe tener {{ limit }} caracteres de largo",
-     *      maxMessage = "El nombre no puede tener más de {{ limit }} caracteres de largo"
-     * )
-     *
-     * @ORM\Column(name="nombre", type="string", length=50, nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $nombre;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="id", type="integer", nullable=false)
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="IDENTITY")
+	 */
+	private $id;
 
-    /**
-     * @var string
-     *
-     * @Assert\Length(
-     *      min = "3",
-     *      max = "80",
-     *      minMessage = "El nombre del contacto por lo menos debe tener {{ limit }} caracteres de largo",
-     *      maxMessage = "El nombre del contacto no puede tener más de {{ limit }} caracteres de largo"
-     * )
-     *
-     * @ORM\Column(name="contacto", type="string", length=80, nullable=false)
-     */
-    private $contacto;
+	/**
+	 * @var string
+	 *
+	 * @Assert\Length(
+	 *      min = "5",
+	 *      max = "100",
+	 *      minMessage = "El nombre por lo menos debe tener {{ limit }} caracteres de largo",
+	 *      maxMessage = "El nombre no puede tener más de {{ limit }} caracteres de largo"
+	 * )
+	 *
+	 * @ORM\Column(name="nombre", type="string", length=100, nullable=false)
+	 */
+	private $nombre;
 
-    /**
-     * @var string
-     *
-     * @Assert\Regex(
-     *     pattern = "/^\d{8}$/",
-     *     message = "El telefono debe contener solo 8 números"
-     * )
-     *
-     * @ORM\Column(name="telefono", type="string", length=8, nullable=false)
-     */
-    private $telefono;
+	/**
+	 * @var string
+	 *
+	 * @Assert\Length(
+	 *      min = "3",
+	 *      max = "80",
+	 *      minMessage = "El nombre del contacto por lo menos debe tener {{ limit }} caracteres de largo",
+	 *      maxMessage = "El nombre del contacto no puede tener más de {{ limit }} caracteres de largo"
+	 * )
+	 *
+	 * @ORM\Column(name="contacto", type="string", length=80, nullable=false)
+	 */
+	private $contacto;
 
-    /**
-     * @var string
-     *
-     * @Assert\NotBlank(message = "Debe especificar una dirección")
-     * 
-     * @ORM\Column(name="direccion", type="text", nullable=false)
-     */
-    private $direccion;
+	/**
+	 * @var string
+	 *
+	 * @Assert\Regex(
+	 *     pattern = "/^\d{8}$/",
+	 *     message = "El telefono debe contener solo 8 números"
+	 * )
+	 *
+	 * @ORM\Column(name="telefono", type="string", length=8, nullable=false)
+	 */
+	private $telefono;
 
-    /**
-     * @var string
-     *
-     * @Assert\Email(
-     *     message = "El correo '{{ value }}' no es una dirección valida",
-     *     checkMX = true,
-     *     checkHost = true
-     * )
-     *
-     * @ORM\Column(name="email", type="string", length=40, nullable=true)
-     */
-    private $email;
+	/**
+	 * @var string
+	 *
+	 * @Assert\NotBlank(message = "Debe especificar una dirección")
+	 *
+	 * @ORM\Column(name="direccion", type="text", nullable=false)
+	 */
+	private $direccion;
 
+	/**
+	 * @var string
+	 *
+	 * @Assert\Email(
+	 *     message = "El correo '{{ value }}' no es una dirección valida"
+	 * )
+	 *
+	 * @ORM\Column(name="email", type="string", length=40, nullable=true)
+	 */
+	private $email;
 
+	/**
+	 * Get id
+	 *
+	 * @return integer
+	 */
+	public function getId()
+	{
+		return $this->id;
+	}
 
-    /**
-     * Get nombre
-     *
-     * @return string 
-     */
-    public function getNombre()
-    {
-        return $this->nombre;
-    }
+	/**
+	 * Set nombre
+	 *
+	 * @param string $nombre
+	 * @return Empresa
+	 */
+	public function setNombre($nombre)
+	{
+		$this->nombre = $nombre;
 
-    /**
-     * Set contacto
-     *
-     * @param string $contacto
-     * @return Empresa
-     */
-    public function setContacto($contacto)
-    {
-        $this->contacto = $contacto;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get contacto
-     *
-     * @return string 
-     */
-    public function getContacto()
-    {
-        return $this->contacto;
-    }
+	/**
+	 * Get nombre
+	 *
+	 * @return string
+	 */
+	public function getNombre()
+	{
+		return $this->nombre;
+	}
 
-    /**
-     * Set telefono
-     *
-     * @param string $telefono
-     * @return Empresa
-     */
-    public function setTelefono($telefono)
-    {
-        $this->telefono = $telefono;
-    
-        return $this;
-    }
+	/**
+	 * Set contacto
+	 *
+	 * @param string $contacto
+	 * @return Empresa
+	 */
+	public function setContacto($contacto)
+	{
+		$this->contacto = $contacto;
 
-    /**
-     * Get telefono
-     *
-     * @return string 
-     */
-    public function getTelefono()
-    {
-        return $this->telefono;
-    }
+		return $this;
+	}
 
-    /**
-     * Set direccion
-     *
-     * @param string $direccion
-     * @return Empresa
-     */
-    public function setDireccion($direccion)
-    {
-        $this->direccion = $direccion;
-    
-        return $this;
-    }
+	/**
+	 * Get contacto
+	 *
+	 * @return string
+	 */
+	public function getContacto()
+	{
+		return $this->contacto;
+	}
 
-    /**
-     * Get direccion
-     *
-     * @return string 
-     */
-    public function getDireccion()
-    {
-        return $this->direccion;
-    }
+	/**
+	 * Set telefono
+	 *
+	 * @param string $telefono
+	 * @return Empresa
+	 */
+	public function setTelefono($telefono)
+	{
+		$this->telefono = $telefono;
 
-    /**
-     * Set email
-     *
-     * @param string $email
-     * @return Empresa
-     */
-    public function setEmail($email)
-    {
-        $this->email = $email;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get email
-     *
-     * @return string 
-     */
-    public function getEmail()
-    {
-        return $this->email;
-    }
+	/**
+	 * Get telefono
+	 *
+	 * @return string
+	 */
+	public function getTelefono()
+	{
+		return $this->telefono;
+	}
+
+	/**
+	 * Set direccion
+	 *
+	 * @param string $direccion
+	 * @return Empresa
+	 */
+	public function setDireccion($direccion)
+	{
+		$this->direccion = $direccion;
+
+		return $this;
+	}
+
+	/**
+	 * Get direccion
+	 *
+	 * @return string
+	 */
+	public function getDireccion()
+	{
+		return $this->direccion;
+	}
+
+	/**
+	 * Set email
+	 *
+	 * @param string $email
+	 * @return Empresa
+	 */
+	public function setEmail($email)
+	{
+		$this->email = $email;
+
+		return $this;
+	}
+
+	/**
+	 * Get email
+	 *
+	 * @return string
+	 */
+	public function getEmail()
+	{
+		return $this->email;
+	}
 }

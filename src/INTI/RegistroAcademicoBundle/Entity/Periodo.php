@@ -14,157 +14,157 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  */
 class Periodo
 {
-    /**
-     * @var integer
-     *
-     * @Assert\Range(
-     *      min = "1",
-     *      max = "5",
-     *      minMessage = "El periodo no debe ser menor que {{ limit }}",
-     *      maxMessage = "El periodo no debe ser mayor que {{ limit }}"
-     * )
-     *
-     * @ORM\Column(name="periodo", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
-     */
-    private $periodo;
+	/**
+	 * @var integer
+	 *
+	 * @Assert\Range(
+	 *      min = "1",
+	 *      max = "5",
+	 *      minMessage = "El periodo no debe ser menor que {{ limit }}",
+	 *      maxMessage = "El periodo no debe ser mayor que {{ limit }}"
+	 * )
+	 *
+	 * @ORM\Column(name="periodo", type="integer", nullable=false)
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="IDENTITY")
+	 */
+	private $periodo;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="inicio", type="date", nullable=false)
-     */
-    private $inicio;
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="inicio", type="date", nullable=false)
+	 */
+	private $inicio;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fin", type="date", nullable=true)
-     */
-    private $fin;
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="fin", type="date", nullable=true)
+	 */
+	private $fin;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="enCurso", type="boolean", nullable=false)
-     */
-    private $encurso;
+	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="en_curso", type="boolean", nullable=false)
+	 */
+	private $enCurso;
 
-    /**
-     * @var \Anho
-     *
-     * @ORM\ManyToOne(targetEntity="Anho")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="Anho", referencedColumnName="anho")
-     * })
-     */
-    private $anho;
+	/**
+	 * @var \Anho
+	 *
+	 * @ORM\ManyToOne(targetEntity="Anho")
+	 * @ORM\JoinColumns({
+	 *   @ORM\JoinColumn(name="Anho", referencedColumnName="anho")
+	 * })
+	 */
+	private $anho;
 
 
 
-    /**
-     * Get periodo
-     *
-     * @return integer 
-     */
-    public function getPeriodo()
-    {
-        return $this->periodo;
-    }
+	/**
+	 * Get periodo
+	 *
+	 * @return integer
+	 */
+	public function getPeriodo()
+	{
+		return $this->periodo;
+	}
 
-    /**
-     * Set inicio
-     *
-     * @param \DateTime $inicio
-     * @return Periodo
-     */
-    public function setInicio($inicio)
-    {
-        $this->inicio = $inicio;
-    
-        return $this;
-    }
+	/**
+	 * Set inicio
+	 *
+	 * @param \DateTime $inicio
+	 * @return Periodo
+	 */
+	public function setInicio($inicio)
+	{
+		$this->inicio = $inicio;
 
-    /**
-     * Get inicio
-     *
-     * @return \DateTime
-     */
-    public function getInicio()
-    {
-        return $this->inicio;
-    }
+		return $this;
+	}
 
-    /**
-     * Set fin
-     *
-     * @param \DateTime $fin
-     * @return Periodo
-     */
-    public function setFin($fin)
-    {
-        if($fin > $this->inicio)
-            $this->fin = null;
-        else
-            $this->fin = $fin;
-    
-        return $this;
-    }
+	/**
+	 * Get inicio
+	 *
+	 * @return \DateTime
+	 */
+	public function getInicio()
+	{
+		return $this->inicio;
+	}
 
-    /**
-     * Get fin
-     *
-     * @return \DateTime
-     */
-    public function getFin()
-    {
-        return $this->fin;
-    }
+	/**
+	 * Set fin
+	 *
+	 * @param \DateTime $fin
+	 * @return Periodo
+	 */
+	public function setFin($fin)
+	{
+		if($fin > $this->inicio)
+			$this->fin = null;
+		else
+			$this->fin = $fin;
 
-    /**
-     * Set encurso
-     *
-     * @param boolean $encurso
-     * @return Periodo
-     */
-    public function setEncurso($encurso)
-    {
-        $this->encurso = $encurso;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get encurso
-     *
-     * @return boolean 
-     */
-    public function getEncurso()
-    {
-        return $this->encurso;
-    }
+	/**
+	 * Get fin
+	 *
+	 * @return \DateTime
+	 */
+	public function getFin()
+	{
+		return $this->fin;
+	}
 
-    /**
-     * Set anho
-     *
-     * @param \INTI\RegistroAcademicoBundle\Entity\Anho $anho
-     * @return Periodo
-     */
-    public function setAnho(\INTI\RegistroAcademicoBundle\Entity\Anho $anho = null)
-    {
-        $this->anho = $anho;
-    
-        return $this;
-    }
+	/**
+	 * Set enCurso
+	 *
+	 * @param boolean $enCurso
+	 * @return Periodo
+	 */
+	public function setEnCurso($enCurso)
+	{
+		$this->enCurso = $enCurso;
 
-    /**
-     * Get anho
-     *
-     * @return \INTI\RegistroAcademicoBundle\Entity\Anho 
-     */
-    public function getAnho()
-    {
-        return $this->anho;
-    }
+		return $this;
+	}
+
+	/**
+	 * Get enCurso
+	 *
+	 * @return boolean
+	 */
+	public function getEnCurso()
+	{
+		return $this->enCurso;
+	}
+
+	/**
+	 * Set anho
+	 *
+	 * @param \INTI\RegistroAcademicoBundle\Entity\Anho $anho
+	 * @return Periodo
+	 */
+	public function setAnho(\INTI\RegistroAcademicoBundle\Entity\Anho $anho = null)
+	{
+		$this->anho = $anho;
+
+		return $this;
+	}
+
+	/**
+	 * Get anho
+	 *
+	 * @return \INTI\RegistroAcademicoBundle\Entity\Anho
+	 */
+	public function getAnho()
+	{
+		return $this->anho;
+	}
 }

@@ -1,8 +1,7 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
 {% block style %}
-{{ parent() }}
-{{ load.sheet({ watable: true }) }}
+{{ load.css({ watable: true }) }}
 {% endblock %}
 
 {% block breadcrumb %}
@@ -48,8 +47,8 @@
                 {% endif %}</td>
             <td>
                 <div class="btn-group btn-group-vertical">
-                    <a class="btn btn-info" href="{{ path('empleado_show', { 'id': entity.dui }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
-                    <a class="btn btn-info" href="{{ path('empleado_edit', { 'id': entity.dui }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+                    <a class="btn btn-mini btn-info" href="{{ path('empleado_show', { 'id': entity.dui }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
+                    <a class="btn btn-mini btn-info" href="{{ path('empleado_edit', { 'id': entity.dui }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
                 </div>
             </td>
         </tr>
@@ -60,6 +59,5 @@
 {% endblock %}
 
 {% block javascript %}
-{{ parent() }}
 {{ load.script({ watable: true }) }}
 {% endblock %}

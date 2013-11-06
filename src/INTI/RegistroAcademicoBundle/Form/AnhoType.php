@@ -45,7 +45,7 @@ class AnhoType extends AbstractType
 					'format'          => 'dd/MM/yyyy',
 					'invalid_message' => 'La fecha debe tener mel formato dd/mm/yyyy',
 					'attr'            => array(
-					'placeholder'         => 'Por ejemplo: 17/11/1990',
+					'placeholder'          => 'Por ejemplo: 17/11/1990',
 						'class'            => 'date',
 						'required'         => false,
 						'data-provide'     => 'datepicker',

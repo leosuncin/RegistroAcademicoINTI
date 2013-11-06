@@ -17,13 +17,13 @@ class AspiranteType extends AbstractType
 	{
 		$builder
 			->add('foto', 'hidden')
-			->add('primerapellido',
+			->add('primerApellido',
 				'text',
 				array(
 					'label'      => 'Primer apellido',
 					'max_length' => 15
 				))
-			->add('segundoapellido',
+			->add('segundoApellido',
 				'text',
 				array(
 					'label'      => 'Segundo apellido',
@@ -54,9 +54,10 @@ class AspiranteType extends AbstractType
 					'label'      => 'Teléfono',
 					'max_length' => 8,
 					'attr'       => array(
+                        'class'       => 'telefono',
 						'placeholder' => 'Por ejemplo: 23253526'
 			)))
-			->add('fechanac',
+			->add('fechaNac',
 				'birthday',
 				array(
 					'label'     => 'Fecha de nacimiento',
@@ -71,7 +72,7 @@ class AspiranteType extends AbstractType
 						'data-viewmode' => 'years',
 						'data-language' => 'es'
 			)))
-			->add('lugarnac',
+			->add('lugarNac',
 				'text',
 				array(
 					'label'      => 'Lugar de nacimiento',
@@ -85,17 +86,7 @@ class AspiranteType extends AbstractType
 						'M' => 'Masculino',
 						'F' => 'Femenino'
 				)))
-			->add('estado',
-					'choice',
-					array(
-						'label'   => 'Estado de la aplicación',
-						'choices' => array(
-							'P' => 'Pendiente',
-							'A' => 'Aprobado',
-							'R' => 'Reprobado',
-							'M' => 'Matriculado'
-				)))
-			->add('encargado', new EncargadoType());
+			->add('encargado', new EncargadoType(), array('label' => false));
 	}
 
 	/**

@@ -19,7 +19,7 @@ class EmpresaType extends AbstractType
 				'text',
 				array(
 					'label'      => 'Nombre',
-					'max_length' => 50
+					'max_length' => 100
 				))
 			->add('contacto',
 				'text',

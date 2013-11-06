@@ -12,119 +12,119 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Anho
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="anho", type="integer", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="NONE")
-     */
-    private $anho;
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="anho", type="integer", nullable=false)
+	 * @ORM\Id
+	 * @ORM\GeneratedValue(strategy="NONE")
+	 */
+	private $anho;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="inicio", type="date", nullable=false)
-     */
-    private $inicio;
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="inicio", type="date", nullable=false)
+	 */
+	private $inicio;
 
-    /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="fin", type="date", nullable=true)
-     */
-    private $fin;
+	/**
+	 * @var \DateTime
+	 *
+	 * @ORM\Column(name="fin", type="date", nullable=true)
+	 */
+	private $fin;
 
-    /**
-     * @var boolean
-     *
-     * @ORM\Column(name="enCurso", type="boolean", nullable=false)
-     */
-    private $encurso;
+	/**
+	 * @var boolean
+	 *
+	 * @ORM\Column(name="en_curso", type="boolean", nullable=false)
+	 */
+	private $enCurso;
 
-    public function __construct() {
-        $this->inicio = new \DateTime("now");
-        $this->anho = $this->inicio->format("Y");
-        $this->encurso = TRUE;
-    }
+	public function __construct() {
+		$this->inicio = new \DateTime("now");
+		$this->anho = $this->inicio->format("Y");
+		$this->encurso = TRUE;
+	}
 
-    /**
-     * Get anho
-     *
-     * @return integer 
-     */
-    public function getAnho()
-    {
-        return $this->anho;
-    }
+	/**
+	 * Get anho
+	 *
+	 * @return integer
+	 */
+	public function getAnho()
+	{
+		return $this->anho;
+	}
 
-    /**
-     * Set inicio
-     *
-     * @param \DateTime $inicio
-     * @return Anho
-     */
-    public function setInicio($inicio)
-    {
-        $this->inicio = $inicio;
-        $this->anho = $inicio->format("Y");
-    
-        return $this;
-    }
+	/**
+	 * Set inicio
+	 *
+	 * @param \DateTime $inicio
+	 * @return Anho
+	 */
+	public function setInicio($inicio)
+	{
+		$this->inicio = $inicio;
+		$this->anho = $inicio->format("Y");
 
-    /**
-     * Get inicio
-     *
-     * @return \DateTime 
-     */
-    public function getInicio()
-    {
-        return $this->inicio;
-    }
+		return $this;
+	}
 
-    /**
-     * Set fin
-     *
-     * @param \DateTime $fin
-     * @return Anho
-     */
-    public function setFin($fin)
-    {
-        $this->fin = $fin;
-    
-        return $this;
-    }
+	/**
+	 * Get inicio
+	 *
+	 * @return \DateTime
+	 */
+	public function getInicio()
+	{
+		return $this->inicio;
+	}
 
-    /**
-     * Get fin
-     *
-     * @return \DateTime 
-     */
-    public function getFin()
-    {
-        return $this->fin;
-    }
+	/**
+	 * Set fin
+	 *
+	 * @param \DateTime $fin
+	 * @return Anho
+	 */
+	public function setFin($fin)
+	{
+		$this->fin = $fin;
 
-    /**
-     * Set encurso
-     *
-     * @param boolean $encurso
-     * @return Anho
-     */
-    public function setEncurso($encurso)
-    {
-        $this->encurso = $encurso;
-    
-        return $this;
-    }
+		return $this;
+	}
 
-    /**
-     * Get encurso
-     *
-     * @return boolean 
-     */
-    public function getEncurso()
-    {
-        return $this->encurso;
-    }
+	/**
+	 * Get fin
+	 *
+	 * @return \DateTime
+	 */
+	public function getFin()
+	{
+		return $this->fin;
+	}
+
+	/**
+	 * Set enCurso
+	 *
+	 * @param boolean $enCurso
+	 * @return Anho
+	 */
+	public function setEnCurso($enCurso)
+	{
+		$this->enCurso = $enCurso;
+
+		return $this;
+	}
+
+	/**
+	 * Get enCurso
+	 *
+	 * @return boolean
+	 */
+	public function getEnCurso()
+	{
+		return $this->enCurso;
+	}
 }
