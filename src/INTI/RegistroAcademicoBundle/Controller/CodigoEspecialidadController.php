@@ -217,7 +217,7 @@ class CodigoEspecialidadController extends Controller
      * @Route("/ComboCodigoEspecialidad", name="ComboCodigoEspecialidadAjax")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexComboAction()
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
@@ -231,10 +231,10 @@ class CodigoEspecialidadController extends Controller
     /**
      * Lists all Especialidad entities.
      *
-     * @Route("/", name="ComboEspecialidadAjax")
+     * @Route("/index", name="ComboEspecialidadAjax")
      * @Method("GET")
      */
-    public function indexAction()
+    public function indexAjaxAction()
     {
         $em = $this->getDoctrine()->getManager();
         $entities = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
