@@ -45,6 +45,8 @@ class BuscarAspiranteEspecificoAjax extends Controller
 					$text="<span style='color:#f00'>".$text." ya esta matriculado</span>";
 				break;
 			}
+			$text.="<input type='hidden' id='userNameH' value='".substr(strtoupper($aspirante->getPrimerapellido()), 0, 1).substr(strtolower($aspirante->getSegundoapellido()), 0, 1).$aspirante->getNie()."'>";
+			$text.="<input type='hidden' id='passwordH' value='".substr(md5($aspirante->getNie()), 0, 8)."'>";
 		} catch (\Doctrine\Orm\NoResultException $e) {
 			$text = "No se ha seleccionado ningun aspirante valido";
 		}	
