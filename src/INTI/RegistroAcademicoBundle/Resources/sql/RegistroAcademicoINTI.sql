@@ -352,12 +352,12 @@ USE `registro` ;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Alumno_inscrito` (`nie` INT, `foto` INT, `nombre_completo` INT, `direccion` INT, `telefono` INT, `edad` INT, `lugar_nac` INT, `sexo` INT, `codigo` INT);
 
+DELIMITER $$
+USE `registro`$$
 -- -----------------------------------------------------
 -- procedure bloquear_usuario
 -- -----------------------------------------------------
 
-DELIMITER $$
-USE `registro`$$
 CREATE PROCEDURE `bloquear_usuario` (IN usuario VARCHAR(50))
 BEGIN
 	IF EXISTS (SELECT username FROM Usuario WHERE username = usuario) THEN
@@ -370,8 +370,6 @@ END$$
 -- procedure desbloquear_usuario
 -- -----------------------------------------------------
 
-DELIMITER $$
-USE `registro`$$
 CREATE PROCEDURE `desbloquear_usuario` (IN usuario VARCHAR(50))
 BEGIN
 	IF EXISTS (SELECT username FROM Usuario WHERE username = usuario) THEN
@@ -384,8 +382,6 @@ END$$
 -- procedure desbloquear_usuarios
 -- -----------------------------------------------------
 
-DELIMITER $$
-USE `registro`$$
 CREATE PROCEDURE `desbloquear_usuarios` ()
 BEGIN
 	DECLARE hecho BOOLEAN DEFAULT FALSE;
@@ -404,11 +400,10 @@ END$$
 -- function edad
 -- -----------------------------------------------------
 
-DELIMITER $$
-USE `registro`$$
 CREATE FUNCTION `edad` (fecha DATE) RETURNS INT DETERMINISTIC
 	RETURN DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW()) - TO_DAYS(fecha)), '%Y') + 0;$$
 
+DELIMITER ;
 -- -----------------------------------------------------
 -- View `Alumno_inscrito`
 -- -----------------------------------------------------
@@ -431,6 +426,7 @@ FROM
 	Codigo_especialidad cd
 WHERE
 	al.NIE = ap.NIE;
+
 CREATE USER 'academico' IDENTIFIED BY 'R1N9ts!ru040ct3dc3nm1€0l';
 
 GRANT DELETE, INSERT, SELECT, UPDATE ON TABLE `registro`.`Aspirante` TO 'academico';
@@ -524,8 +520,6 @@ INSERT INTO `Codigo_especialidad` (`codigo`, `anho`, `seccion`, `Especialidad`) 
 
 COMMIT;
 
-USE `registro`;
-
 DELIMITER $$
 USE `registro`$$
 CREATE TRIGGER `verificar_bloqueo` BEFORE UPDATE ON `Usuario` FOR EACH ROW
@@ -537,17 +531,14 @@ BEGIN
 	END IF;
 END$$
 
-USE `registro`$$
 CREATE TRIGGER `Eliminar_Usuario_Empleado` AFTER DELETE ON `Empleado` FOR EACH ROW
 -- Edit trigger body code below this line. Do not edit lines above this one
 DELETE FROM Usuario WHERE username = OLD.Usuario;$$
 
-USE `registro`$$
 CREATE TRIGGER `Eliminar_Usuario_Alumno` AFTER DELETE ON `Alumno` FOR EACH ROW
 -- Edit trigger body code below this line. Do not edit lines above this one
 DELETE FROM Usuario WHERE username = OLD.Usuario;$$
 
-USE `registro`$$
 CREATE TRIGGER `check_enCurso_anho` BEFORE INSERT ON `Anho` FOR EACH ROW
 -- Edit trigger body code below this line. Do not edit lines above this one
 BEGIN
@@ -555,12 +546,11 @@ BEGIN
 		SET NEW.inicio = CURDATE();
 	END IF;
 	IF ISNULL(NEW.fin) THEN
-		SET NEW.enCurso = TRUE;
+		SET NEW.en_curso = TRUE;
 	END IF;
 	SET NEW.anho = YEAR(NEW.inicio);
 END$$
 
-USE `registro`$$
 CREATE TRIGGER `check_close_anho` BEFORE UPDATE ON `Anho` FOR EACH ROW
 -- Edit trigger body code below this line. Do not edit lines above this one
 BEGIN
@@ -568,13 +558,12 @@ BEGIN
 		SIGNAL SQLSTATE '45000' SET message_text = 'La fecha de cierre no puede ser antes de la de apertura';
 	END IF;
 	IF ISNULL(NEW.fin) THEN
-		SET NEW.enCurso = TRUE;
+		SET NEW.en_curso = TRUE;
 	ELSE
-		SET NEW.enCurso = FALSE;
+		SET NEW.en_curso = FALSE;
 	END IF;
 END$$
 
-USE `registro`$$
 CREATE TRIGGER `check_enCurso_periodo` BEFORE INSERT ON `Periodo` FOR EACH ROW
 -- Edit trigger body code below this line. Do not edit lines above this one
 BEGIN
@@ -582,13 +571,12 @@ BEGIN
 		SET NEW.inicio = CURDATE();
 	END IF;
 	IF ISNULL(NEW.fin) THEN
-		SET NEW.enCurso = TRUE;
+		SET NEW.en_curso = TRUE;
 	ELSE
-		SET NEW.enCurso = FALSE;
+		SET NEW.en_curso = FALSE;
 	END IF;
 END$$
 
-USE `registro`$$
 CREATE TRIGGER `check_close_periodo` BEFORE UPDATE ON `Periodo` FOR EACH ROW
 -- Edit trigger body code below this line. Do not edit lines above this one
 BEGIN
@@ -596,18 +584,12 @@ BEGIN
 		SIGNAL SQLSTATE '45000' SET message_text = 'La fecha de cierre no puede ser antes de la de apertura';
 	END IF;
 	IF ISNULL(NEW.fin) THEN
-		SET NEW.enCurso = TRUE;
+		SET NEW.en_curso = TRUE;
 	ELSE
-		SET NEW.enCurso = FALSE;
+		SET NEW.en_curso = FALSE;
 	END IF;
 END$$
 
-
-DELIMITER ;
-
-DELIMITER $$
-
-USE `registro`$$
 CREATE EVENT `actualizar_bloqueo_usuarios` ON SCHEDULE EVERY 1 HOUR DO CALL desbloquear_usuarios()$$
 
 DELIMITER ;

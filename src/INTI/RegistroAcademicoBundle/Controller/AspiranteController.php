@@ -28,13 +28,29 @@ class AspiranteController extends Controller
 	public function indexAction()
 	{
 		$em = $this->getDoctrine()->getManager();
+		$request = $this->getRequest();
 
-		$aspirantes = $em->getRepository('RegistroAcademicoBundle:Aspirante')->findAll();
-
-		return array(
-			'aspirantes' => $aspirantes,
-			'title'    => 'Consultar aspirantes'
-		);
+		if($request->isXmlHttpRequest()) {
+			$qb = $em->getRepository('RegistroAcademicoBundle:Aspirante')
+				->createQueryBuilder('ap')
+				->where('ap.primerApellido LIKE :apellido')
+				->orWhere('ap.segundoApellido LIKE :apellido')
+				->setParameter(':apellido', '%'.$request->get('apellido'))
+				->getQuery();
+			$aspirantes = $qb->getResult();
+			$this->render(
+				'RegistroAcademicoBundle:Aspirante:indexAjax.html.twig',
+				array(
+					'aspirantes' => $aspirantes,
+					'title'      => 'Consultar aspirantes'
+				));
+		} else {
+			$aspirantes = $em->getRepository('RegistroAcademicoBundle:Aspirante')->findAll();
+			return array(
+				'aspirantes' => $aspirantes,
+				'title'      => 'Consultar aspirantes'
+			);
+		}
 	}
 
 	/**
