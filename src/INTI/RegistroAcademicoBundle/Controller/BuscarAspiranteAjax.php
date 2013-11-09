@@ -34,7 +34,11 @@ class BuscarAspiranteAjax extends Controller
 				'nie'=>$search."%",
 			);
         $em = $this->getDoctrine()->getManager();
+<<<<<<< HEAD
 		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p JOIN p.especialidad u WHERE CONCAT(CONCAT(CONCAT(CONCAT(p.nombres,' '),p.primerApellido),' '),p.segundoApellido) LIKE :nombres or p.nie LIKE :nie";
+=======
+		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p JOIN p.especialidad u WHERE p.estado='A' AND CONCAT(CONCAT(CONCAT(CONCAT(p.nombres,' '),p.primerapellido),' '),p.segundoapellido) LIKE :nombres or p.nie LIKE :nie AND p.estado='A'";
+>>>>>>> 6c4a563541d791036fa90d0d2e8bae23908eeeff
 		if(($_REQUEST['esp']!="todas")&&($_REQUEST['esp']!="")){
 			$parameters['especialidad']=$_REQUEST['esp'];
 			$dql.=" AND u.codigo=:especialidad";
