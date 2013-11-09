@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use INTI\RegistroAcademicoBundle\Entity\Alumno;
 use INTI\RegistroAcademicoBundle\Form\AlumnoType;
 
+
 /**
  * Alumno controller.
  *

@@ -15,6 +15,7 @@
 {% block content %}
 <form id="newAlumnoForm" action="{{ path('alumno_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 	<div style="border:solid 1px #000;padding:15px"><h3>Lista de Aspirantes:</h3> Buscar: <input type='text' id='search' placeholder='Nombre o NIE del Aspirante'> Especialidad: <select id='esp'></select>
+	
 	<div id='resultTable'></div></div>
 	<br><br>
 	<table class='table'>

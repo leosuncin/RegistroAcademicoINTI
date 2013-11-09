@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use INTI\RegistroAcademicoBundle\Entity\Especialidad;
 use INTI\RegistroAcademicoBundle\Form\EspecialidadType;
 use Symfony\Component\HttpFoundation\Response;
+
 /**
  * EspecialidadForAjax controller.
  *

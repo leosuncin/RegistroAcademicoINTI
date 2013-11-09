@@ -11,7 +11,6 @@ use INTI\RegistroAcademicoBundle\Entity\Aspirante;
 use INTI\RegistroAcademicoBundle\Entity\Usuario;
 use INTI\RegistroAcademicoBundle\Form\AlumnoType;
 
-
 /**
  * GuardarAlumno controller for ajax.
  *
