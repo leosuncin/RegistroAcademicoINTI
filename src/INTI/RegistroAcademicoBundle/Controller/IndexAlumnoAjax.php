@@ -29,12 +29,13 @@ class IndexAlumnoAjax extends Controller
     {
 		/*
 			Parametros:
-			order_field, sence, n_result, search_field, search, actual, anterior
+			order_field, sence, n_result, search_field, search, actual, anterior, especialidad
 		*/
 		$entity='Alumno';
-		$campos=Array("u.nie","u.primerapellido","u.segundoapellido","u.nombres", "");
-		$nombre_campos=Array("NIE", "Primer Apellido", "Segundo Apellido", "Nombres", "Acciones");
+		$campos=Array("u.nie","u.primerapellido","u.segundoapellido","u.nombres", "n.nombre", "");
+		$nombre_campos=Array("NIE", "Primer Apellido", "Segundo Apellido", "Nombres", "Especialidad", "Acciones");
 		$order_field=$_REQUEST['order_field'];
+		$especialidad=$_REQUEST['especialidad'];
 		$sence=strtolower($_REQUEST['sence']);
 		$n_result=$_REQUEST['n_result'];
 		$parameters=Array();
@@ -42,15 +43,24 @@ class IndexAlumnoAjax extends Controller
 		if(isset($_REQUEST['search']))
 		if($_REQUEST['search']!=""){
 			$search=$_REQUEST['search'];
-			$condicion="where CONCAT(CONCAT(CONCAT(CONCAT(u.nombres,' '),u.primerapellido),' '),u.segundoapellido) like :search or u.nie like :search2";
+			$condicion=" where CONCAT(CONCAT(CONCAT(CONCAT(u.nombres,' '),u.primerapellido),' '),u.segundoapellido) like :search or u.nie like :search2";
 			$parameters['search']='%'.$search.'%';
 			$parameters['search2']=$search.'%';
 		}
-		$dql="SELECT COUNT(p) FROM RegistroAcademicoBundle:Alumno p JOIN p.nie u ".$condicion;
+		$cEspecialidad="";
+		if(($especialidad!="todas")&&($especialidad!="")){
+			if($condicion=="")	
+				$cEspecialidad.=" where ";
+			else
+				$cEspecialidad.=" and ";
+			$cEspecialidad.="n.codigo=:codigo";
+			$parameters['codigo']=$especialidad;
+		}
+		$dql="SELECT COUNT(p) FROM RegistroAcademicoBundle:Alumno p JOIN p.nie u JOIN u.especialidad n".$condicion.$cEspecialidad;
 		$em = $this->getDoctrine()->getManager();
 		$query=$em->createQuery($dql);
 		if(isset($_REQUEST['search']))
-		if($_REQUEST['search']!="")
+		if(($_REQUEST['search']!="")||($cEspecialidad!=""))
 			$query->setParameters($parameters);
 		$n_filas=$query->getSingleScalarResult();
 		$n_paginas=ceil($n_filas/$n_result);
@@ -81,17 +91,15 @@ class IndexAlumnoAjax extends Controller
 			}
 		}else	$actual=1;
 
-			$query="select p, u from RegistroAcademicoBundle:Alumno p JOIN p.nie u ";
-			if($condicion!="")
-				$query.=$condicion;
-			if(($order_field!="")&&($sence!=""))
-				$query.=" order by ".$order_field." ".$sence;
+		$query="select p, u from RegistroAcademicoBundle:Alumno p JOIN p.nie u JOIN u.especialidad n".$condicion.$cEspecialidad;
+		if(($order_field!="")&&($sence!=""))
+			$query.=" order by ".$order_field." ".$sence;
 
 		//$text.= $query;
 		$resultado=$em->createQuery($query);
 		
 		if(isset($_REQUEST['search']))
-		if($_REQUEST['search']!="")
+		if(($_REQUEST['search']!="")||($cEspecialidad!=""))
 			$resultado->setParameters($parameters);
 			
 		$resultado->setMaxResults($n_result)->setFirstResult($init);
@@ -117,6 +125,7 @@ class IndexAlumnoAjax extends Controller
 				$text.= "<td>".$result[$i]->getNie()->getPrimerapellido()."</td>";
 				$text.= "<td>".$result[$i]->getNie()->getSegundoapellido()."</td>";
 				$text.= "<td>".$result[$i]->getNie()->getNombres()."</td>";
+				$text.= "<td>".$result[$i]->getNie()->getEspecialidad()->getNombre()."</td>";
 				$text.='<td><div class="btn-group btn-group-horizontal">';
 				$text.="<a class='btn btn-info' href='../alumno/".$result[$i]->getNie()->getNie()."'><span class='icon-eye-open icon-white'></span></a>";
                 $text.="<a class='btn btn-info' href='../alumno/".$result[$i]->getNie()->getNie()."/edit'><span class='icon-edit icon-white'></span></a></div></td></tr>";

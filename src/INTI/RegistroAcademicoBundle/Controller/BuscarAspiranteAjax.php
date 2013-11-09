@@ -33,7 +33,7 @@ class BuscarAspiranteAjax extends Controller
 				'nie'=>$search."%",
 			);
         $em = $this->getDoctrine()->getManager();
-		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p JOIN p.especialidad u WHERE p.estado='A' AND CONCAT(CONCAT(CONCAT(CONCAT(p.nombres,' '),p.primerapellido),' '),p.segundoapellido) LIKE :nombres or p.nie LIKE :nie";
+		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p JOIN p.especialidad u WHERE CONCAT(CONCAT(CONCAT(CONCAT(p.nombres,' '),p.primerApellido),' '),p.segundoApellido) LIKE :nombres or p.nie LIKE :nie";
 		if(($_REQUEST['esp']!="todas")&&($_REQUEST['esp']!="")){
 			$parameters['especialidad']=$_REQUEST['esp'];
 			$dql.=" AND u.codigo=:especialidad";
@@ -47,13 +47,15 @@ class BuscarAspiranteAjax extends Controller
 				for($i=0;$i<count($aspirante) and $i<10;$i++){
 					$text.="<tr class='aspirante'><td class='n_nie' value='".$aspirante[$i]->getNie()."'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $aspirante[$i]->getNie())."</td>";
 					$text.="<td class='aspName'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $aspirante[$i]->getNombres()." ".$aspirante[$i]->getPrimerapellido()." ".$aspirante[$i]->getSegundoapellido())."</td>";
-					$text.="<td>".$aspirante[$i]->getEspecialidad()->getNombre()."</td>";
+					$text.="<td>".$aspirante[$i]->getEspecialidad()->getNombre();
+					$text.="<input type='hidden' class='uH' value='".substr(strtoupper($aspirante[$i]->getPrimerapellido()), 0, 1).substr(strtolower($aspirante[$i]->getSegundoapellido()), 0, 1).$aspirante[$i]->getNie()."'>";
+					$text.="<input type='hidden' class='pH' value='".substr(md5($aspirante[$i]->getNie()), 0, 8)."'></td>";
 					$text.='<td><div class="btn-group btn-group-horizontal">';
 					$text.="<a class='btn btn-info' href='../aspirante/".$aspirante[$i]->getNie()."'><span class='icon-eye-open icon-white'></span></a>";
                     $text.="<a class='btn btn-info' href='../aspirante/".$aspirante[$i]->getNie()."/edit'><span class='icon-edit icon-white'></span></a></div></td></tr>";
 				}
 			}else{
-				$text.="<tr><td colspan='4'>No se encuentra el aspirante</td></tr>";
+				$text.="<tr><td colspan='4'>No se encuentran aspirantes que coincidan con el criterio de busqueda</td></tr>";
 			}
 			$text.="</table>";
 		} catch (\Doctrine\Orm\NoResultException $e) {

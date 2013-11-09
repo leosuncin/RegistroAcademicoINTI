@@ -168,19 +168,19 @@ class AlumnoController extends Controller
     }
 
     /**
-     * Deletes a Alumo entity.
+     * Deletes a Alumno entity.
      * 
      * @Route("/{nie}/del", name="alumno_erase")
      * @Method("GET")
      */
     public function eraseAction($nie)
     {
-        $as = $this->getDoctrine()->getManager();
-        $aspirante = $as->getRepository('RegistroAcademicoBundle:Alumno')->find($nie);
-        if (!$aspirante) {
+        $em = $this->getDoctrine()->getManager();
+        $alumno = $em->getRepository('RegistroAcademicoBundle:Alumno')->find($nie);
+        if (!$alumno) {
             throw $this->createNotFoundException('Unable to find Alumno entity.');
         }
-        $em->remove($aspirante);
+        $em->remove($alumno);
         $em->flush();
         return $this->redirect($this->generateUrl('alumno_index'));
     }
