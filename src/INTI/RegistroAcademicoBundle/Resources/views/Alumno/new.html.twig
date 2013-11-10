@@ -20,23 +20,14 @@
 	<br><br>
 	<table class='table'>
 		<tr><td colspan='2' style='padding-top:30px;padding-bottom:10px'><b>Informacion de Matricula</b></td></tr>
-<<<<<<< HEAD
 		<tr><td>NIE:</td><td><input type='text' id='nie' name='nie' required="required"></td></tr>
-=======
-		<tr><td>NIE:</td><td><input type='text' id='nie' name='nie'></td></tr>
->>>>>>> 6c4a563541d791036fa90d0d2e8bae23908eeeff
 		<tr><td>Nombre del Aspirante:</td><td id='nameAsp'>No ha ingresado un numero de aspirante valido</td></tr>
 		<tr><td>Condicion de Matricula:</td><td><select id='cond' name='cond'><option value='CC'>Condicionado Conducta</option><option value='CM'>Condicionado Matricula</option><option value='RE'>Repetidor</option><option value='RI'>Reingreso</option><option value='NI' selected>Nuevo Ingreso</option></select></td></tr>
 		<tr><td>Codigo de Especialidad:</td><td><select id='cod_esp'></select></td></tr>
 		<tr><td colspan='2' style='padding-top:30px;padding-bottom:10px'><b>Creacion de Usuario en el Sistema</b></td></tr>
-<<<<<<< HEAD
 		<tr><td>Nombre de Usuario</td><td><input type='text' id='userName' placeholder='Nombre de Usuario' maxlength="50" required="required"><br>Escriba el nombre del usuario sin espacios</td></tr>
 		<tr><td>Contraseña</td><td><input type='password' id='password' placeholder='Contraseña' maxlength="60" required="required"><br>Utilice mayusculas, minusculas, numeros y otros caracteres intercalados</td></tr>
 		<tr><td colspan="2"><div id="problem"></div></td></tr>
-=======
-		<tr><td>Nombre de Usuario</td><td><input type='text' id='userName' placeholder='Nombre de Usuario'><br>Escriba el nombre del usuario sin espacios</td></tr>
-		<tr><td>Contraseña</td><td><input type='password' id='password' placeholder='Contraseña'><br>Utilice mayusculas, minusculas, numeros y otros caracteres intercalados</td></tr>
->>>>>>> 6c4a563541d791036fa90d0d2e8bae23908eeeff
 	</table>
 	<div class="form-actions">
         <input type="button" value="Matricular" class="btn btn-primary" />
@@ -72,15 +63,6 @@
 			if($("#nie").val()!=""){
 				$.get("{{ path('GuardarAlumnoAjax') }}", {"username":$("#userName").val(), "password":$("#password").val(), "nie":$("#nie").val(), "cod_esp":$("#cod_esp").val(), "cond":$("#cond").val()}, function(e){
 					switch(e.trim().toLowerCase()){
-<<<<<<< HEAD
-=======
-						case 'r':
-							alert("El NIE ingresado esta reprobado. No puede matricularse");
-						break;
-						case 'p':
-							alert("El NIE ingresado esta pendiente de aprobacion. No puede matricularse");
-						break;
->>>>>>> 6c4a563541d791036fa90d0d2e8bae23908eeeff
 						case 'm':
 							$("#problem").html("<div class='alert alert-error'><button type='button' class='close' data-dismiss='alert'>×</button>¡Error!. El NIE ingresado ya ha sido matriculado</div>");
 						break;

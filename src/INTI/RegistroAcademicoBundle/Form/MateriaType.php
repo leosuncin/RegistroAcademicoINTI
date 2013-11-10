@@ -15,6 +15,12 @@ class MateriaType extends AbstractType
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
 		$builder
+			->add('codigo',
+				'text',
+				array(
+					'label'		=> 'Codigo de la materia en SIRAI',
+					'max_length'=>5
+				))
 			->add('nombre',
 				'text',
 				array(

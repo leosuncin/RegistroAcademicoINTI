@@ -31,7 +31,6 @@ class GuardarAlumnoAjax extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$query=$em->createQuery($dql)->setParameter("nie", $_REQUEST['nie'])->setMaxResults(1);
 		try{
-<<<<<<< HEAD
 				$aspirante = $query->getSingleResult();
 				$alumno = $em->getRepository('RegistroAcademicoBundle:Alumno')->find($_REQUEST['nie']);
 				if (!$alumno) {
@@ -56,46 +55,13 @@ class GuardarAlumnoAjax extends Controller
 						$entity->setCodigoEspecialidad($codigoEspecialidad);
 						$em->persist($entity->getUsuario());
 						$em->persist($entity);
-=======
-			$aspirante = $query->getSingleResult();
-			if($aspirante->getEstado()=="A"){
-				$dql2="SELECT p FROM RegistroAcademicoBundle:CodigoEspecialidad p WHERE p.codigo=:codigo";
-				$query2=$em->createQuery($dql2)->setParameter("codigo", $_REQUEST['cod_esp'])->setMaxResults(1);
-				$codigoEspecialidad = $query2->getSingleResult();
-				$usuario = new Usuario();
-				$usuario->setUsername($_REQUEST['username']);
-				$usuario->setPassword($_REQUEST['password']);
-				$factory  = $this->get('security.encoder_factory');
-				$encoder  = $factory->getEncoder($usuario);
-				$password = $encoder->encodePassword($usuario->getPassword(), $usuario->getSalt());
-				$usuario->setPassword($password);
-				$usuario->addRole("ROLE_USER");
-				
-				$entity = new Alumno();
-				$entity->setCondicion($_REQUEST['cond']);
-				$aspirante->setEstado('M');
-				$entity->setNie($aspirante);
-				$entity->setUsuario($usuario);
-				$entity->setCodigoEspecialidad($codigoEspecialidad);
-				$em->persist($entity->getUsuario());
-				$em->persist($entity->getNIE());
-				$em->persist($entity);
->>>>>>> 6c4a563541d791036fa90d0d2e8bae23908eeeff
-
 						$em->flush();
-
-<<<<<<< HEAD
+						
 						return new response($this->generateUrl('alumno_show', array('nie' => $entity->getNie()->getNie())));
 					}else
 						return new response("U");
 				}else
 					return new response("M");
-=======
-				return new response($this->generateUrl('alumno_show', array('nie' => $entity->getNie()->getNie())));
-			}else{
-				return new response($aspirante->getEstado());
-			}
->>>>>>> 6c4a563541d791036fa90d0d2e8bae23908eeeff
 		} catch (\Doctrine\Orm\NoResultException $e) {
 			return new response("N");
 		}

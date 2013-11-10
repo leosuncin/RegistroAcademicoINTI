@@ -113,18 +113,16 @@ class MateriaController extends Controller
         $entity = $em->getRepository('RegistroAcademicoBundle:Materia')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Materia entity.');
+            throw $this->createNotFoundException('No se encontro la materia seleccionada');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'entity' => $entity,
+            'title'  => 'Consultar Materia'
         );
     }
 
-    /**
+      /**
      * Displays a form to edit an existing Materia entity.
      *
      * @Route("/{id}/edit", name="materia_edit")
@@ -138,37 +136,18 @@ class MateriaController extends Controller
         $entity = $em->getRepository('RegistroAcademicoBundle:Materia')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Materia entity.');
+            throw $this->createNotFoundException('La materia especificada no existe');
         }
 
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
+        $editForm = $this->createForm(new MateriaType(), $entity);
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'entity'    => $entity,
+            'edit_form' => $editForm->createView(),
+            'title'     => 'Modificar materia'
         );
     }
 
-    /**
-    * Creates a form to edit a Materia entity.
-    *
-    * @param Materia $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Materia $entity)
-    {
-        $form = $this->createForm(new MateriaType(), $entity, array(
-            'action' => $this->generateUrl('materia_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
     /**
      * Edits an existing Materia entity.
      *
@@ -183,65 +162,41 @@ class MateriaController extends Controller
         $entity = $em->getRepository('RegistroAcademicoBundle:Materia')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Materia entity.');
+            throw $this->createNotFoundException('No se encontro la materia especificada.');
         }
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
+        $editForm = $this->createForm(new MateriaType(), $entity);
+        $editForm->submit($request);
 
         if ($editForm->isValid()) {
+            $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('materia_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('materia_show', array('id' => $id)));
         }
 
         return array(
             'entity'      => $entity,
             'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'title'       => 'Modificar Materia'
         );
     }
+
     /**
      * Deletes a Materia entity.
-     *
-     * @Route("/{id}", name="materia_delete")
-     * @Method("DELETE")
+     * 
+     * @Route("/{id}/del", name="materia_delete")
+     * @Method("GET")
      */
-    public function deleteAction(Request $request, $id)
+    public function eraseAction($id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('RegistroAcademicoBundle:Materia')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Materia entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        $em = $this->getDoctrine()->getManager();
+        $materia = $em->getRepository('RegistroAcademicoBundle:Materia')->find($id);
+        if (!$materia) {
+            throw $this->createNotFoundException('No se encontro la materia seleccionada.');
         }
-
+        $em->remove($materia);
+        $em->flush();
         return $this->redirect($this->generateUrl('materia'));
-    }
-
-    /**
-     * Creates a form to delete a Materia entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('materia_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
     }
 }

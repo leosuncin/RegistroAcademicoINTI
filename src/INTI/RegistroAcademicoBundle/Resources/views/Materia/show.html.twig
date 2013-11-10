@@ -1,32 +1,46 @@
-{% extends '::base.html.twig' %}
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
-{% block body -%}
-    <h1>Materia</h1>
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span><a href="{{ path('materia') }}">Materias</a></li>
+<li class="active"><span class="divider">&gt;</span> Consultar</li>
+{% endblock %}
 
-    <table class="record_properties">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
-            </tr>
-            <tr>
-                <th>Nombre</th>
-                <td>{{ entity.nombre }}</td>
-            </tr>
-        </tbody>
-    </table>
+{% block content %}
+{% for flashMessage in app.session.flashbag.get('confirm') %}
+<div class="alert alert-success">
+    {{ flashMessage }}
+</div>
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('materia') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('materia_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+{% endfor %}
+
+        <table class="record_properties table">
+            <tbody>
+                <tr>
+                    <th>Identificador de la Materia:</th>
+                    <td>{{ entity.id }}</td>
+				</tr>
+				<tr>
+                    <th>Codigo de la materia en SIRAI:</th>
+                    <td>{{ entity.codigo }}</td>
+				</tr>
+				<tr>
+                    <th>Nombre de la Materia:</th>
+                    <td>{{ entity.nombre }}</td>
+                </tr>
+                <tr>
+                    <th>Profesor Encargado de la Materia</th>
+                    <td>{{ entity.profesor }}</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="form-actions">
+          <a href="{{ path('materia_edit', { 'id': entity.id}) }}" class="btn btn-info">Modificar</a>
+          <a href="{{ path('materia_delete', { 'id': entity.id }) }}" class="btn btn-danger">Eliminar</a>
+          <a href="{{ path('materia') }}" class="btn">Regresar</a>
+        </div>
+
+{% endblock %}
+{% block javascript %}
+{{ parent() }}
 {% endblock %}

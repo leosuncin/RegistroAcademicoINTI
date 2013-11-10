@@ -2,45 +2,16 @@
 
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span> <a href="{{ path('materia') }} ">Materia</a></li>
+<li><span class="divider">&gt;</span> <a href="{{ path('materia') }} ">Materias</a></li>
 <li class="active"><span class="divider">&gt;</span> Crear</li>
 {% endblock %}
 
 {% block content %}
-
-<h1>Crear materia</h1>
-
-<form action="{{ path('materia_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-
-    <div id='etiq'>{{ form_widget(form, {'form_type': 'horizontal'}) }}</div>
-	
-    <div class="form-actions">
-       <input  type="submit" value="Crear" class="btn btn-primary" />
-        <a href="{{ path('materia') }}" class="btn">Regresar</a>
-    </div>
-    <div class="control-group error">
-        {{ form_errors(form) }}
-    </div>
-</form>
-
+    <form action="{{ path('materia_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+        {{ form_widget(form, {'form_type': 'horizontal'}) }}
+        <div class="form-actions">
+            <input type="submit" class="btn btn-primary" value="Crear" />
+            <a href="{{ path('materia') }}" class="btn">Regresar</a>
+        </div>
+    </form>
 {% endblock %}
-
-{% block javascript %}
-{{ parent() }}
-<script src="{{ asset('assets/jquery-validation/dist/jquery.validate.js') }}"></script>
-<script src="{{ asset('assets/jquery/jquery.min.js') }}"></script>
-<script src="{{ asset('bundles/registroacademico/js/validacion-formularios.js') }}"></script>
-<script src="{{ asset('assets/jquery-validation/localization/messages_es.js') }}">
-    
-
-</script>
-
-<script> $(document).ready(function(){
-  
-    
-  
-});</script>
-{% endblock %}
-
-
-
