@@ -14,6 +14,7 @@
 				<ul id="acc-gestion-empleado" class="accordion-body collapse list-unstyled">
 					<li class="accordion-inner"><a href="{{ path('empleado_new') }}"><span class="icon-plus-sign"></span> Añadir un empleado</a></li>
 					<li class="accordion-inner"><a href="{{ path('empleado_index') }}"><span class="icon-eye-open"></span> Consultar empleados</a></li>
+					<li class="accordion-inner"><a href="{{ path('empleado_responsabilities') }}"><span class="icon-edit"></span> Asignar Responsabilidades</a></li>
 				</ul>
 				{% endif %}
 				{% if is_granted('ROLE_ACADEMIC') %}

@@ -19,6 +19,7 @@ use INTI\RegistroAcademicoBundle\Form\AlumnoType;
 class AlumnoController extends Controller
 {
 
+<<<<<<< HEAD
 	/**
 	 * Lists all Alumno entities.
 	 *
@@ -31,6 +32,80 @@ class AlumnoController extends Controller
 		$em = $this->getDoctrine()->getManager();
 
 		$alumnos = $em->getRepository('RegistroAcademicoBundle:Alumno')->findAll();
+=======
+    /**
+     * Lists all Alumno entities.
+     *
+     * @Route("/", name="alumno_index")
+     * @Method("GET")
+     * @Template()
+     */
+    public function indexAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entities = $em->getRepository('RegistroAcademicoBundle:Alumno')->findAll();
+		$especialidades = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
+        return array(
+            'entities' => $entities,
+			'especialidades' => $especialidades,
+            'title'    => 'Consultar alumnos'
+        );
+    }
+    /**
+     * Creates a new Alumno entity.
+     *
+     * @Route("/", name="alumno_create")
+     * @Method("POST")
+     * @Template("RegistroAcademicoBundle:Alumno:new.html.twig")
+     */
+    public function createAction(Request $request)
+    {
+        $entity  = new Alumno();
+        $form = $this->createForm(new AlumnoType(), $entity);
+        $form->submit($request);
+
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($entity->getAspirante());
+            $em->persist($entity);
+            $em->flush();
+
+            return $this->redirect($this->generateUrl('alumno_show', array('nie' => $entity->getNie())));
+        }
+		
+        return array(
+            'entity' => $entity,
+            'form'   => $form->createView(),
+            'title'  => 'Añadir un alumno'
+        );
+    }
+
+    /**
+     * Displays a form to create a new Alumno entity.
+     *
+     * @Route("/new", name="alumno_new")
+     * @Method("GET")
+     * @Template()
+     */
+    public function newAction()
+    {
+        $entity = new Alumno();
+        $form   = $this->createForm(new AlumnoType(), $entity);
+
+		$em = $this->getDoctrine()->getManager();
+		$especialidades = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
+		$codigoespecialidades = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
+		
+        return array(
+            'entity' => $entity,
+			'especialidades' => $especialidades,
+			'codigoespecialidades' => $codigoespecialidades,
+            'form'   => $form->createView(),
+            'title'  => 'Añadir un alumno'
+        );
+    }
+>>>>>>> 849e6fcd88b9baf2bd9d0187c75b1e724a1e87a3
 
 		return array(
 			'alumnos' => $alumnos,
