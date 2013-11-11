@@ -19,7 +19,7 @@ class PracticaProfesionalType extends AbstractType
 				'choice',
 				array(
 					'label'  => 'Horario',
-					'choice' => array(
+					'choices' => array(
 						'M'    => 'Matutino',
 						'V'    => 'Vespertino'
 				)))
@@ -59,6 +59,7 @@ class PracticaProfesionalType extends AbstractType
 					'precision'       => 2,
 					'read_only'       => true,
 					'invalid_message' => 'Ingrese un numero decimal valido',
+					'attr'			  =>	
 					array(
 						'placeholder' => 'por ejemplo: 10.00'
 				)))

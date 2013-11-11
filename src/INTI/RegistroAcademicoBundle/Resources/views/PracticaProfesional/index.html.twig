@@ -1,0 +1,59 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block style %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Practica Profesional  </h1>
+
+    <table id="tabla" class="table table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Horario</th>
+                <th>Inicio</th>
+                <th>Fin</th>
+                <th>Evaluacion</th>
+             
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('practicaprofesional_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.horario }}</td>
+                <td>{% if entity.inicio %}{{ entity.inicio|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if entity.fin %}{{ entity.fin|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{{ entity.evaluacion }}</td>
+                <td>
+                <ul>
+                    
+                        <a href="{{ path('practicaprofesional_show', { 'id': entity.id }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
+                   
+                        <a href="{{ path('practicaprofesional_edit', { 'id': entity.id }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+                    
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <a class="btn btn-primary" href="{{ path('practicaprofesional_new') }}">
+                {{ '.icon-plus-sign Ingresar nueva practica profesional'|parse_icons('white') }}
+            </a>
+
+                       {% for flashMessage in app.session.flashbag.get('notice') %}
+                        <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ flashMessage }}
+                        </div>
+                        {% endfor %}
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/watable/jquery.watable.js') }}"></script>
+{% endblock %}

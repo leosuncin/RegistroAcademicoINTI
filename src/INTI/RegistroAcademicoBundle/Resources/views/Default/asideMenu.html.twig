@@ -89,7 +89,7 @@
 					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
 					<li class="accordion-inner"><a href="{{ path('empresa_new') }}"><span class="icon-plus-sign"></span> Añadir empresa</a></li>
 					{% endif %}
-					<li class="accordion-inner"><a href="#"><span class="icon-plus-sign"></span> Crear practica</a></li>
+					<li class="accordion-inner"><a href="{{path('practicaprofesional_new')}}"><span class="icon-plus-sign"></span> Crear practica</a></li>
 					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
 					<li class="accordion-inner"><a href="#"><span class="icon-plus-sign"></span> Asignar alumnos</a></li>
 					<li class="accordion-inner"><a href="#"><span class="icon-plus-sign"></span> Ingresar estadisticos</a></li>
