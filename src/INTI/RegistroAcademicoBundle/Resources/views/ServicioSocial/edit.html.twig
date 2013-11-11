@@ -1,0 +1,36 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span> <a href="{{ path('serviciosocial') }}">Servicio social</a></li>
+<li class="active"><span class="divider">&gt;</span> Editar</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Modificar Servicio Social </h1>
+
+   <form action="{{ path('serviciosocial_update', { 'id': entity.id }) }}" method="post" {{ form_enctype(edit_form) }}>
+        <input type="hidden" name="_method" value="PUT" />
+        
+        
+        {{ form_widget(edit_form) }}
+       <table> 
+        <tr><td>    <button type="submit" class="btn btn-primary">Editar</button></td>
+       
+    </form>
+
+        
+    
+         <td><a class="btn btn-info" href="{{ path('serviciosocial') }}">
+            Regresar a la lista
+        </a> </td>
+   
+   
+        <form action="{{ path('serviciosocial_delete', { 'id': entity.id }) }}" method="post">
+            <input type="hidden" name="_method" value="DELETE" />
+            {{ form_widget(delete_form) }}
+         <td>   <button type="submit" class="btn btn-danger">Eliminar</button></td>
+
+     </tr>
+            </table>
+        </form>
+{% endblock %}

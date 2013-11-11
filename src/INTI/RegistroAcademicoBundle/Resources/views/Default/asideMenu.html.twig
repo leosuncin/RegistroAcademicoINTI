@@ -63,6 +63,24 @@
 					{% endif %}
 				</ul>
 				{% endif %}
+
+
+				{% if is_granted('ROLE_ACADEMIC') %}
+				<div class="accordion-heading">
+    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-serviciosocial" href="#acc-gestion-serviciosocial"><span class="icon-list-alt"></span> Servicio social</a>
+    			</div>
+				<ul id="acc-gestion-serviciosocial" class="accordion-body collapse list-unstyled">
+					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
+					<li class="accordion-inner"><a href="{{ path('encargadoproyecto_new') }}"><span class="icon-plus-sign"></span> Añadir encargado proyecto</a></li>
+					{% endif %}
+					<li class="accordion-inner"><a href="{{path('proyecto_new')}}"><span class="icon-plus-sign"></span> Añadir Proyecto</a></li>
+					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
+					<li class="accordion-inner"><a href="{{ path('serviciosocial_new') }}"><span class="icon-plus-sign"></span> Asignar horas sociales</a></li>
+					{% endif %}
+				</ul>
+				{% endif %}
+
+
     			<div class="accordion-heading">
     				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-periodos"><span class="icon-calendar"></span> Periodos</a>
     			</div>

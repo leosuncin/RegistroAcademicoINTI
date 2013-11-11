@@ -1,0 +1,23 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span> <a href="{{ path('proyecto') }} ">Proyecto</a></li>
+<li class="active"><span class="divider">&gt;</span> Crear</li>
+{% endblock %}
+
+{% block content %}
+    <h1>Proyecto Hora social </h1>
+<form action="{{ path('proyecto_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	
+    {{ form_widget(form, {'form_type': 'horizontal'}) }}
+	
+    <div class="form-actions">
+       <input  type="submit" value="Crear" class="btn btn-primary" />
+        <a href="{{ path('proyecto') }}" class="btn">Regresar</a>
+    </div>
+    <div class="control-group error">
+        {{ form_errors(form) }}
+    </div>
+</form>
+{% endblock %}

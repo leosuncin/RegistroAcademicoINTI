@@ -14,14 +14,20 @@
 
 {% block content %}
 <form id="newAlumnoForm" action="{{ path('alumno_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-	<div style="border:solid 1px #000;padding:15px"><h3>Buscar Aspirante:</h3> <input type='text' id='search' placeholder='Nombre o N° de Aspirante'> Especialidad: <select id='esp'></select>
+	<div style="border:solid 1px #000;padding:15px"><h3>Lista de Aspirantes:</h3> Buscar: <input type='text' id='search' placeholder='Nombre o NIE del Aspirante'> Especialidad: <select id='esp'></select>
+	
 	<div id='resultTable'></div></div>
-	<br>
-	<table>
+	<br><br>
+	<table class='table'>
+		<tr><td colspan='2' style='padding-top:30px;padding-bottom:10px'><b>Informacion de Matricula</b></td></tr>
+		<tr><td>NIE:</td><td><input type='text' id='nie' name='nie' required="required"></td></tr>
 		<tr><td>Nombre del Aspirante:</td><td id='nameAsp'>No ha ingresado un numero de aspirante valido</td></tr>
-		<tr><td>NIE:</td><td><input type='text' id='nie' name='nie'></td></tr>
 		<tr><td>Condicion de Matricula:</td><td><select id='cond' name='cond'><option value='CC'>Condicionado Conducta</option><option value='CM'>Condicionado Matricula</option><option value='RE'>Repetidor</option><option value='RI'>Reingreso</option><option value='NI' selected>Nuevo Ingreso</option></select></td></tr>
 		<tr><td>Codigo de Especialidad:</td><td><select id='cod_esp'></select></td></tr>
+		<tr><td colspan='2' style='padding-top:30px;padding-bottom:10px'><b>Creacion de Usuario en el Sistema</b></td></tr>
+		<tr><td>Nombre de Usuario</td><td><input type='text' id='userName' placeholder='Nombre de Usuario' maxlength="50" required="required"><br>Escriba el nombre del usuario sin espacios</td></tr>
+		<tr><td>Contraseña</td><td><input type='password' id='password' placeholder='Contraseña' maxlength="60" required="required"><br>Utilice mayusculas, minusculas, numeros y otros caracteres intercalados</td></tr>
+		<tr><td colspan="2"><div id="problem"></div></td></tr>
 	</table>
 	<div class="form-actions">
         <input type="button" value="Matricular" class="btn btn-primary" />
@@ -49,26 +55,28 @@
 	function buscarAspirante(){
 		$.get("{{ path('BuscarAspiranteEspecificoAjax') }}", {"nie":$("#nie").val()}, function(e){
 			$("#nameAsp").html(e);
+			$("#userName").val($("#userNameH").val());
+			$("#password").val($("#passwordH").val());
 		});
 	}
 	function saveAlumno(){
 			if($("#nie").val()!=""){
-				$.get("{{ path('GuardarAlumnoAjax') }}", {"nie":$("#nie").val(), "cod_esp":$("#cod_esp").val(), "cond":$("#cond").val()}, function(e){
+				$.get("{{ path('GuardarAlumnoAjax') }}", {"username":$("#userName").val(), "password":$("#password").val(), "nie":$("#nie").val(), "cod_esp":$("#cod_esp").val(), "cond":$("#cond").val()}, function(e){
 					switch(e.trim().toLowerCase()){
-						case 'a':
-							document.location.href=e;
-						break;
-						case 'r':
-							alert("El NIE ingresado esta reprobado. No puede matricularse");
-						break;
-						case 'p':
-							alert("El NIE ingresado esta pendiente de aprobacion. No puede matricularse");
-						break;
 						case 'm':
-							alert("El NIE ingresado ya ha sido matriculado");
+							$("#problem").html("<div class='alert alert-error'><button type='button' class='close' data-dismiss='alert'>×</button>¡Error!. El NIE ingresado ya ha sido matriculado</div>");
+						break;
+						case 'u':
+							$("#problem").html("<div class='alert alert-error'><button type='button' class='close' data-dismiss='alert'>×</button>¡Error!. El nombre de usuario ingresado ya esta en uso</div>");
 						break;
 						case 'n':
-							alert("El NIE ingresado no es valido");
+							$("#problem").html("<div class='alert alert-error'><button type='button' class='close' data-dismiss='alert'>×</button>¡Error!. El NIE ingresado no es valido</div>");
+						break;
+						default:
+							document.location.href=e;
+						break;
+						default:
+							document.location.href=e;
 						break;
 					}
 				});
@@ -92,6 +100,8 @@
 			$("tr.aspirante").click(function(){
 				$("#nie").val($(this).find("td.n_nie").attr('value'));
 				$("#nameAsp").html($(this).find("td.aspName").html());
+				$("#userName").val($(this).find("input.uH").val());
+				$("#password").val($(this).find("input.pH").val());
 			});
 		});
 	}

@@ -258,6 +258,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Materia` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `codigo` INT NULL,
   `nombre` VARCHAR(60) NOT NULL,
   `profesor` VARCHAR(80) NOT NULL,
   PRIMARY KEY (`id`))

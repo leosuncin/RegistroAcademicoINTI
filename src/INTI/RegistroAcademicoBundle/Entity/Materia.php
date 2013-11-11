@@ -23,6 +23,13 @@ class Materia
 	 * @ORM\GeneratedValue(strategy="IDENTITY")
 	 */
 	private $id;
+	
+	/**
+	 * @var integer
+	 *
+	 * @ORM\Column(name="codigo", type="integer", length=5, nullable=true)
+	 */
+	private $codigo;
 
 	/**
 	 * @var string
@@ -44,8 +51,6 @@ class Materia
 	 * @ORM\Column(name="profesor", type="string", length=80, nullable=false)
 	 */
 	private $profesor;
-
-
 
 	/**
 	 * Get id
@@ -101,5 +106,28 @@ class Materia
 	public function getProfesor()
 	{
 		return $this->profesor;
+	}
+	
+	/**
+	 * Set codigo
+	 *
+	 * @param integer $codigo
+	 * @return Materia
+	 */
+	public function setCodigo($codigo)
+	{
+		$this->codigo = $codigo;
+
+		return $this;
+	}
+
+	/**
+	 * Get codigo
+	 *
+	 * @return integer
+	 */
+	public function getCodigo()
+	{
+		return $this->codigo;
 	}
 }

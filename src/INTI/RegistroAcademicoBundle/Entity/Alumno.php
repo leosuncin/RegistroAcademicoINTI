@@ -150,4 +150,9 @@ class Alumno
 	{
 		return $this->usuario;
 	}
+	
+	public function __toString(){
+
+		return (string)$this->nie;
+	}
 }

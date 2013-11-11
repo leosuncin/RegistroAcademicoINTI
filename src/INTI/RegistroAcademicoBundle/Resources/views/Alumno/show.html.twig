@@ -11,10 +11,12 @@
 <div class="alert alert-success">
     {{ flashMessage }}
 </div>
+
 {% endfor %}
 <ul class="nav nav-tabs">
     <li class="active"><a href="#tabInformacion" data-toggle="tab">Información básica</a></li>
     <li><a href="#tabEncargado" data-toggle="tab">Encargado</a></li>
+	<li><a href="#tabUsuario" data-toggle="tab">Usuario</a></li>
 </ul>
 <ul id="tabContent" class="tab-content">
     <li id="tabInformacion" class="tab-pane fade in active">
@@ -56,23 +58,37 @@
                     <th>Lugarnac</th>
                     <td>{{ entity.nie.lugarnac }}</td>
                 </tr>
-                <tr id='sex'>
+                <tr>
                     <th>Sexo</th>
-                    <td>{{ entity.nie.sexo }}</td>
-                </tr>
-				<tr id='cond'>
-                    <th>Condicion</th>
-                    <td>{{ entity.condicion }}</td>
+                    <td>
+						{% if entity.nie.sexo == 'M' %}
+							Masculino
+						{% else %}
+							Femenino
+						{% endif %}
+					</td>
                 </tr>
 				<tr>
-                    <th>Nombre de Usuario en el Sistema</th>
-                    <td>{{ entity.usuario.username }}</td>
+                    <th>Condicion</th>
+                    <td>
+						{% if entity.condicion == 'CC' %}
+							Condicionado Conducta
+						{% elseif entity.condicion == 'CM' %}
+							Condicionado Materia
+						{% elseif entity.condicion == 'NI' %}
+							Nuevo Ingreso
+						{% elseif entity.condicion == 'R' %}
+							Repetidor
+						{% elseif entity.condicion == 'RI' %}
+							Reingreso
+						{% endif %}
+					</td>
                 </tr>
             </tbody>
         </table>
         <div class="form-actions">
           <a href="{{ path('alumno_edit', { 'nie': entity.nie.nie}) }}" class="btn btn-info">Modificar</a>
-          <a href="{{ path('alumno_erase', { 'nie': entity.nie.nie }) }}" class="btn btn-danger">Eliminar</a>
+          <a href="{{ path('alumno_erase', { 'nie': entity.nie.nie }) }}" class="btn btn-danger">Dar de Baja</a>
           <a href="{{ path('alumno_index') }}" class="btn">Regresar</a>
         </div>
     </li>
@@ -96,38 +112,26 @@
             </tr>
         </table>
     </li>
+	<li id="tabUsuario" class="tab-pane fade">
+		<p><strong>Nombre de usuario</strong> {{ entity.usuario.username }}</p>
+		<a href="{{ path('update_password', {'username':entity.usuario.username}) }}" class="btn btn-info">Cambiar contraseña</a>
+		{% if is_granted('ROLE_ADMIN') %}
+			{% if entity.usuario.enabled %}
+				<a href="#confirmDisabled" role="button" class="btn btn-danger" data-toggle="modal">Deshabilitar</a>
+			{% else %}
+			<button id="habilitarUsuario" class="btn btn-danger">Habilitar</button>
+			{% endif %}
+		{% endif %}
+		{% if is_granted('ROLE_ADMIN') or is_granted('ROLE_ACADEMIC_ADMIN') %}
+			<button id="bloquearUsuario" class="btn btn-danger">{% if entity.usuario.locked %}
+				Desbloquear
+			{% else %}
+				Bloquear
+			{% endif %}</button>
+		{% endif %}
+	</li>
 </ul>
 {% endblock %}
 {% block javascript %}
 {{ parent() }}
-<script>
-	$(document).ready(function(){
-		switch($("#sex td").html().toLowerCase()){
-			case 'm':
-				$("#sex td").html('Masculino')
-			break;
-			case 'f':
-				$("#sex td").html('Femenino')
-			break;
-		}
-		switch($("#cond td").html().toLowerCase()){
-			case 'cc':
-				$("#cond td").html('Condicionado Conducta');
-			break;
-			case 'cm':
-				$("#cond td").html('Condicionado Materia');
-			break;
-			case 'ni':
-				$("#cond td").html('Nuevo Ingreso');
-			break;
-			case 'r':
-				$("#cond td").html('Repetidor');
-			break;
-			case 'ri':
-				$("#cond td").html('Reingreso');
-			break;
-			
-		}
-	});
-</script>
 {% endblock %}

@@ -1,0 +1,55 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+
+<li class="active"><span class="divider">&gt;</span> Encargados de proyectos</li>
+{% endblock %}
+{% block style %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}">
+{% endblock %}
+
+{% block content %}
+    <h1>Encargados de proyectos</h1>
+
+    <table id="tabla" class="table table-hover">
+        <thead>
+            <tr>
+              
+                <th>Nombre</th>
+                <th>Rol</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                
+                <td>{{ entity.nombre }}</td>
+                <td>{{ entity.rol }}</td>
+                <td>
+              
+                   
+                        <a class="btn btn-info" href="{{ path('encargadoproyecto_show', { 'id': entity.id }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
+                    
+                   
+                        <a class="btn btn-info"  href="{{ path('encargadoproyecto_edit', { 'id': entity.id }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+                   
+                
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <a class="btn btn-primary" href="{{ path('encargadoproyecto_new') }}">
+                {{ '.icon-plus-sign Ingresar Encargado hora social'|parse_icons('white') }}
+            </a>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/watable/jquery.watable.js') }}"></script>
+{% endblock %}
