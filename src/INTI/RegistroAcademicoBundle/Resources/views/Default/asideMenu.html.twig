@@ -81,6 +81,23 @@
 				{% endif %}
 
 
+					{% if is_granted('ROLE_ACADEMIC') %}
+				<div class="accordion-heading">
+    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-practicaprofesional" href="#acc-gestion-practicaprofesional"><span class="icon-tasks"></span> Practica profesional</a>
+    			</div>
+				<ul id="acc-gestion-practicaprofesional" class="accordion-body collapse list-unstyled">
+					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
+					<li class="accordion-inner"><a href="{{ path('empresa_new') }}"><span class="icon-plus-sign"></span> Añadir empresa</a></li>
+					{% endif %}
+					<li class="accordion-inner"><a href="#"><span class="icon-plus-sign"></span> Crear practica</a></li>
+					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
+					<li class="accordion-inner"><a href="#"><span class="icon-plus-sign"></span> Asignar alumnos</a></li>
+					<li class="accordion-inner"><a href="#"><span class="icon-plus-sign"></span> Ingresar estadisticos</a></li>
+					<li class="accordion-inner"><a href="#"><span class="icon-plus-sign"></span> Generar nota</a></li>
+					{% endif %}
+				</ul>
+				{% endif %}
+
     			<div class="accordion-heading">
     				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-periodos"><span class="icon-calendar"></span> Periodos</a>
     			</div>
@@ -109,15 +126,7 @@
 					#}
 				</ul>
 
-				<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-hsociales"><span class="icon-tasks"></span> Horas sociales</a>
-    			</div>
-				<ul id="acc-gestion-hsociales" class="accordion-body collapse list-unstyled">
-					<li class="accordion-inner"><a href="{{path('encargadoproyecto_new')}}"><span class="icon-plus-sign"></span> Agregar Encargado</a></li>
-					<li class="accordion-inner"><a href="{{path('serviciosocial_new')}}"><span class="icon-plus-sign"></span> Agregar Horas</a></li>
-					<li class="accordion-inner"><a href="#"><span class="icon-plus-sign"></span>Agregar Proyecto </a></li>
-					
-				</ul>
+			
     		</div>
     	</div>
     </li>

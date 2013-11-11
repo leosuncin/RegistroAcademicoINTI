@@ -47,14 +47,15 @@ class EmpresaController extends Controller
 	public function createAction(Request $request)
 	{
 		$entity = new Empresa();
-		$form = $this->createCreateForm($entity);
-		$form->handleRequest($request);
+		$form = $this->createForm(new EmpresaType(),$entity);
+		$form->submit($request);
 
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
 			$em->persist($entity);
 			$em->flush();
 
+			$this->get('session')->getFlashBag()->add('notice', 'Se inserto correctamente');
 			return $this->redirect($this->generateUrl('empresa_show', array('id' => $entity->getId())));
 		}
 
@@ -65,24 +66,6 @@ class EmpresaController extends Controller
 		);
 	}
 
-	/**
-	 * Creates a form to create a Empresa entity.
-	 *
-	 * @param Empresa $entity The entity
-	 *
-	 * @return \Symfony\Component\Form\Form The form
-	 */
-	private function createCreateForm(Empresa $entity)
-	{
-		$form = $this->createForm(new EmpresaType(), $entity, array(
-			'action' => $this->generateUrl('empresa_create'),
-			'method' => 'POST',
-		));
-
-		$form->add('submit', 'submit', array('label' => 'Create'));
-
-		return $form;
-	}
 
 	/**
 	 * Displays a form to create a new Empresa entity.
@@ -94,7 +77,7 @@ class EmpresaController extends Controller
 	public function newAction()
 	{
 		$entity = new Empresa();
-		$form   = $this->createCreateForm($entity);
+		$form   = $this->createForm(new EmpresaType(),$entity);
 
 		return array(
 			'entity' => $entity,
@@ -146,7 +129,7 @@ class EmpresaController extends Controller
 			throw $this->createNotFoundException('Unable to find Empresa entity.');
 		}
 
-		$editForm = $this->createEditForm($entity);
+		$editForm = $this->createForm(new EmpresaType(),$entity);
 		$deleteForm = $this->createDeleteForm($id);
 
 		return array(
@@ -157,24 +140,7 @@ class EmpresaController extends Controller
 		);
 	}
 
-	/**
-	 * Creates a form to edit a Empresa entity.
-	 *
-	 * @param Empresa $entity The entity
-	 *
-	 * @return \Symfony\Component\Form\Form The form
-	 */
-	private function createEditForm(Empresa $entity)
-	{
-		$form = $this->createForm(new EmpresaType(), $entity, array(
-			'action' => $this->generateUrl('empresa_update', array('id' => $entity->getId())),
-			'method' => 'PUT',
-		));
-
-		$form->add('submit', 'submit', array('label' => 'Update'));
-
-		return $form;
-	}
+	
 
 	/**
 	 * Edits an existing Empresa entity.
@@ -194,12 +160,12 @@ class EmpresaController extends Controller
 		}
 
 		$deleteForm = $this->createDeleteForm($id);
-		$editForm = $this->createEditForm($entity);
-		$editForm->handleRequest($request);
+		$editForm = $this->createForm(new EmpresaType(),$entity);
+		$editForm->submit($request);
 
 		if ($editForm->isValid()) {
 			$em->flush();
-
+			$this->get('session')->getFlashBag()->add('notice', 'Se modifico correctamente');
 			return $this->redirect($this->generateUrl('empresa_show', array('id' => $id)));
 		}
 
@@ -219,7 +185,7 @@ class EmpresaController extends Controller
 	public function deleteAction(Request $request, $id)
 	{
 		$form = $this->createDeleteForm($id);
-		$form->handleRequest($request);
+		$form->submit($request);
 
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
@@ -232,7 +198,7 @@ class EmpresaController extends Controller
 			$em->remove($entity);
 			$em->flush();
 		}
-
+$this->get('session')->getFlashBag()->add('notice', 'Se elimino correctamente');
 		return $this->redirect($this->generateUrl('empresa_index'));
 	}
 
@@ -245,10 +211,8 @@ class EmpresaController extends Controller
 	*/
 	private function createDeleteForm($id)
 	{
-		return $this->createFormBuilder()
-			->setAction($this->generateUrl('empresa_delete', array('id' => $id)))
-			->setMethod('DELETE')
-			->add('submit', 'submit', array('label' => 'Delete'))
+		return $this->createFormBuilder(array('id' => $id))
+			->add('id', 'hidden')
 			->getForm()
 		;
 	}
