@@ -37,6 +37,61 @@ class EmpleadoController extends Controller
             'title'    => 'Consultar empleados'
         );
     }
+	
+	/**
+     * Lists all Empleado Secretaria entities.
+     *
+     * @Route("/responsabilities", name="empleado_responsabilities")
+     * @Method("GET")
+     */
+    public function asignarResponsabilidades()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $query = $em->createQuery("SELECT p from RegistroAcademicoBundle:Empleado p WHERE p.puesto='secretaria_reg_acad'");
+		$entities=$query->getResult();
+		
+		$especialidades = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
+		
+		return $this->render(
+			'RegistroAcademicoBundle:Empleado:responsability.html.twig',
+			 array(
+				'entities' => $entities,
+				'especialidades' => $especialidades,
+				'title'    => 'Asignacion de Responsabilidades'
+			)
+		);
+    }
+	
+	/**
+     * Update Empleados Responsabilities entity.
+     *
+     * @Route("/responsability", name="responsability_update")
+     * @Method("POST")
+     */
+    public function updateResponsability()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('RegistroAcademicoBundle:Empleado')->find($_REQUEST['secretaria']);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('No se encontro el empleado seleccionado');
+        }
+
+		$responsabilidad = $em->getRepository('RegistroAcademicoBundle:Especialidad')->find($_REQUEST['especialidad']);
+
+        if (!$responsabilidad) {
+            throw $this->createNotFoundException('No se encontro la especialidad seleccionada');
+        }
+		
+        $entity->setResponsabilidad($responsabilidad);
+        $em->persist($entity);
+        $em->flush();
+
+        return $this->redirect($this->generateUrl('empleado_show', array('id' => $_REQUEST['secretaria'])));
+    }
+	
     /**
      * Creates a new Empleado entity.
      *
@@ -150,6 +205,7 @@ class EmpleadoController extends Controller
             'title'       => 'Modificar la información de un empleado'
         );
     }
+	
 
     /**
      * Edits an existing Empleado entity.
