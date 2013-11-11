@@ -8,23 +8,31 @@
         
         
         {{ form_widget(edit_form) }}
-        <p>
-            <button type="submit" class="btn ">Editar</button>
-        </p>
+       <table> 
+        <tr><td>    <button type="submit" class="btn btn-primary">Editar</button></td>
+       
     </form>
 
-        <ul class="record_actions">
+        
     
-        <a class="btn" href="{{ path('especialidad_index') }}">
+         <td><a class="btn btn-info" href="{{ path('especialidad_index') }}">
             Regresar a la lista
-        </a>
+        </a> </td>
    
    
         <form action="{{ path('especialidad_delete', { 'id': entity.codigo }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
-            <button type="submit" class="btn-warning">Eliminar</button>
+         <td>   <button type="submit" class="btn btn-danger">Eliminar</button></td>
+
+     </tr>
+            </table>
         </form>
-    
-</ul>
+    {% for flashMessage in app.session.flashbag.get('notice') %}
+<div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ flashMessage }}
+</div>
+{% endfor %}
+
 {% endblock %}

@@ -147,6 +147,7 @@ class Aspirante
 	 */
 	private $especialidad;
 
+
 	function __construct() {
 		$ahora = new \DateTime("now");
 		$this->nie = $ahora->format("U");
@@ -427,6 +428,10 @@ class Aspirante
 	{
 		return $this->especialidad;
 	}
+<<<<<<< Updated upstream
+=======
+	
+>>>>>>> Stashed changes
 	public function __toString(){
 
 		return (string)$this->getNie();

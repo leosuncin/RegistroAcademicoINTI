@@ -361,3 +361,7 @@ footer address {
   border-top-right-radius: 0;
   width: 100%;
 }
+
+#serviciosocialtype_submit {
+visibility: hidden;
+}

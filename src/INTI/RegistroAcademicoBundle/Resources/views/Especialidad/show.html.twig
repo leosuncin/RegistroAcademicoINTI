@@ -28,14 +28,17 @@
 
 <div class="form-actions">
 <form action="{{ path('especialidad_delete', { 'id': entity.codigo }) }}" method="post" class="form-acctions">
-
-
-   <a href="{{ path('especialidad_index') }}" class="btn">Regresar a la lista</a>
-  <a href="{{ path('especialidad_edit', { 'id': entity.codigo }) }}" class="btn btn-info">Editar</a>
-   <input type="hidden" name="_method" value="DELETE" /> 
+<table>
+  <tr>
+    <td><a href="{{ path('especialidad_edit', { 'id': entity.codigo }) }}" class="btn btn-primary">Editar</a></td>
+    
+     <td> <a href="{{ path('especialidad_index') }}" class="btn btn-info">Regresar a la lista</a></td>
+ 
+    <input type="hidden" name="_method" value="DELETE" /> 
     {{ form_widget(delete_form) }}
-    <tr> <button type="submit"  class="btn btn-danger">Borrar</button> 
-	
+    <td> <button type="submit"  class="btn btn-danger">Borrar</button></td> 
+	</tr>
+    </table>
 </form>
 </div>
 

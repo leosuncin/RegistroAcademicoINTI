@@ -62,7 +62,7 @@ class EspecialidadController extends Controller
 		return array(
 			'entity' => $entity,
 			'form'   => $form->createView(),
-			'title'  => 'Añadir Especialidad'
+			'tittle'  => 'Añadir Especialidad',
 		);
 	}
 
@@ -160,7 +160,7 @@ class EspecialidadController extends Controller
 		if ($editForm->isValid()) {
 			$em->persist($entity);
 			$em->flush();
-
+			$this->get('session')->getFlashBag()->add('notice', 'Se modifico correctamente');
 			return $this->redirect($this->generateUrl('especialidad_edit', array('id' => $id)));
 		}
 
@@ -193,7 +193,7 @@ class EspecialidadController extends Controller
 			$em->remove($entity);
 			$em->flush();
 		}
-
+		$this->get('session')->getFlashBag()->add('notice', 'Se elimino correctamente');
 		return $this->redirect($this->generateUrl('especialidad_index'));
 	}
 

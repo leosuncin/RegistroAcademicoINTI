@@ -91,8 +91,15 @@ class EncargadoProyecto
 		return $this->rol;
 	}
 
+<<<<<<< Updated upstream
 	public function __toString(){
 
 		return $this->getNombre();
+=======
+
+	public function __toString(){
+
+		return (string)$this->nombre;
+>>>>>>> Stashed changes
 	}
 }

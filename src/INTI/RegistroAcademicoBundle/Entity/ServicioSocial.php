@@ -3,12 +3,15 @@
 namespace INTI\RegistroAcademicoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * ServicioSocial
  *
  * @ORM\Table(name="Servicio_social")
  * @ORM\Entity
+ * @UniqueEntity(fields = "alumno", message = "Este Alumno ya fue asignado a servicio social")
  */
 class ServicioSocial
 {
@@ -94,7 +97,14 @@ class ServicioSocial
 		return $this->alumno;
 	}
 
+<<<<<<< Updated upstream
 	public function __toString(){
 		return (string)$this->getAlumno();
 	}
+=======
+	public function __toString()
+    {
+        return  (string)$this->alumno;
+    }
+>>>>>>> Stashed changes
 }

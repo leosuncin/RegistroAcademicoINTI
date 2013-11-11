@@ -20,7 +20,9 @@ class AnhoType extends AbstractType
 				array(
 					'label' => 'Año corriente'
 				))
-			->add(
+			->add('encurso','integer',
+				array(
+					'max_length' => 1)
 			)
 			->add('inicio',
 				'date',
