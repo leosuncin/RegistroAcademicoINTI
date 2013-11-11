@@ -97,14 +97,9 @@ class ServicioSocial
 		return $this->alumno;
 	}
 
-<<<<<<< Updated upstream
+
 	public function __toString(){
 		return (string)$this->getAlumno();
 	}
-=======
-	public function __toString()
-    {
-        return  (string)$this->alumno;
-    }
->>>>>>> Stashed changes
+
 }

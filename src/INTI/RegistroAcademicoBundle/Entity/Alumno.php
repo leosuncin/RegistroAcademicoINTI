@@ -150,11 +150,7 @@ class Alumno
 	{
 		return $this->usuario;
 	}
-<<<<<<< Updated upstream
-	
-=======
 
->>>>>>> Stashed changes
 	public function __toString(){
 
 		return (string)$this->nie;

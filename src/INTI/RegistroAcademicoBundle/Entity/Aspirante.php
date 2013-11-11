@@ -428,10 +428,7 @@ class Aspirante
 	{
 		return $this->especialidad;
 	}
-<<<<<<< Updated upstream
-=======
-	
->>>>>>> Stashed changes
+
 	public function __toString(){
 
 		return (string)$this->getNie();
