@@ -14,7 +14,16 @@
 
 {% block content %}
 	<form class="form-inline">
-		<table style='width:100%'><tr><td>Buscar: <input type='text' placeholder='Ingrese Nombre o NIE' id='search'></td><td>Especialidad: <select id='especialidad'></select></td><td style='text-align:right'>Numero de Resultados: <select id='nResults' class='span2'><option value='10'>10</option><option value='20'>20</option></select></td></table>
+		<table style='width:100%'><tr><td>Buscar: <input type='text' placeholder='Ingrese Nombre o NIE' id='search'></td>
+		<td>Especialidad: 
+			<select id='especialidad'>
+				<option value='todas'>Todas</option>
+				{% for entity in especialidades %}
+					<option value='{{ entity.codigo }}'> {{ entity.nombre }} </option>
+				{% endfor %}
+			</select>
+		</td>
+		<td style='text-align:right'>Numero de Resultados: <select id='nResults' class='span2'><option value='10'>10</option><option value='20'>20</option></select></td></table>
 		<div id="tableResult" style='padding-top:20px;'></div>
 	</form>
 <a class="btn btn-primary" href="{{ path('alumno_new') }}">{{ '.icon-plus-sign Ingresar un nuevo alumno'|parse_icons('white') }}</a>
@@ -28,17 +37,12 @@
 		order_field="u.nie";
 		sence="ASC";
 		actual=1;
-		getEspecialidades();
 		generateTable(actual, actual);
 		$("#search").keyup(function(){generateTable(actual,actual);});
 		$("#nResults").change(function(){generateTable(actual,actual);});
 		$("#especialidad").change(function(){generateTable(actual,actual);});
 	});
-	function getEspecialidades(){
-		$.get("{{ path('ComboEspecialidadAjax') }}", {}, function(e){
-			$("#especialidad").html(e);
-		});
-	}
+
 	function generateTable(actual, anterior){
 		$.get("{{ path('IndexAlumnoAjax') }}", {"especialidad":$("#especialidad").val(), "order_field":order_field, "search":$("#search").val() ,"sence":sence, "n_result":$("#nResults").val(), "actual":actual, "anterior":anterior}, function(e){
 			$("#tableResult").html(e);

@@ -31,9 +31,10 @@ class AlumnoController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('RegistroAcademicoBundle:Alumno')->findAll();
-
+		$especialidades = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
         return array(
             'entities' => $entities,
+			'especialidades' => $especialidades,
             'title'    => 'Consultar alumnos'
         );
     }
@@ -58,7 +59,7 @@ class AlumnoController extends Controller
 
             return $this->redirect($this->generateUrl('alumno_show', array('nie' => $entity->getNie())));
         }
-
+		
         return array(
             'entity' => $entity,
             'form'   => $form->createView(),
@@ -78,8 +79,14 @@ class AlumnoController extends Controller
         $entity = new Alumno();
         $form   = $this->createForm(new AlumnoType(), $entity);
 
+		$em = $this->getDoctrine()->getManager();
+		$especialidades = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
+		$codigoespecialidades = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
+		
         return array(
             'entity' => $entity,
+			'especialidades' => $especialidades,
+			'codigoespecialidades' => $codigoespecialidades,
             'form'   => $form->createView(),
             'title'  => 'Añadir un alumno'
         );
