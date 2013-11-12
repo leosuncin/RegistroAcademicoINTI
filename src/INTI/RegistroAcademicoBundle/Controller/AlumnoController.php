@@ -19,7 +19,6 @@ use INTI\RegistroAcademicoBundle\Form\AlumnoType;
 class AlumnoController extends Controller
 {
 
-<<<<<<< HEAD
 	/**
 	 * Lists all Alumno entities.
 	 *
@@ -31,85 +30,12 @@ class AlumnoController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$alumnos = $em->getRepository('RegistroAcademicoBundle:Alumno')->findAll();
-=======
-    /**
-     * Lists all Alumno entities.
-     *
-     * @Route("/", name="alumno_index")
-     * @Method("GET")
-     * @Template()
-     */
-    public function indexAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entities = $em->getRepository('RegistroAcademicoBundle:Alumno')->findAll();
+		$entities = $em->getRepository('RegistroAcademicoBundle:Alumno')->findAll();
 		$especialidades = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
-        return array(
-            'entities' => $entities,
-			'especialidades' => $especialidades,
-            'title'    => 'Consultar alumnos'
-        );
-    }
-    /**
-     * Creates a new Alumno entity.
-     *
-     * @Route("/", name="alumno_create")
-     * @Method("POST")
-     * @Template("RegistroAcademicoBundle:Alumno:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $entity  = new Alumno();
-        $form = $this->createForm(new AlumnoType(), $entity);
-        $form->submit($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity->getAspirante());
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('alumno_show', array('nie' => $entity->getNie())));
-        }
-		
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-            'title'  => 'Añadir un alumno'
-        );
-    }
-
-    /**
-     * Displays a form to create a new Alumno entity.
-     *
-     * @Route("/new", name="alumno_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Alumno();
-        $form   = $this->createForm(new AlumnoType(), $entity);
-
-		$em = $this->getDoctrine()->getManager();
-		$especialidades = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
-		$codigoespecialidades = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
-		
-        return array(
-            'entity' => $entity,
-			'especialidades' => $especialidades,
-			'codigoespecialidades' => $codigoespecialidades,
-            'form'   => $form->createView(),
-            'title'  => 'Añadir un alumno'
-        );
-    }
->>>>>>> 849e6fcd88b9baf2bd9d0187c75b1e724a1e87a3
-
 		return array(
-			'alumnos' => $alumnos,
-			'title'   => 'Consultar alumnos'
+			'entities' => $entities,
+			'especialidades' => $especialidades,
+			'title'    => 'Consultar alumnos'
 		);
 	}
 
@@ -161,11 +87,17 @@ class AlumnoController extends Controller
 	 */
 	public function newAction()
 	{
-		$alumno = new Alumno();
-		$form   = $this->createForm(new AlumnoType(), $alumno);
+		$entity = new Alumno();
+		$form   = $this->createForm(new AlumnoType(), $entity);
 
+		$em = $this->getDoctrine()->getManager();
+		$especialidades = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
+		$codigoespecialidades = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
+		
 		return array(
-			'alumno' => $alumno,
+			'entity' => $entity,
+			'especialidades' => $especialidades,
+			'codigoespecialidades' => $codigoespecialidades,
 			'form'   => $form->createView(),
 			'title'  => 'Añadir un alumno'
 		);
@@ -253,59 +185,72 @@ class AlumnoController extends Controller
 		return $this->redirect($this->generateUrl('alumno_index'));
 	}
 
-    /**
-     * Creates a new Alumno entity.
-     *
-     * @Route("/guardar", name="GuardarAlumnoAjax")
-     * @Method("GET")
-     */
-    function crearAlumno()
-    {
+	/**
+	 * Creates a new Alumno entity.
+	 *
+	 * @Route("/GuardarAlumno", name="GuardarAlumnoAjax")
+	 * @Method("GET")
+	 */
+	function crearAlumno()
+	{
+		set_time_limit(0);
 		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p WHERE p.nie=:nie";
 		$em = $this->getDoctrine()->getManager();
 		$query=$em->createQuery($dql)->setParameter("nie", $_REQUEST['nie'])->setMaxResults(1);
 		try{
-			$aspirante = $query->getSingleResult();
-			if($aspirante->getEstado()=="A"){
-				$dql2="SELECT p FROM RegistroAcademicoBundle:CodigoEspecialidad p WHERE p.codigo=:codigo";
-				$query2=$em->createQuery($dql2)->setParameter("codigo", $_REQUEST['cod_esp'])->setMaxResults(1);
-				$codigoEspecialidad = $query2->getSingleResult();
-				$entity  = new Alumno();
-				$entity->setCondicion($_REQUEST['cond']);
-				$entity->setCondicion($_REQUEST['cond']);
-				$aspirante->setEstado('M');
-				$entity->setNie($aspirante);
-				$entity->setCodigoEspecialidad($codigoEspecialidad);
-				$em->persist($entity->getNIE());
-				$em->persist($entity);
-
-				$em->flush();
-
-				return new Response($this->generateUrl('alumno_show', array('nie' => $entity->getNie())));
-			}else{
-				return new Response($aspirante->getEstado());
-			}
+				$aspirante = $query->getSingleResult();
+				$alumno = $em->getRepository('RegistroAcademicoBundle:Alumno')->find($_REQUEST['nie']);
+				if (!$alumno) {
+					$user = $em->getRepository('RegistroAcademicoBundle:Usuario')->find($_REQUEST['username']);
+					if(!$user){
+						$dql2="SELECT p FROM RegistroAcademicoBundle:CodigoEspecialidad p WHERE p.codigo=:codigo";
+						$query2=$em->createQuery($dql2)->setParameter("codigo", $_REQUEST['cod_esp'])->setMaxResults(1);
+						$codigoEspecialidad = $query2->getSingleResult();
+						$usuario = new Usuario();
+						$usuario->setUsername($_REQUEST['username']);
+						$usuario->setPassword($_REQUEST['password']);
+						$factory  = $this->get('security.encoder_factory');
+						$encoder  = $factory->getEncoder($usuario);
+						$password = $encoder->encodePassword($usuario->getPassword(), $usuario->getSalt());
+						$usuario->setPassword($password);
+						$usuario->addRole("ROLE_USER");
+						
+						$entity = new Alumno();
+						$entity->setCondicion($_REQUEST['cond']);
+						$entity->setNie($aspirante);
+						$entity->setUsuario($usuario);
+						$entity->setCodigoEspecialidad($codigoEspecialidad);
+						$em->persist($entity->getUsuario());
+						$em->persist($entity);
+						$em->flush();
+						
+						return new Response($this->generateUrl('alumno_show', array('nie' => $entity->getNie()->getNie())));
+					}else
+						return new Response("U");
+				}else
+					return new Response("M");
 		} catch (\Doctrine\Orm\NoResultException $e) {
 			return new Response("N");
 		}
-    }
+	}
 
 	/**
-     * Genera tabla de index.
-     *
-     * @Route("/ajax", name="IndexAlumnoAjax")
-     * @Method("GET")
-     */
-    function generateTable()
-    {
+	 * Genera tabla de index.
+	 *
+	 * @Route("/ajax", name="IndexAlumnoAjax")
+	 * @Method("GET")
+	 */
+	function generateTableAction()
+	{
 		/*
 			Parametros:
-			order_field, sence, n_result, search_field, search, actual, anterior
+			order_field, sence, n_result, search_field, search, actual, anterior, especialidad
 		*/
 		$entity='Alumno';
-		$campos=Array("u.nie","u.primerapellido","u.segundoapellido","u.nombres", "");
-		$nombre_campos=Array("NIE", "Primer Apellido", "Segundo Apellido", "Nombres", "Acciones");
+		$campos=Array("u.nie","u.primerapellido","u.segundoapellido","u.nombres", "n.nombre", "");
+		$nombre_campos=Array("NIE", "Primer Apellido", "Segundo Apellido", "Nombres", "Especialidad", "Acciones");
 		$order_field=$_REQUEST['order_field'];
+		$especialidad=$_REQUEST['especialidad'];
 		$sence=strtolower($_REQUEST['sence']);
 		$n_result=$_REQUEST['n_result'];
 		$parameters=Array();
@@ -313,15 +258,24 @@ class AlumnoController extends Controller
 		if(isset($_REQUEST['search']))
 		if($_REQUEST['search']!=""){
 			$search=$_REQUEST['search'];
-			$condicion="where CONCAT(CONCAT(CONCAT(CONCAT(u.nombres,' '),u.primerapellido),' '),u.segundoapellido) like :search or u.nie like :search2";
+			$condicion=" where CONCAT(CONCAT(CONCAT(CONCAT(u.nombres,' '),u.primerapellido),' '),u.segundoapellido) like :search or u.nie like :search2";
 			$parameters['search']='%'.$search.'%';
 			$parameters['search2']=$search.'%';
 		}
-		$dql="SELECT COUNT(p) FROM RegistroAcademicoBundle:Alumno p JOIN p.nie u ".$condicion;
+		$cEspecialidad="";
+		if(($especialidad!="todas")&&($especialidad!="")){
+			if($condicion=="")	
+				$cEspecialidad.=" where ";
+			else
+				$cEspecialidad.=" and ";
+			$cEspecialidad.="n.codigo=:codigo";
+			$parameters['codigo']=$especialidad;
+		}
+		$dql="SELECT COUNT(p) FROM RegistroAcademicoBundle:Alumno p JOIN p.nie u JOIN u.especialidad n".$condicion.$cEspecialidad;
 		$em = $this->getDoctrine()->getManager();
 		$query=$em->createQuery($dql);
 		if(isset($_REQUEST['search']))
-		if($_REQUEST['search']!="")
+		if(($_REQUEST['search']!="")||($cEspecialidad!=""))
 			$query->setParameters($parameters);
 		$n_filas=$query->getSingleScalarResult();
 		$n_paginas=ceil($n_filas/$n_result);
@@ -352,17 +306,15 @@ class AlumnoController extends Controller
 			}
 		}else	$actual=1;
 
-			$query="select p, u from RegistroAcademicoBundle:Alumno p JOIN p.nie u ";
-			if($condicion!="")
-				$query.=$condicion;
-			if(($order_field!="")&&($sence!=""))
-				$query.=" order by ".$order_field." ".$sence;
+		$query="select p, u from RegistroAcademicoBundle:Alumno p JOIN p.nie u JOIN u.especialidad n".$condicion.$cEspecialidad;
+		if(($order_field!="")&&($sence!=""))
+			$query.=" order by ".$order_field." ".$sence;
 
 		//$text.= $query;
 		$resultado=$em->createQuery($query);
 		
 		if(isset($_REQUEST['search']))
-		if($_REQUEST['search']!="")
+		if(($_REQUEST['search']!="")||($cEspecialidad!=""))
 			$resultado->setParameters($parameters);
 			
 		$resultado->setMaxResults($n_result)->setFirstResult($init);
@@ -388,6 +340,7 @@ class AlumnoController extends Controller
 				$text.= "<td>".$result[$i]->getNie()->getPrimerapellido()."</td>";
 				$text.= "<td>".$result[$i]->getNie()->getSegundoapellido()."</td>";
 				$text.= "<td>".$result[$i]->getNie()->getNombres()."</td>";
+				$text.= "<td>".$result[$i]->getNie()->getEspecialidad()->getNombre()."</td>";
 				$text.='<td><div class="btn-group btn-group-horizontal">';
 				$text.="<a class='btn btn-info' href='../alumno/".$result[$i]->getNie()->getNie()."'><span class='icon-eye-open icon-white'></span></a>";
                 $text.="<a class='btn btn-info' href='../alumno/".$result[$i]->getNie()->getNie()."/edit'><span class='icon-edit icon-white'></span></a></div></td></tr>";

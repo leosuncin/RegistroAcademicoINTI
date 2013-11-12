@@ -26,7 +26,6 @@ class PracticaProfesionalType extends AbstractType
 			->add('inicio',
 				'date',
 				array(
-					 'input'		  => 'datetime',	 
 					'label'           => 'Fecha de inicio',
 					'widget'          => 'single_text',
 					'format'          => 'dd/MM/yyyy',

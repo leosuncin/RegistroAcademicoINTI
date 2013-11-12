@@ -62,7 +62,7 @@ class EspecialidadController extends Controller
 		return array(
 			'entity' => $entity,
 			'form'   => $form->createView(),
-			'tittle'  => 'Añadir Especialidad',
+			'title'  => 'Añadir Especialidad'
 		);
 	}
 

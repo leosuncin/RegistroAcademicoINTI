@@ -97,9 +97,8 @@ class ServicioSocial
 		return $this->alumno;
 	}
 
-
-	public function __toString(){
+	public function __toString()
+	{
 		return (string)$this->getAlumno();
 	}
-
 }

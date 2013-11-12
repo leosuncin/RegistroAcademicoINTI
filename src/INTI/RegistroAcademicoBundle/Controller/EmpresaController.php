@@ -48,7 +48,7 @@ class EmpresaController extends Controller
 	{
 		$entity = new Empresa();
 		$form = $this->createForm(new EmpresaType(),$entity);
-		$form->submit($request);
+		$form->handleRequest($request);
 
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
@@ -65,7 +65,6 @@ class EmpresaController extends Controller
 			'title'  => 'Añadir una empresa'
 		);
 	}
-
 
 	/**
 	 * Displays a form to create a new Empresa entity.
@@ -140,8 +139,6 @@ class EmpresaController extends Controller
 		);
 	}
 
-	
-
 	/**
 	 * Edits an existing Empresa entity.
 	 *
@@ -160,8 +157,8 @@ class EmpresaController extends Controller
 		}
 
 		$deleteForm = $this->createDeleteForm($id);
-		$editForm = $this->createForm(new EmpresaType(),$entity);
-		$editForm->submit($request);
+		$editForm = $this->createEditForm($entity);
+		$editForm->handleRequest($request);
 
 		if ($editForm->isValid()) {
 			$em->flush();
@@ -185,7 +182,7 @@ class EmpresaController extends Controller
 	public function deleteAction(Request $request, $id)
 	{
 		$form = $this->createDeleteForm($id);
-		$form->submit($request);
+		$form->handleRequest($request);
 
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
@@ -211,8 +208,10 @@ $this->get('session')->getFlashBag()->add('notice', 'Se elimino correctamente');
 	*/
 	private function createDeleteForm($id)
 	{
-		return $this->createFormBuilder(array('id' => $id))
-			->add('id', 'hidden')
+		return $this->createFormBuilder()
+			->setAction($this->generateUrl('empresa_delete', array('id' => $id)))
+			->setMethod('DELETE')
+			->add('submit', 'submit', array('label' => 'Delete'))
 			->getForm()
 		;
 	}

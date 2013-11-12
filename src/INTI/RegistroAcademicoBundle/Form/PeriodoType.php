@@ -53,17 +53,6 @@ class PeriodoType extends AbstractType
 						'data-date-format' => 'dd/mm/yyyy',
 						'data-language'    => 'es'
 			)))
-			->add(
-				'encurso',
-				'integer',
-				array(
-					'max_length'=>'1')
-				)
-			->add(
-				'Año',
-				'integer',
-				array(
-					'max_length'=>'4'))
 		;
 	}
 

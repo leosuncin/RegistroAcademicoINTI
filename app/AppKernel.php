@@ -25,7 +25,6 @@ class AppKernel extends Kernel
             new Liuggio\ExcelBundle\LiuggioExcelBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new INTI\RegistroAcademicoBundle\RegistroAcademicoBundle(),
-            
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

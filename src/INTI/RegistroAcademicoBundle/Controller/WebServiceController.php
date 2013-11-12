@@ -32,7 +32,7 @@ class WebServiceController extends Controller
 	 * @Route("/user/{username}/exist")
 	 * @Method("GET")
 	 */
-	public function usuarioExist($username)
+	public function usuarioExistAction($username)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$query = $em->createQuery("SELECT u FROM RegistroAcademicoINTI:Usuario u WHERE u.username = :username")->setParameter('username', $username);
@@ -51,7 +51,7 @@ class WebServiceController extends Controller
 	 * @Route("/user/{username}/check")
 	 * @Method("GET")
 	 */
-	public function usuarioCheck($username)
+	public function usuarioCheckAction($username)
 	{
 		$em = $this->getDoctrine()->getManager();
 		$query = $em->createQuery("SELECT u FROM RegistroAcademicoINTI:Usuario u WHERE u.username = :username")->setParameter('username', $username);

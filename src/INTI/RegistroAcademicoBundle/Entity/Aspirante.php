@@ -11,6 +11,9 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *
  * @ORM\Table(name="Aspirante")
  * @ORM\Entity
+ * @ORM\InheritanceType("JOINED")
+ * @ORM\DiscriminatorColumn(name="class_name", type="string")
+ * @ORM\DiscriminatorMap({"aspirante" = "Aspirante", "alumno" = "Alumno"})
  * @UniqueEntity(fields = "nie", message = "El NIE ya esta registrado")
  */
 class Aspirante
@@ -146,7 +149,6 @@ class Aspirante
 	 * })
 	 */
 	private $especialidad;
-
 
 	function __construct() {
 		$ahora = new \DateTime("now");

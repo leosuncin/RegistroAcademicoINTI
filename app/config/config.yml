@@ -74,7 +74,3 @@ swiftmailer:
 
 bc_bootstrap:
     less_filter: lessphp
-
-
-
-

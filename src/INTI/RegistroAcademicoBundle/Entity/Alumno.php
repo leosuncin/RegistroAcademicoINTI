@@ -4,6 +4,7 @@ namespace INTI\RegistroAcademicoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use INTI\RegistroAcademicoBundle\Entity\Aspirante;
 
 /**
  * Alumno
@@ -11,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * @ORM\Table(name="Alumno")
  * @ORM\Entity
  */
-class Alumno
+class Alumno extends Aspirante
 {
 	/**
 	 * @var string
@@ -24,18 +25,6 @@ class Alumno
 	 * @ORM\Column(name="condicion", type="string", length=2, nullable=false)
 	 */
 	private $condicion;
-
-	/**
-	 * @var \Aspirante
-	 *
-	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="NONE")
-	 * @ORM\OneToOne(targetEntity="Aspirante")
-	 * @ORM\JoinColumns({
-	 *   @ORM\JoinColumn(name="NIE", referencedColumnName="NIE")
-	 * })
-	 */
-	private $nie;
 
 	/**
 	 * @var \CodigoEspecialidad
@@ -56,8 +45,6 @@ class Alumno
 	 * })
 	 */
 	private $usuario;
-
-
 
 	/**
 	 * Set condicion
@@ -80,29 +67,6 @@ class Alumno
 	public function getCondicion()
 	{
 		return $this->condicion;
-	}
-
-	/**
-	 * Set nie
-	 *
-	 * @param \INTI\RegistroAcademicoBundle\Entity\Aspirante $nie
-	 * @return Alumno
-	 */
-	public function setNie(\INTI\RegistroAcademicoBundle\Entity\Aspirante $nie)
-	{
-		$this->nie = $nie;
-	
-		return $this;
-	}
-
-	/**
-	 * Get nie
-	 *
-	 * @return \INTI\RegistroAcademicoBundle\Entity\Aspirante 
-	 */
-	public function getNie()
-	{
-		return $this->nie;
 	}
 
 	/**

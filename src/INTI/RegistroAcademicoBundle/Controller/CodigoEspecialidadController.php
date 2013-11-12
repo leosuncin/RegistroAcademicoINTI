@@ -160,7 +160,7 @@ class CodigoEspecialidadController extends Controller
 		if ($editForm->isValid()) {
 			$em->persist($entity);
 			$em->flush();
-				$this->get('session')->getFlashBag()->add('notice', 'Se modifico correctamente');
+			$this->get('session')->getFlashBag()->add('notice', 'Se modifico correctamente');
 			return $this->redirect($this->generateUrl('codigoespecialidad_edit', array('id' => $id)));
 		}
 
@@ -192,7 +192,7 @@ class CodigoEspecialidadController extends Controller
 			$em->remove($entity);
 			$em->flush();
 		}
-			$this->get('session')->getFlashBag()->add('notice', 'Se elimino correctamente');
+		$this->get('session')->getFlashBag()->add('notice', 'Se elimino correctamente');
 		return $this->redirect($this->generateUrl('codigoespecialidad_index'));
 	}
 
