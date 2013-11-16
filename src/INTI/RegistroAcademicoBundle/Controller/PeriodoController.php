@@ -313,7 +313,6 @@ class PeriodoController extends Controller {
 		  ));
 		 */
 
-
 		return $form;
 	}
 

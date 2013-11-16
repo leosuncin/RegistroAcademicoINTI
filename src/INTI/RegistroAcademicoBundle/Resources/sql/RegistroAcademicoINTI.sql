@@ -44,6 +44,7 @@ CREATE TABLE IF NOT EXISTS `Aspirante` (
   `sexo` CHAR NOT NULL,
   `Especialidad` VARCHAR(5) NOT NULL,
   `Encargado` VARCHAR(10) NOT NULL,
+  `class_name` VARCHAR(45) NOT NULL,
   PRIMARY KEY (`NIE`),
   INDEX `1erApellido` (`primer_apellido` ASC),
   INDEX `2doApellido` (`segundo_apellido` ASC),
@@ -258,6 +259,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Materia` (
   `id` INT NOT NULL AUTO_INCREMENT,
+  `codigo` INT NULL,
   `nombre` VARCHAR(60) NOT NULL,
   `profesor` VARCHAR(80) NOT NULL,
   PRIMARY KEY (`id`))
@@ -419,11 +421,10 @@ SELECT
 	edad(ap.fecha_nac) AS edad,
 	ap.lugar_nac,
 	ap.sexo,
-	cd.codigo
+	al.Codigo_especialidad
 FROM
 	Aspirante ap,
-	Alumno al,
-	Codigo_especialidad cd
+	Alumno al
 WHERE
 	al.NIE = ap.NIE;
 
@@ -593,3 +594,5 @@ END$$
 CREATE EVENT `actualizar_bloqueo_usuarios` ON SCHEDULE EVERY 1 HOUR DO CALL desbloquear_usuarios()$$
 
 DELIMITER ;
+
+SET @@global.event_scheduler = ON;

@@ -21,23 +21,7 @@
         </tr>
     </thead>
     <tbody>
-    {% for aspirante in aspirantes %}
-        <tr>
-            <td>{{ aspirante.primerapellido~' '~aspirante.segundoapellido~', '~aspirante.nombres }}</td>
-            <td>{{ aspirante.especialidad.nombre }}</td>
-            <td>{% if aspirante.sexo == 'M' %}
-                        Masculino
-                    {% else %}
-                        Femenino
-                    {% endif %}</td>
-            <td>
-                <div class="btn-group btn-group-vertical">
-                    <a class="btn btn-info btn-mini" href="{{ path('aspirante_show', { 'nie': aspirante.nie }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
-                    <a class="btn btn-info btn-mini" href="{{ path('aspirante_edit', { 'nie': aspirante.nie }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
-                </div>
-            </td>
-        </tr>
-    {% endfor %}
+    {% include 'RegistroAcademicoBundle:Aspirante:indexAjax.html.twig' %}
     </tbody>
 </table>
 <a class="btn btn-primary" href="{{ path('aspirante_new') }}">{{ '.icon-plus-sign Ingresar un nuevo aspirante'|parse_icons('white') }}</a>

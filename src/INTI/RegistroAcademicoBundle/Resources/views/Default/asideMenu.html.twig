@@ -14,6 +14,7 @@
 				<ul id="acc-gestion-empleado" class="accordion-body collapse list-unstyled">
 					<li class="accordion-inner"><a href="{{ path('empleado_new') }}"><span class="icon-plus-sign"></span> Añadir un empleado</a></li>
 					<li class="accordion-inner"><a href="{{ path('empleado_index') }}"><span class="icon-eye-open"></span> Consultar empleados</a></li>
+					<li class="accordion-inner"><a href="{{ path('empleado_responsabilities') }}"><span class="icon-edit"></span> Asignar Responsabilidades</a></li>
 				</ul>
 				{% endif %}
 				{% if is_granted('ROLE_ACADEMIC') %}
@@ -60,6 +61,38 @@
 					<li class="accordion-inner"><a href="{{path('especialidad_index')}}"><span class="icon-eye-open"></span> Consultar especialidades</a></li>
 					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
 					<li class="accordion-inner"><a href="{{ path('codigoespecialidad_new') }}"><span class="icon-plus-sign"></span> Añadir Codigo de especialidad</a></li>
+					{% endif %}
+				</ul>
+				{% endif %}
+				{% if is_granted('ROLE_ACADEMIC') %}
+				<div class="accordion-heading">
+    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-serviciosocial" href="#acc-gestion-serviciosocial"><span class="icon-list-alt"></span> Servicio social</a>
+    			</div>
+				<ul id="acc-gestion-serviciosocial" class="accordion-body collapse list-unstyled">
+					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
+					<li class="accordion-inner"><a href="{{ path('encargadoproyecto_new') }}"><span class="icon-plus-sign"></span> Añadir encargado proyecto</a></li>
+					{% endif %}
+					<li class="accordion-inner"><a href="{{path('proyecto_new')}}"><span class="icon-plus-sign"></span> Añadir Proyecto</a></li>
+					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
+					<li class="accordion-inner"><a href="{{ path('serviciosocial_new') }}"><span class="icon-plus-sign"></span> Asignar horas sociales</a></li>
+					{% endif %}
+				</ul>
+				{% endif %}
+
+
+					{% if is_granted('ROLE_ACADEMIC') %}
+				<div class="accordion-heading">
+    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-practicaprofesional" href="#acc-gestion-practicaprofesional"><span class="icon-tasks"></span> Practica profesional</a>
+    			</div>
+				<ul id="acc-gestion-practicaprofesional" class="accordion-body collapse list-unstyled">
+					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
+					<li class="accordion-inner"><a href="{{ path('empresa_new') }}"><span class="icon-plus-sign"></span> Añadir empresa</a></li>
+					{% endif %}
+					<li class="accordion-inner"><a href="{{path('practicaprofesional_new')}}"><span class="icon-plus-sign"></span> Crear practica</a></li>
+					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
+					<li class="accordion-inner"><a href="#"><span class="icon-plus-sign"></span> Asignar alumnos</a></li>
+					<li class="accordion-inner"><a href="#"><span class="icon-plus-sign"></span> Ingresar estadisticos</a></li>
+					<li class="accordion-inner"><a href="#"><span class="icon-plus-sign"></span> Generar nota</a></li>
 					{% endif %}
 				</ul>
 				{% endif %}

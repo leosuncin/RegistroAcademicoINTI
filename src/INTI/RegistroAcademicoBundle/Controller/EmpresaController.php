@@ -47,7 +47,7 @@ class EmpresaController extends Controller
 	public function createAction(Request $request)
 	{
 		$entity = new Empresa();
-		$form = $this->createCreateForm($entity);
+		$form = $this->createForm(new EmpresaType(),$entity);
 		$form->handleRequest($request);
 
 		if ($form->isValid()) {
@@ -55,6 +55,7 @@ class EmpresaController extends Controller
 			$em->persist($entity);
 			$em->flush();
 
+			$this->get('session')->getFlashBag()->add('notice', 'Se inserto correctamente');
 			return $this->redirect($this->generateUrl('empresa_show', array('id' => $entity->getId())));
 		}
 
@@ -63,25 +64,6 @@ class EmpresaController extends Controller
 			'form'   => $form->createView(),
 			'title'  => 'Añadir una empresa'
 		);
-	}
-
-	/**
-	 * Creates a form to create a Empresa entity.
-	 *
-	 * @param Empresa $entity The entity
-	 *
-	 * @return \Symfony\Component\Form\Form The form
-	 */
-	private function createCreateForm(Empresa $entity)
-	{
-		$form = $this->createForm(new EmpresaType(), $entity, array(
-			'action' => $this->generateUrl('empresa_create'),
-			'method' => 'POST',
-		));
-
-		$form->add('submit', 'submit', array('label' => 'Create'));
-
-		return $form;
 	}
 
 	/**
@@ -94,7 +76,7 @@ class EmpresaController extends Controller
 	public function newAction()
 	{
 		$entity = new Empresa();
-		$form   = $this->createCreateForm($entity);
+		$form   = $this->createForm(new EmpresaType(),$entity);
 
 		return array(
 			'entity' => $entity,
@@ -146,7 +128,7 @@ class EmpresaController extends Controller
 			throw $this->createNotFoundException('Unable to find Empresa entity.');
 		}
 
-		$editForm = $this->createEditForm($entity);
+		$editForm = $this->createForm(new EmpresaType(),$entity);
 		$deleteForm = $this->createDeleteForm($id);
 
 		return array(
@@ -155,25 +137,6 @@ class EmpresaController extends Controller
 			'delete_form' => $deleteForm->createView(),
 			'title'       => 'Modificar empresa'
 		);
-	}
-
-	/**
-	 * Creates a form to edit a Empresa entity.
-	 *
-	 * @param Empresa $entity The entity
-	 *
-	 * @return \Symfony\Component\Form\Form The form
-	 */
-	private function createEditForm(Empresa $entity)
-	{
-		$form = $this->createForm(new EmpresaType(), $entity, array(
-			'action' => $this->generateUrl('empresa_update', array('id' => $entity->getId())),
-			'method' => 'PUT',
-		));
-
-		$form->add('submit', 'submit', array('label' => 'Update'));
-
-		return $form;
 	}
 
 	/**
@@ -199,7 +162,7 @@ class EmpresaController extends Controller
 
 		if ($editForm->isValid()) {
 			$em->flush();
-
+			$this->get('session')->getFlashBag()->add('notice', 'Se modifico correctamente');
 			return $this->redirect($this->generateUrl('empresa_show', array('id' => $id)));
 		}
 
@@ -232,7 +195,7 @@ class EmpresaController extends Controller
 			$em->remove($entity);
 			$em->flush();
 		}
-
+$this->get('session')->getFlashBag()->add('notice', 'Se elimino correctamente');
 		return $this->redirect($this->generateUrl('empresa_index'));
 	}
 

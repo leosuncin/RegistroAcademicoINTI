@@ -62,7 +62,18 @@ class CodigoEspecialidad
 	 */
 	private $especialidad;
 
+	/**
+	 * Set codigo
+	 *
+	 * @param string $codigo
+	 * @return CodigoEspecialidad
+	 */
+	public function setCodigo($codigo)
+	{
+		$this->codigo = $codigo;
 
+		return $this;
+	}
 
 	/**
 	 * Get codigo

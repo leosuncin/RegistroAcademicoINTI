@@ -1,0 +1,47 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span> <a href="{{ path('proyecto') }}">Proyectos</a></li>
+<li class="active"><span class="divider">&gt;</span> Mostrar</li>
+{% endblock %}
+
+{% block content%}
+    <h1>Proyecto</h1>
+
+    <table class="record_properties">
+        <tbody>
+            
+            <tr>
+                <th>Nombre</th>
+                <td>{{ entity.nombre }}</td>
+            </tr>
+            <tr>
+                <th>Descripcion</th>
+                <td>{{ entity.descripcion }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <div class="form-actions">
+<form action="{{ path('proyecto_delete', { 'id': entity.id }) }}" method="post" class="form-acctions">
+<table>
+  <tr>
+    <td><a href="{{ path('proyecto_edit', { 'id': entity.id }) }}" class="btn btn-primary">Editar</a></td>
+    
+     <td> <a href="{{ path('proyecto') }}" class="btn btn-info">Regresar a la lista</a></td>
+ 
+    <input type="hidden" name="_method" value="DELETE" /> 
+    {{ form(delete_form) }}
+    <td> <button type="submit"  class="btn btn-danger">Borrar</button></td> 
+    </tr>
+    </table>
+</form>
+</div>
+
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ flashMessage }}
+</div>
+{% endfor %}
+{% endblock %}

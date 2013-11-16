@@ -1,7 +1,11 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
 
+<li class="active"><span class="divider">&gt;</span> Empresas</li>
+{% endblock %}
 {% block content %}
-<table class="records_list">
+<table id="tabla" class="table table-hover">
   <thead>
     <tr>
       <th>Id</th>
@@ -24,12 +28,11 @@
       <td>{{ entity.email }}</td>
       <td>
       <ul>
-          <li>
-              <a class="btn btn-small" href="{{ path('empresa_show', { 'id': entity.id }) }}">Mostrar</a>
-          </li>
-          <li>
-              <a class="btn btn-small" href="{{ path('empresa_edit', { 'id': entity.id }) }}">Editar</a>
-          </li>
+        
+              <a class="btn btn-small btn-info" href="{{ path('empresa_show', { 'id': entity.id }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
+          
+              <a class="btn btn-small btn-info" href="{{ path('empresa_edit', { 'id': entity.id }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+          
       </ul>
       </td>
     </tr>
@@ -37,5 +40,19 @@
   </tbody>
 </table>
 
-<a class="btn" href="{{ path('empresa_new') }}">Añadir una nueva empresa</a>
+   <a class="btn btn-primary" href="{{ path('empresa_new') }}">
+                {{ '.icon-plus-sign Ingresar una nueva empresa'|parse_icons('white') }}
+            </a>
+
+                       {% for flashMessage in app.session.flashbag.get('notice') %}
+                        <div class="alert alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{ flashMessage }}
+                        </div>
+                        {% endfor %}
+                        {% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/watable/jquery.watable.js') }}"></script>
 {% endblock %}

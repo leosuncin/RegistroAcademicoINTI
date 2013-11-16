@@ -1,0 +1,32 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span> <a href="{{ path('practicaprofesional') }} ">Practica Profesional</a></li>
+<li class="active"><span class="divider">&gt;</span> Crear</li>
+{% endblock %}
+
+{% block content %}
+
+
+
+
+<h1>Ingresar practica profesional</h1>
+  
+  
+
+<form action="{{ path('practicaprofesional_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	
+    {{ form_widget(form, {'form_type': 'horizontal'}) }}
+    
+	
+    <div class="form-actions">
+       <input  type="submit" value="Crear" class="btn btn-primary" />
+        <a href="{{ path('practicaprofesional') }}" class="btn">Regresar</a>
+    </div>
+    <div class="control-group error">
+        {{ form_errors(form) }}
+    </div>
+</form>
+
+{% endblock %}

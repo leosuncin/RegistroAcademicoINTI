@@ -30,9 +30,11 @@
 		generateTable(actual, actual);
 		$("#search").keyup(function(){generateTable(actual,actual);});
 		$("#nResults").change(function(){generateTable(actual,actual);});
+		$("#especialidad").change(function(){generateTable(actual,actual);});
 	});
+
 	function generateTable(actual, anterior){
-		$.get("{{ path('IndexAlumnoAjax') }}", {"order_field":order_field, "search":$("#search").val() ,"sence":sence, "n_result":$("#nResults").val(), "actual":actual, "anterior":anterior}, function(e){
+		$.get("{{ path('IndexAlumnoAjax') }}", {"especialidad":$("#especialidad").val(), "order_field":order_field, "search":$("#search").val() ,"sence":sence, "n_result":$("#nResults").val(), "actual":actual, "anterior":anterior}, function(e){
 			$("#tableResult").html(e);
 			actual=$(".actual").attr('value');
 			$("tr.header th").click(function(){
