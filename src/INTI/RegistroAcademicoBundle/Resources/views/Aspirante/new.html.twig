@@ -24,4 +24,14 @@
 
 {% block javascript %}
 {{ load.script({ form: true, foto: true, calendar: true })}}
+<script>
+$('#aspirantetype_encargado_dui').keyup(function() {
+	$.getJSON(
+		Routing.generate('encargado_show', { 'dui': $(this).val() }),
+		function(enc) {
+			$('#aspirantetype_encargado_nombre').val(enc.nombre);
+			$('#aspirantetype_encargado_telefono').val(enc.telefono);
+		}
+	)});
+</script>
 {% endblock %}

@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use INTI\RegistroAcademicoBundle\Entity\CodigoEspecialidad;
+use INTI\RegistroAcademicoBundle\Entity\Especialidad;
 use INTI\RegistroAcademicoBundle\Form\CodigoEspecialidadType;
 
 /**
@@ -87,24 +88,16 @@ class CodigoEspecialidadController extends Controller
 	/**
 	 * Finds and displays a CodigoEspecialidad entity.
 	 *
-	 * @Route("/{id}", name="codigoespecialidad_show")
+	 * @Route("/{codigo}", name="codigoespecialidad_show", requirements={"codigo"="[A-Z]{1,3}\d[A-Z]"})
 	 * @Method("GET")
 	 * @Template()
 	 */
-	public function showAction($id)
+	public function showAction(CodigoEspecialidad $codigoEspecialidad)
 	{
-		$em = $this->getDoctrine()->getManager();
-
-		$entity = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->find($id);
-
-		if (!$entity) {
-			throw $this->createNotFoundException('Unable to find CodigoEspecialidad entity.');
-		}
-
-		$deleteForm = $this->createDeleteForm($id);
+		$deleteForm = $this->createDeleteForm($codigoEspecialidad->getCodigo());
 
 		return array(
-			'entity'      => $entity,
+			'entity'      => $codigoEspecialidad,
 			'delete_form' => $deleteForm->createView(),
 		);
 	}
@@ -112,25 +105,17 @@ class CodigoEspecialidadController extends Controller
 	/**
 	 * Displays a form to edit an existing CodigoEspecialidad entity.
 	 *
-	 * @Route("/{id}/edit", name="codigoespecialidad_edit")
+	 * @Route("/{codigo}/edit", name="codigoespecialidad_edit", requirements={"codigo"="[A-Z]{1,3}\d[A-Z]"})
 	 * @Method("GET")
 	 * @Template()
 	 */
-	public function editAction($id)
+	public function editAction(CodigoEspecialidad $codigoEspecialidad)
 	{
-		$em = $this->getDoctrine()->getManager();
-
-		$entity = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->find($id);
-
-		if (!$entity) {
-			throw $this->createNotFoundException('Unable to find CodigoEspecialidad entity.');
-		}
-
-		$editForm = $this->createForm(new CodigoEspecialidadType(), $entity);
-		$deleteForm = $this->createDeleteForm($id);
+		$editForm = $this->createForm(new CodigoEspecialidadType(), $codigoEspecialidad);
+		$deleteForm = $this->createDeleteForm($codigoEspecialidad->getCodigo());
 
 		return array(
-			'entity'      => $entity,
+			'entity'      => $codigoEspecialidad,
 			'edit_form'   => $editForm->createView(),
 			'delete_form' => $deleteForm->createView(),
 		);
@@ -139,57 +124,46 @@ class CodigoEspecialidadController extends Controller
 	/**
 	 * Edits an existing CodigoEspecialidad entity.
 	 *
-	 * @Route("/{id}", name="codigoespecialidad_update")
+	 * @Route("/{codigo}/update", name="codigoespecialidad_update", requirements={"codigo"="[A-Z]{1,3}\d[A-Z]"})
 	 * @Method("PUT")
 	 * @Template("RegistroAcademicoBundle:CodigoEspecialidad:edit.html.twig")
 	 */
-	public function updateAction(Request $request, $id)
+	public function updateAction(Request $request, CodigoEspecialidad $codigoEspecialidad)
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$entity = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->find($id);
-
-		if (!$entity) {
-			throw $this->createNotFoundException('Unable to find CodigoEspecialidad entity.');
-		}
-
 		$deleteForm = $this->createDeleteForm($id);
-		$editForm = $this->createForm(new CodigoEspecialidadType(), $entity);
-		$editForm->submit($request);
+		$editForm = $this->createForm(new CodigoEspecialidadType(), $codigoEspecialidad);
+		$editForm->handleRequest($request);
 
 		if ($editForm->isValid()) {
-			$em->persist($entity);
+			$em->persist($codigoEspecialidad);
 			$em->flush();
 			$this->get('session')->getFlashBag()->add('notice', 'Se modifico correctamente');
-			return $this->redirect($this->generateUrl('codigoespecialidad_edit', array('id' => $id)));
+			return $this->redirect($this->generateUrl('codigoespecialidad_edit', array('codigo' => $codigoEspecialidad->getCodigo())));
 		}
 
 		return array(
-			'entity'      => $entity,
+			'entity'      => $codigoEspecialidad,
 			'edit_form'   => $editForm->createView(),
 			'delete_form' => $deleteForm->createView(),
 		);
 	}
+
 	/**
 	 * Deletes a CodigoEspecialidad entity.
 	 *
-	 * @Route("/{id}", name="codigoespecialidad_delete")
+	 * @Route("/{codigo}", name="codigoespecialidad_delete", requirements={"codigo"="[A-Z]{1,3}\d[A-Z]"})
 	 * @Method("DELETE")
 	 */
-	public function deleteAction(Request $request, $id)
+	public function deleteAction(Request $request, CodigoEspecialidad $codigoEspecialidad)
 	{
-		$form = $this->createDeleteForm($id);
-		$form->submit($request);
+		$form = $this->createDeleteForm($codigoEspecialidad->getCodigo());
+		$form->handleRequest($request);
 
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
-			$entity = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->find($id);
-
-			if (!$entity) {
-				throw $this->createNotFoundException('Unable to find CodigoEspecialidad entity.');
-			}
-
-			$em->remove($entity);
+			$em->remove($codigoEspecialidad);
 			$em->flush();
 		}
 		$this->get('session')->getFlashBag()->add('notice', 'Se elimino correctamente');
@@ -211,37 +185,43 @@ class CodigoEspecialidadController extends Controller
 		;
 	}
 
-    /**
-     * Lists all CodigoEspecialidad entities.
-     *
-     * @Route("/ComboCodigoEspecialidad", name="ComboCodigoEspecialidadAjax")
-     * @Method("GET")
-     */
-    public function indexComboAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
-		$text="";
-		for($i=0;$i<count($entities);$i++){
-			$text.="<option value='".$entities[$i]->getCodigo()."'>".$entities[$i]->getCodigo()."</option>";
-		}
-        return new Response($text);
-    }
+	/**
+	 * Lists all CodigoEspecialidad codes.
+	 *
+	 * @Route("/ajax", name="ComboCodigoEspecialidadAjax")
+	 * @Method("GET")
+	 * @Template()
+	 */
+	public function codigosAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$codigos = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
+		if($this->getRequest()->isXmlHttpRequest()) {
+			$serializer = $this->get("jms_serializer");
+			$respuesta = new Response($serializer->serialize($codigos, "json"));
+			$respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
+			return $respuesta;
+		} else
+	 		return array('codigos' => $codigos);
+	}
 
-    /**
-     * Lists all Especialidad entities.
-     *
-     * @Route("/index", name="ComboEspecialidadAjax")
-     * @Method("GET")
-     */
-    public function indexAjaxAction()
-    {
-        $em = $this->getDoctrine()->getManager();
-        $entities = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
-		$text="<option value='todas'>Todas</option>";
-		for($i=0;$i<count($entities);$i++){
-			$text.="<option value='".$entities[$i]->getCodigo()."'>".$entities[$i]->getNombre()."</option>";
-		}
-        return new Response($text);
-    }
+	/**
+	 * Lists all CodigoEspecialidad codes by Especialidad.
+	 *
+	 * @Route("/ajax/{codigo}", name="codigoespecialidad_codigobyespecialidad", requirements={"codigo"="[A-Z]{2,5}"})
+	 * @Method("GET")
+	 * @Template("RegistroAcademicoBundle:CodigoEspecialidad:codigos.html.twig")
+	 */
+	public function codigosByEspecialidadAction(Especialidad $especialidad)
+	{
+		$em = $this->getDoctrine()->getManager();
+		$codigos = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findBy(array('especialidad' => $especialidad));
+		if($this->getRequest()->isXmlHttpRequest()) {
+			$serializer = $this->get("jms_serializer");
+			$respuesta = new Response($serializer->serialize($codigos, "json"));
+			$respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
+			return $respuesta;
+		} else
+	 		return array('codigos' => $codigos);
+	}
 }

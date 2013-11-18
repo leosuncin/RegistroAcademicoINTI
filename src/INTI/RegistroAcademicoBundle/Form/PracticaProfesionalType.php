@@ -59,8 +59,7 @@ class PracticaProfesionalType extends AbstractType
 					'precision'       => 2,
 					'read_only'       => true,
 					'invalid_message' => 'Ingrese un numero decimal valido',
-					'attr'			  =>	
-					array(
+					'attr'			  => array(
 						'placeholder' => 'por ejemplo: 10.00'
 				)))
 			;

@@ -3,11 +3,13 @@
 namespace INTI\RegistroAcademicoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use INTI\RegistroAcademicoBundle\Entity\Aspirante;
+use INTI\RegistroAcademicoBundle\Entity\Encargado;
 use INTI\RegistroAcademicoBundle\Form\AspiranteType;
 
 /**
@@ -21,7 +23,7 @@ class AspiranteController extends Controller
 	/**
 	 * Lists all Aspirante entities.
 	 *
-	 * @Route("/", name="aspirante_index")
+	 * @Route("/", name="aspirante_index", options={"expose"=true})
 	 * @Method("GET")
 	 * @Template()
 	 */
@@ -35,14 +37,13 @@ class AspiranteController extends Controller
 				->createQueryBuilder('ap')
 				->where('ap.primerApellido LIKE :apellido')
 				->orWhere('ap.segundoApellido LIKE :apellido')
-				->setParameter(':apellido', '%'.$request->get('apellido'))
+				->setParameter(':apellido', $request->query->get('apellido').'%')
 				->getQuery();
 			$aspirantes = $qb->getResult();
-			$this->render(
+			return $this->render(
 				'RegistroAcademicoBundle:Aspirante:indexAjax.html.twig',
 				array(
-					'aspirantes' => $aspirantes,
-					'title'      => 'Consultar aspirantes'
+					'aspirantes' => $aspirantes
 				));
 		} else {
 			$aspirantes = $em->getRepository('RegistroAcademicoBundle:Aspirante')->findAll();
@@ -68,6 +69,9 @@ class AspiranteController extends Controller
 
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
+			$encargado_exist = $em->getRepository('RegistroAcademicoBundle:Encargado')->find($aspirante->getEncargado()->getDui());
+			if($encargado_exist)
+				$aspirante->setEncargado($encargado_exist);
 			$em->persist($aspirante->getEspecialidad());
 			$em->persist($aspirante->getEncargado());
 			$em->persist($aspirante);
@@ -175,6 +179,34 @@ class AspiranteController extends Controller
 		$em->remove($empleado);
 		$em->flush();
 		return $this->redirect($this->generateUrl('aspirante_index'));
+	}
+
+	/**
+	 * Return Encargado Aspirante
+	 *
+	 * @Route("/encargado/{dui}", name="encargado_show", requirements={"dui"="\d{8}-\d"}, options={"expose"=true})
+	 * @Method("GET")
+	 */
+	public function encargadoShowAction(Encargado $encargado)
+	{
+		$serializer = $this->get("jms_serializer");
+		return new Response($serializer->serialize($encargado, 'json'), 200, array("Content-Type" => "application/json; charset=UTF-8"));
+	}
+
+	/**
+	 * Muestra todos los DUI que concuerdan con el patrón
+	 * 
+	 * @Route("/encargado/{dui}", name="encargado_index", options={"expose"=true})
+	 */
+	public function encargadoIndexAction($dui)
+	{
+		$query = $this->getDoctrine()
+			->getManager()
+			->createQuery('SELECT e.dui FROM RegistroAcademicoBundle:Encargado e WHERE e.dui LIKE :dui')
+			->setParameter(':dui', $dui.'%');
+		$serializer = $this->get("jms_serializer");
+		$duis = $query->getArrayResult();
+		return new Response($serializer->serialize($duis, 'json'), 200, array("Content-Type" => "application/json; charset=UTF-8"));
 	}
 
 	/**

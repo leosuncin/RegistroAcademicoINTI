@@ -13,7 +13,7 @@ use INTI\RegistroAcademicoBundle\Form\EncargadoProyectoType;
 /**
  * EncargadoProyecto controller.
  *
- * @Route("/encargadoproyecto")
+ * @Route("/proyecto/encargado")
  */
 class EncargadoProyectoController extends Controller
 {
@@ -21,7 +21,7 @@ class EncargadoProyectoController extends Controller
     /**
      * Lists all EncargadoProyecto entities.
      *
-     * @Route("/", name="encargadoproyecto")
+     * @Route("/", name="encargado_proyecto")
      * @Method("GET")
      * @Template()
      */
@@ -38,7 +38,7 @@ class EncargadoProyectoController extends Controller
     /**
      * Creates a new EncargadoProyecto entity.
      *
-     * @Route("/", name="encargadoproyecto_create")
+     * @Route("/", name="encargado_proyecto_create")
      * @Method("POST")
      * @Template("RegistroAcademicoBundle:EncargadoProyecto:new.html.twig")
      */
@@ -67,7 +67,7 @@ class EncargadoProyectoController extends Controller
     /**
      * Displays a form to create a new EncargadoProyecto entity.
      *
-     * @Route("/new", name="encargadoproyecto_new")
+     * @Route("/new", name="encargado_proyecto_new")
      * @Method("GET")
      * @Template()
      */
@@ -85,7 +85,7 @@ class EncargadoProyectoController extends Controller
     /**
      * Finds and displays a EncargadoProyecto entity.
      *
-     * @Route("/{id}", name="encargadoproyecto_show")
+     * @Route("/{id}", name="encargado_proyecto_show")
      * @Method("GET")
      * @Template()
      */
@@ -110,7 +110,7 @@ class EncargadoProyectoController extends Controller
     /**
      * Displays a form to edit an existing EncargadoProyecto entity.
      *
-     * @Route("/{id}/edit", name="encargadoproyecto_edit")
+     * @Route("/{id}/edit", name="encargado_proyecto_edit")
      * @Method("GET")
      * @Template()
      */
@@ -138,7 +138,7 @@ class EncargadoProyectoController extends Controller
     /**
      * Edits an existing EncargadoProyecto entity.
      *
-     * @Route("/{id}", name="encargadoproyecto_update")
+     * @Route("/{id}", name="encargado_proyecto_update")
      * @Method("PUT")
      * @Template("RegistroAcademicoBundle:EncargadoProyecto:edit.html.twig")
      */
@@ -171,7 +171,7 @@ class EncargadoProyectoController extends Controller
     /**
      * Deletes a EncargadoProyecto entity.
      *
-     * @Route("/{id}", name="encargadoproyecto_delete")
+     * @Route("/{id}", name="encargado_proyecto_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)

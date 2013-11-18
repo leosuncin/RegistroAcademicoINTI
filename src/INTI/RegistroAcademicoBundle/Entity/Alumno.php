@@ -115,8 +115,8 @@ class Alumno extends Aspirante
 		return $this->usuario;
 	}
 
-	public function __toString(){
-
+	public function __toString()
+	{
 		return (string)$this->nie;
 	}
 }

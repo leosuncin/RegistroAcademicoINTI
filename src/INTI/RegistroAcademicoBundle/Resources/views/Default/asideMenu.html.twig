@@ -70,7 +70,7 @@
     			</div>
 				<ul id="acc-gestion-serviciosocial" class="accordion-body collapse list-unstyled">
 					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
-					<li class="accordion-inner"><a href="{{ path('encargadoproyecto_new') }}"><span class="icon-plus-sign"></span> Añadir encargado proyecto</a></li>
+					<li class="accordion-inner"><a href="{{ path('encargado_proyecto_new') }}"><span class="icon-plus-sign"></span> Añadir encargado proyecto</a></li>
 					{% endif %}
 					<li class="accordion-inner"><a href="{{path('proyecto_new')}}"><span class="icon-plus-sign"></span> Añadir Proyecto</a></li>
 					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}

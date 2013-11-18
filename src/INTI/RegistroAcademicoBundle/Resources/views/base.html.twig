@@ -24,6 +24,8 @@
 		{% block body %}{% endblock %}
 		<script type="text/javascript" src="{{ asset('assets/jquery/jquery.js') }}"></script>
 		<script src="{{ asset('assets/bootstrap/js/bootstrap.js') }}"></script>
+		<script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+		<script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>
@@ -57,14 +59,32 @@
 		<script src="{{ asset('assets/select2/select2.js') }}"></script>
 		<script src="{{ asset('assets/select2/select2_locale_es.js') }}"></script>
 	{% endif %}
+	{% if js.dropzone|default(false) %}
+		<script src="{{ asset('assets/dropzone/lib/dropzone.js') }}"></script>
+	{% endif %}
+	{% if js.offline|default(false) %}
+		<script src="{{ asset('assets/offline/offline.min.js') }}"></script>
+	{% endif %}
+	{% if js.twig|default(false) %}
+		<script src="{{ asset('assets/twig.js/twig.min.js') }}"></script>
+	{% endif %}
+	{% if js.buscarAjax|default(false) %}
+		<script src="{{ asset('bundles/registroacademico/js/buscarAjax.js') }}"></script>
+	{% endif %}
 {% endmacro %}
 
 {% macro css(sheet) %}
 	{% if sheet.calendar|default(false) %}
-		<link rel="stylesheet" href="{{ asset('assets/bootstrap-datepicker/css/datepicker.css') }}" />
-	{% elseif sheet.watable|default(false) %}
-		<link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}" />
-	{% elseif sheet.select2|default(false) %}
-		<link rel="stylesheet" href="{{ asset('bundles/registroacademico/css/select2-bootstrap.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/bootstrap-datepicker/css/datepicker.css') }}" />
+	{% endif %}
+	{% if sheet.watable|default(false) %}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}" />
+	{% endif %}
+	{% if sheet.select2|default(false) %}
+<link rel="stylesheet" href="{{ asset('bundles/registroacademico/css/select2-bootstrap.css') }}">
+	{% endif %}
+	{% if sheet.offline|default(false) %}
+<link rel="stylesheet" href="{{ asset('assets/offline/themes/offline-theme-dark.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/offline/themes/offline-theme-dark-indicator.css') }}">
 	{% endif %}
 {% endmacro %}

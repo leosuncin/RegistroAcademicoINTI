@@ -431,8 +431,8 @@ class Aspirante
 		return $this->especialidad;
 	}
 
-	public function __toString(){
-
+	public function __toString()
+	{
 		return (string)$this->getNie();
 	}
 }

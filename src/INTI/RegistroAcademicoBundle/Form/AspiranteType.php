@@ -38,9 +38,10 @@ class AspiranteType extends AbstractType
 			->add('especialidad',
 				'entity',
 				array(
-					'label'    => 'Especialidad',
-					'class'    => 'RegistroAcademicoBundle:Especialidad',
-					'property' => 'nombre'
+					'label'       => 'Especialidad',
+					'empty_value' => 'Escoja una especialidad',
+					'class'       => 'RegistroAcademicoBundle:Especialidad',
+					'property'    => 'nombre'
 			))
 			->add('direccion',
 				'textarea',

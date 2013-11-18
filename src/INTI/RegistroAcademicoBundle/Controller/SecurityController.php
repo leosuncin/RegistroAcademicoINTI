@@ -86,17 +86,18 @@ class SecurityController extends Controller
 				'attr'        => array('placeholder' => 'Escriba su contraseña actual'),
 				'constraints' => $constraints
 			 ))
-		->add('new_password', 'password',
-			array('label'     => 'Nueva contraseña',
-				'max_length'  => 60,
-				'attr'        => array('placeholder' => 'Escriba su nueva contraseña'),
-				'constraints' => $constraints
-			))
-		->add('confirm_password', 'password',
-			array('label' => 'Confirmar contraseña',
-				'max_length'  => 60,
-				'attr'        => array('placeholder' => 'Repita su nueva contraseña'),
-				'constraints' => $constraints
+		->add('new_password', 'repeated',
+			array('type'          => 'password',
+				'invalid_message' => 'Debe confirmar la nueva contraseña',
+				'max_length'      => 60,
+				'required'        => true,
+				'first_options'   => array(
+					'label' => 'Nueva contraseña',
+					'attr'  => array('placeholder' => 'Escriba su nueva contraseña')),
+				'second_options'  => array(
+					'label' => 'Repetir contraseña',
+					'attr'  => array('placeholder' => 'Repita su nueva contraseña')),
+				'constraints'     => $constraints
 			))
 		->getForm();
 
@@ -108,18 +109,14 @@ class SecurityController extends Controller
 				$encoder  = $factory->getEncoder($usuario);
 				$password_enc = $encoder->encodePassword($data['old_password'], $usuario->getSalt());
 				if($usuario->getPassword() == $password_enc) {
-					if($data['new_password'] == $data['confirm_password']) {
-						$usuario->setPassword($encoder->encodePassword($data['new_password'], $usuario->getSalt()));
-						$em->persist($usuario);
-						$em->flush();
-						$this->get('session')->getFlashBag()->add('confirm', 'Se cambio la contraseña del usuario');
-						return new RedirectResponse(
-							$this->generateUrl(
-								'user_info', array(
-									'username' => $usuario->getUsername()), 301));
-					} else {
-						$this->get('session')->getFlashBag()->add('errores', 'La nueva contraseña no concuerda');
-					}
+					$usuario->setPassword($encoder->encodePassword($data['new_password'], $usuario->getSalt()));
+					$em->persist($usuario);
+					$em->flush();
+					$this->get('session')->getFlashBag()->add('confirm', 'Se cambio la contraseña del usuario');
+					return new RedirectResponse(
+						$this->generateUrl(
+							'user_info', array(
+								'username' => $usuario->getUsername()), 301));
 				} else {
 					$this->get('session')->getFlashBag()->add('errores', 'La contraseña actual no concuerda');
 				}

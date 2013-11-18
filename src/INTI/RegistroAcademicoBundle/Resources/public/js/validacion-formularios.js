@@ -143,12 +143,12 @@ $(document).ready(function() {
 				minlength: 8,
 				maxlength: 60
 			},
-			"form[new_password]":{
+			"form[new_password][first]":{
 				password: true,
 				minlength: 8,
 				maxlength: 60
 			},
-			"form[confirm_password]":{
+			"form[new_password][second]":{
 				password: true,
 				confirm_password: true,
 				minlength: 8,

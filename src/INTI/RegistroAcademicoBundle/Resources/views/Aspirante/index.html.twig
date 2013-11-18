@@ -11,7 +11,11 @@
 {% endblock %}
 
 {% block content %}
-<table id="tabla" class="table table-hover">
+<div id="buscarAspirantes" class="input-append">
+    <input type="search" placeholder="Buscar por apellido">
+    <button class="btn"><i class="icon-search"></i> Buscar</button>
+</div>
+<table class="table table-hover">
     <thead>
         <tr>
             <th>Nombre</th>
@@ -20,7 +24,7 @@
             <th>Opciones</th>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="tablaAspirantes">
     {% include 'RegistroAcademicoBundle:Aspirante:indexAjax.html.twig' %}
     </tbody>
 </table>
@@ -28,5 +32,5 @@
 {% endblock %}
 
 {% block javascript %}
-{{ load.script({ form: false, watable: true }) }}
+{{ load.script({ form: false, watable: true, buscarAjax: true}) }}
 {% endblock %}

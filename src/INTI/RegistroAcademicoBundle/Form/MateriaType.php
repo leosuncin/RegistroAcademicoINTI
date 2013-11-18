@@ -18,8 +18,8 @@ class MateriaType extends AbstractType
 			->add('codigo',
 				'text',
 				array(
-					'label'		=> 'Codigo de la materia en SIRAI',
-					'max_length'=>5
+					'label'		 => 'Codigo de la materia en SIRAI',
+					'max_length' => 5
 				))
 			->add('nombre',
 				'text',
