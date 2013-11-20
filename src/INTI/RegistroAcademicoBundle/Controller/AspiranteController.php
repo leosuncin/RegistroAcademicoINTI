@@ -33,13 +33,8 @@ class AspiranteController extends Controller
 		$request = $this->getRequest();
 
 		if($request->isXmlHttpRequest()) {
-			$qb = $em->getRepository('RegistroAcademicoBundle:Aspirante')
-				->createQueryBuilder('ap')
-				->where('ap.primerApellido LIKE :apellido')
-				->orWhere('ap.segundoApellido LIKE :apellido')
-				->setParameter(':apellido', $request->query->get('apellido').'%')
-				->getQuery();
-			$aspirantes = $qb->getResult();
+			$aspirantes = $em->getRepository('RegistroAcademicoBundle:Aspirante')
+                                ->findByApellidos($request->query->get('apellido').'%');
 			return $this->render(
 				'RegistroAcademicoBundle:Aspirante:indexAjax.html.twig',
 				array(
