@@ -366,3 +366,33 @@ footer address {
 #serviciosocialtype_submit {
   visibility: hidden;
 }
+
+input[type="button"].pag, input[type="button"].pag:hover{
+		cursor:pointer;
+		border:1px solid #34740e; 
+		 -webkit-border-radius: 3px; 
+		 -moz-border-radius: 3px;
+		 border-radius: 3px;
+		 font-family:arial, helvetica, sans-serif; 
+		 padding: 5px;
+		 text-shadow: -1px -1px 0 rgba(0,0,0,0.3);	
+		 font-weight:bold; 
+		 text-align: center;
+		 color: #FFFFFF;
+		 background-color: #0045cc;
+	}
+	
+	input[type="button"].actual, input[type="button"].actual:hover{
+		 color:#fff !important;
+		 font-weight:bold; 
+		 cursor:default;
+		 background-color:#57bddb !important;
+		 padding: 5px;
+		 color:#fff;
+		 border:1px solid #000 !important;
+		 background-image: none !important;
+	}
+	
+	.header th{
+		cursor:pointer;
+	}

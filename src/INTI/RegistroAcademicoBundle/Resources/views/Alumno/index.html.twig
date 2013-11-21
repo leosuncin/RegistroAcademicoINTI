@@ -13,7 +13,18 @@
 
 {% block content %}
 	<form class="form-inline">
-		<table style='width:100%'><tr><td>Buscar: <input type='text' placeholder='Ingrese Nombre o NIE' id='search'></td><td style='text-align:right'>Numero de Resultados: <select id='nResults' class='span2'><option value='10'>10</option><option value='20'>20</option></select></td></table>
+		<table style='width:100%'><tr>
+			<td><div class="input-append"><input type="search" placeholder="Buscar por apellidos o NIE" id='search'><button class="btn"><i class="icon-search"></i> Buscar</button></div></td>
+			<td>Especialidad: 
+				<select id='especialidad'>
+					<option value='todas'>Todas</option>
+					{% for entity in especialidades %}
+						<option value='{{ entity.codigo }}'> {{ entity.nombre }} </option>
+					{% endfor %}
+				</select>
+			</td>
+			<td style='text-align:right'>Numero de Resultados: <select id='nResults' class='span2'><option value='10'>10</option><option value='20'>20</option></select>
+		</td></table>
 		<div id="tableResult" style='padding-top:20px;'></div>
 	</form>
 <a class="btn btn-primary" href="{{ path('alumno_new') }}">{{ '.icon-plus-sign Ingresar un nuevo alumno'|parse_icons('white') }}</a>
@@ -24,7 +35,7 @@
 <script>
 	var order_field, sence, actual;
 	$(document).ready(function(){
-		order_field="u.nie";
+		order_field="0";
 		sence="ASC";
 		actual=1;
 		generateTable(actual, actual);
@@ -38,13 +49,13 @@
 			$("#tableResult").html(e);
 			actual=$(".actual").attr('value');
 			$("tr.header th").click(function(){
-				if($(this).attr('name')==order_field){
+				if($(this).attr('class')==order_field){
 					if(sence=="ASC")
 						sence="DESC";
 					else
 						sence="ASC";
 				}else{
-					order_field=$(this).attr('name');
+					order_field=$(this).attr('class');
 					sence="ASC";
 				}
 				generateTable(actual,actual);
