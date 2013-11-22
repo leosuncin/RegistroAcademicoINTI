@@ -217,8 +217,8 @@ class AspiranteController extends Controller
 				'nombres'=>"%".$search."%",
 				'nie'=>$search."%",
 			);
-        $em = $this->getDoctrine()->getManager();
-		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p JOIN p.especialidad u WHERE CONCAT(CONCAT(CONCAT(CONCAT(p.nombres,' '),p.primerApellido),' '),p.segundoApellido) LIKE :nombres or p.nie LIKE :nie";
+    		$em = $this->getDoctrine()->getManager();
+		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p JOIN p.especialidad u WHERE CONCAT(CONCAT(CONCAT(CONCAT(p.primerApellido,' '),p.segundoApellido),' '),p.nombres) LIKE :nombres or p.nie LIKE :nie";
 		if(($_REQUEST['esp']!="todas")&&($_REQUEST['esp']!="")){
 			$parameters['especialidad']=$_REQUEST['esp'];
 			$dql.=" AND u.codigo=:especialidad";
@@ -231,9 +231,9 @@ class AspiranteController extends Controller
 			if(count($aspirante)>0){
 				for($i=0;$i<count($aspirante) and $i<10;$i++){
 					$text.="<tr class='aspirante'><td class='n_nie' value='".$aspirante[$i]->getNie()."'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $aspirante[$i]->getNie())."</td>";
-					$text.="<td class='aspName'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $aspirante[$i]->getNombres()." ".$aspirante[$i]->getPrimerapellido()." ".$aspirante[$i]->getSegundoapellido())."</td>";
+					$text.="<td class='aspName'>".$aspirante[$i]->getPrimerApellido()." ".$aspirante[$i]->getSegundoApellido().", ".$aspirante[$i]->getNombres()."</td>";
 					$text.="<td>".$aspirante[$i]->getEspecialidad()->getNombre();
-					$text.="<input type='hidden' class='uH' value='".substr(strtoupper($aspirante[$i]->getPrimerapellido()), 0, 1).substr(strtolower($aspirante[$i]->getSegundoapellido()), 0, 1).$aspirante[$i]->getNie()."'>";
+					$text.="<input type='hidden' class='uH' value='".substr(strtoupper($aspirante[$i]->getPrimerApellido()), 0, 1).substr(strtolower($aspirante[$i]->getSegundoApellido()), 0, 1).$aspirante[$i]->getNie()."'>";
 					$text.="<input type='hidden' class='pH' value='".substr(md5($aspirante[$i]->getNie()), 0, 8)."'></td>";
 					$text.='<td><div class="btn-group btn-group-horizontal">';
 					$text.="<a class='btn btn-info' href='../aspirante/".$aspirante[$i]->getNie()."'><span class='icon-eye-open icon-white'></span></a>";
@@ -244,7 +244,7 @@ class AspiranteController extends Controller
 			}
 			$text.="</table>";
 		} catch (\Doctrine\Orm\NoResultException $e) {
-			$text = "<table class='table table-hover'><tr><td>No se encuentra el aspirante</td></tr></table>";
+			$text = "<table class='table table-hover'><tr><td>No se encuentra ningun aspirante que coincida con los criterios de busqueda</td></tr></table>";
 		}	
         return new Response($text);
     }
@@ -263,8 +263,8 @@ class AspiranteController extends Controller
 		$text="";
 		try{
 			$aspirante = $query->getSingleResult();
-			$text=$aspirante->getNombres()." ".$aspirante->getPrimerapellido()." ".$aspirante->getSegundoapellido();
-			$text.="<input type='hidden' id='userNameH' value='".substr(strtoupper($aspirante->getPrimerapellido()), 0, 1).substr(strtolower($aspirante->getSegundoapellido()), 0, 1).$aspirante->getNie()."'>";
+			$text=$aspirante->getPrimerApellido()." ".$aspirante->getSegundoApellido().", ".$aspirante->getNombres();
+			$text.="<input type='hidden' id='userNameH' value='".substr(strtoupper($aspirante->getPrimerApellido()), 0, 1).substr(strtolower($aspirante->getSegundoApellido()), 0, 1).$aspirante->getNie()."'>";
 			$text.="<input type='hidden' id='passwordH' value='".substr(md5($aspirante->getNie()), 0, 8)."'>";
 		} catch (\Doctrine\Orm\NoResultException $e) {
 			$text = "No se ha seleccionado ningun aspirante valido";
