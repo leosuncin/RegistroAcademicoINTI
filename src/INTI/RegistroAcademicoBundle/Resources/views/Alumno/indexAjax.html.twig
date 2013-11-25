@@ -1,0 +1,16 @@
+{% if app.request.isXmlHttpRequest and entities|length <= 0 %}
+<tr class="error"><td>No hay alumnos que concuerden con la búsqueda</td></tr>
+{% endif %}
+{% for entity in entities %}
+<tr>
+    <td>{{ entity.primerapellido~' '~entity.segundoapellido~', '~entity.nombres }}</td>
+    <td>{{ entity.codigoEspecialidad.codigo }}</td>
+    <td>{% if entity.sexo == 'M' %}Masculino{% else %}Femenino{% endif %}</td>
+    <td>
+        <div class="btn-group btn-group-vertical">
+            <a class="btn btn-info btn-mini" href="{{ path('alumno_show', { 'nie': entity.nie }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
+            <a class="btn btn-info btn-mini" href="{{ path('alumno_edit', { 'nie': entity.nie }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+        </div>
+    </td>
+</tr>
+{% endfor %}

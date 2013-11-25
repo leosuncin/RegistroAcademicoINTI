@@ -10,8 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Aspirante
  *
  * @ORM\Table(name="Aspirante")
- * @ORM\Entity
- * @ORM\Entity(repositoryClass="INTI\RegistroAcademicoBundle\Entity\Repository\AspiranteRepository")
+ * @ORM\Entity(repositoryClass="INTI\RegistroAcademicoBundle\Repository\AspiranteRepository")
  * @ORM\InheritanceType("JOINED")
  * @ORM\DiscriminatorColumn(name="class_name", type="string")
  * @ORM\DiscriminatorMap({"aspirante" = "Aspirante", "alumno" = "Alumno"})
@@ -134,7 +133,7 @@ class Aspirante
 	/**
 	 * @var \Encargado
 	 *
-	 * @ORM\ManyToOne(targetEntity="Encargado")
+	 * @ORM\ManyToOne(targetEntity="Encargado",cascade={"persist"})
 	 * @ORM\JoinColumns({
 	 *   @ORM\JoinColumn(name="Encargado", referencedColumnName="DUI")
 	 * })
@@ -144,7 +143,7 @@ class Aspirante
 	/**
 	 * @var \Especialidad
 	 *
-	 * @ORM\ManyToOne(targetEntity="Especialidad")
+	 * @ORM\ManyToOne(targetEntity="Especialidad",cascade={"persist"})
 	 * @ORM\JoinColumns({
 	 *   @ORM\JoinColumn(name="Especialidad", referencedColumnName="codigo")
 	 * })

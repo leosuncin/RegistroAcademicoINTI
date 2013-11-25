@@ -61,17 +61,17 @@ class AspiranteType extends AbstractType
 			->add('fechaNac',
 				'birthday',
 				array(
-					'label'     => 'Fecha de nacimiento',
-					'widget'    => 'single_text',
-					'format' => 'dd/MM/yyyy',
+					'label'           => 'Fecha de nacimiento',
+					'widget'          => 'single_text',
+					'format'          => 'dd/MM/yyyy',
 					'invalid_message' => 'La fecha debe tener el formato dd/mm/yyyy',
-					'attr'      => array(
-						'placeholder' => 'Por ejemplo: 17/10/1990',
-						'class' => 'date',
-						'data-provide' => 'datepicker',
+					'attr'            => array(
+						'placeholder'      => 'Por ejemplo: 17/10/1990',
+						'class'            => 'datepicker',
+						'data-provide'     => 'datepicker',
 						'data-date-format' => 'dd/mm/yyyy',
-						'data-viewmode' => 'years',
-						'data-language' => 'es'
+						'data-viewmode'    => 'years',
+						'data-language'    => 'es'
 			)))
 			->add('lugarNac',
 				'text',

@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="{{ path('aspirante_update', { 'nie': aspirante.nie  }) }}" method="POST" {{ form_enctype(edit_form) }} class="form-horizontal">
+<form id="aspirantetype" action="{{ path('aspirante_update', { 'nie': aspirante.nie  }) }}" method="POST" {{ form_enctype(edit_form) }} class="form-horizontal">
     {{ form_label(edit_form.foto) }}
     <input type="file" id="filePicker" class="btn"/>
     <input type="hidden" name="_method" value="PUT" />

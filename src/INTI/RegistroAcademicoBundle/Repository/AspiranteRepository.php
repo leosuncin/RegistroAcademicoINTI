@@ -1,6 +1,6 @@
 <?php
 
-namespace INTI\RegistroAcademicoBundle\Entity\Repository;
+namespace INTI\RegistroAcademicoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use INTI\RegistroAcademicoBundle\Entity\Especialidad;
@@ -18,7 +18,7 @@ class AspiranteRepository extends EntityRepository {
      * Buscar aspirantes por apellido
      * 
      * @param string $apellido
-     * @return \INTI\RegistroAcademicoBundle\Entity\Aspirante
+     * @return array
      */
     public function findByApellidos($apellido) {
         $query = $this->getEntityManager()
@@ -31,7 +31,7 @@ class AspiranteRepository extends EntityRepository {
      * Buscar aspirantes por especialidad
      * 
      * @param \INTI\RegistroAcademicoBundle\Entity\Especialidad $especialidad
-     * @return \INTI\RegistroAcademicoBundle\Entity\Aspirante
+     * @return array
      */
     public function findByEspecialidad(Especialidad $especialidad) {
         $query = $this->getEntityManager()
@@ -46,7 +46,7 @@ class AspiranteRepository extends EntityRepository {
      * Buscar aspirantes que esten bajo la responsabilidad del empleado
      * 
      * @param \INTI\RegistroAcademicoBundle\Entity\Empleado $empleado
-     * @return \INTI\RegistroAcademicoBundle\Entity\Aspirante
+     * @return array
      */
     public function findByResponsable(Empleado $empleado) {
         if ($empleado->getPuesto() == 'secretaria_reg_acad') {

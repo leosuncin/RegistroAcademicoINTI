@@ -18,13 +18,4 @@ class DefaultController extends Controller
 	{
 		return array('title' => 'Pagina principal');
 	}
-
-	/**
-	 * @Route("/construction/{modulo}", name="under_constrution")
-	 * @Template()
-	 */
-	public function underConstructionAction($module)
-	{
-		return array('module' => $module);
-	}
 }

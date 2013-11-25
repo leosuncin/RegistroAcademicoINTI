@@ -5,9 +5,11 @@ namespace INTI\RegistroAcademicoBundle\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use INTI\RegistroAcademicoBundle\Entity\Alumno;
+use INTI\RegistroAcademicoBundle\Entity\Aspirante;
 use INTI\RegistroAcademicoBundle\Entity\Usuario;
 use INTI\RegistroAcademicoBundle\Form\AlumnoType;
 
@@ -22,21 +24,33 @@ class AlumnoController extends Controller
 	/**
 	 * Lists all Alumno entities.
 	 *
-	 * @Route("/", name="alumno_index")
+	 * @Route("/", name="alumno_index", options={"expose"=true})
 	 * @Method("GET")
 	 * @Template()
 	 */
 	public function indexAction()
 	{
 		$em = $this->getDoctrine()->getManager();
+		$request = $this->getRequest();
 
-		$entities = $em->getRepository('RegistroAcademicoBundle:Alumno')->findAll();
-		$especialidades = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
-		return array(
-			'entities' => $entities,
-			'especialidades' => $especialidades,
-			'title'    => 'Consultar alumnos'
-		);
+		if($request->isXmlHttpRequest()) {
+			$apellidos = $request->query->get('apellidos');
+			$codigo = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->find($request->query->get('codigo', ''));
+			$entities = $em->getRepository('RegistroAcademicoBundle:Alumno')->findByApellidos($apellidos.'%', $codigo);
+			return $this->render(
+				'RegistroAcademicoBundle:Alumno:indexAjax.html.twig',
+				array(
+					'entities' => $entities
+				));;
+		} else {
+			$entities = $em->getRepository('RegistroAcademicoBundle:Alumno')->findAll();
+			$especialidades = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
+			return array(
+				'entities' => $entities,
+				'especialidades' => $especialidades,
+				'title'    => 'Consultar alumnos'
+			);
+		}
 	}
 
 	/**
@@ -63,8 +77,11 @@ class AlumnoController extends Controller
 			$usuario->setPassword($password);
 			$alumno->setUsuario($usuario);
 
-			$em->persist($alumno->getAspirante());
-			$em->persist($alumno->getUsuario());
+			$encargado = $em->getRepository('RegistroAcademicoBundle:Encargado')->find($alumno->getEncargado()->getDui());
+			if($encargado != null)
+				$alumno->setEncargado($encargado);
+
+			$em->persist($usuario);
 			$em->persist($alumno);
 			$em->flush();
 
@@ -72,9 +89,10 @@ class AlumnoController extends Controller
 		}
 
 		return array(
-			'alumno' => $alumno,
-			'form'   => $form->createView(),
-			'title'  => 'Añadir un alumno'
+			'alumno'    => $alumno,
+			'aspirante' => $aspirante->getNie(),
+			'form'      => $form->createView(),
+			'title'     => 'Añadir un alumno'
 		);
 	}
 
@@ -91,13 +109,79 @@ class AlumnoController extends Controller
 		$form   = $this->createForm(new AlumnoType(), $entity);
 
 		$em = $this->getDoctrine()->getManager();
-		$especialidades = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
-		$codigoespecialidades = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
+		//$especialidades = $em->getRepository('RegistroAcademicoBundle:Especialidad')->findAll();
+		//$codigoespecialidades = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
 		
 		return array(
 			'entity' => $entity,
-			'especialidades' => $especialidades,
-			'codigoespecialidades' => $codigoespecialidades,
+			//'especialidades' => $especialidades,
+			//'codigoespecialidades' => $codigoespecialidades,
+			'form'   => $form->createView(),
+			'title'  => 'Añadir un alumno'
+		);
+	}
+
+	/**
+	 * Displays a form to create a new Alumno entity.
+	 *
+	 * @Route("/{aspirante}/inscribir", name="alumno_inscribir")
+	 * @ParamConverter("aspirante", class="RegistroAcademicoBundle:Aspirante", options={"nie" = "aspirante"})
+	 * @Method("GET")
+	 * @Template()
+	 */
+	public function inscribirAction(Aspirante $aspirante)
+	{
+		$entity = new Alumno($aspirante);
+		$form   = $this->createForm(new AlumnoType(), $entity);
+
+		$em = $this->getDoctrine()->getManager();
+		
+		return array(
+			'entity'    => $entity,
+			'aspirante' => $aspirante->getNie(),
+			'form'      => $form->createView(),
+			'title'     => 'Añadir un alumno'
+		);
+	}
+
+	/**
+	 * Creates a new Alumno entity.
+	 *
+	 * @Route("/{aspirante}/matricular", name="alumno_matricular")
+	 * @ParamConverter("aspirante", class="RegistroAcademicoBundle:Aspirante", options={"nie" = "aspirante"})
+	 * @Method("POST")
+	 * @Template("RegistroAcademicoBundle:Alumno:inscribir.html.twig")
+	 */
+	public function matricularAction(Request $request)
+	{
+		$alumno = new Alumno();
+		$form = $this->createForm(new AlumnoType(), $alumno);
+		$form->handleRequest($request);
+
+		if ($form->isValid()) {
+			$em = $this->getDoctrine()->getManager();
+			$factory  = $this->get('security.encoder_factory');
+
+			$usuario = new Usuario();
+			$encoder  = $factory->getEncoder($usuario);
+			$usuario->setUsername($alumno->getNie());
+			$password = $encoder->encodePassword($alumno->getNie()*2, $usuario->getSalt());
+			$usuario->setPassword($password);
+			$alumno->setUsuario($usuario);
+
+			$encargado = $em->getRepository('RegistroAcademicoBundle:Encargado')->find($alumno->getEncargado()->getDui());
+			if($encargado != null)
+				$alumno->setEncargado($encargado);
+
+			$em->persist($usuario);
+			$em->persist($alumno);
+			$em->flush();
+
+			return $this->redirect($this->generateUrl('alumno_show', array('nie' => $alumno->getNie())));
+		}
+
+		return array(
+			'alumno' => $alumno,
 			'form'   => $form->createView(),
 			'title'  => 'Añadir un alumno'
 		);
@@ -110,10 +194,11 @@ class AlumnoController extends Controller
 	 * @Method("GET")
 	 * @Template()
 	 */
-	public function showAction(Alumno $alumno)
+	public function showAction(Alumno $entity)
 	{
 		return array(
-			'alumno' => $alumno,
+			'entity' => $entity,
+			'notas'  => $this->getDoctrine()->getManager()->getRepository('RegistroAcademicoBundle:Nota')->findByAlumno($entity),
 			'title'  => 'Consultar alumno'
 		);
 	}
@@ -125,12 +210,12 @@ class AlumnoController extends Controller
 	 * @Method("GET")
 	 * @Template()
 	 */
-	public function editAction(Alumno $alumno)
+	public function editAction(Alumno $entity)
 	{
-		$editForm = $this->createForm(new AlumnoType(), $alumno);
+		$editForm = $this->createForm(new AlumnoType(), $entity);
 
 		return array(
-			'alumno'    => $alumno,
+			'entity'    => $entity,
 			'edit_form' => $editForm->createView(),
 			'title'     => 'Modificar alumno'
 		);
@@ -183,55 +268,6 @@ class AlumnoController extends Controller
 		$em->remove($aspirante);
 		$em->flush();
 		return $this->redirect($this->generateUrl('alumno_index'));
-	}
-
-	/**
-	 * Creates a new Alumno entity.
-	 *
-	 * @Route("/GuardarAlumno", name="GuardarAlumnoAjax")
-	 * @Method("GET")
-	 */
-	function crearAlumno()
-	{
-		set_time_limit(0);
-		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p WHERE p.nie=:nie";
-		$em = $this->getDoctrine()->getManager();
-		$query=$em->createQuery($dql)->setParameter("nie", $_REQUEST['nie'])->setMaxResults(1);
-		try{
-				$aspirante = $query->getSingleResult();
-				$alumno = $em->getRepository('RegistroAcademicoBundle:Alumno')->find($_REQUEST['nie']);
-				if (!$alumno) {
-					$user = $em->getRepository('RegistroAcademicoBundle:Usuario')->find($_REQUEST['username']);
-					if(!$user){
-						$dql2="SELECT p FROM RegistroAcademicoBundle:CodigoEspecialidad p WHERE p.codigo=:codigo";
-						$query2=$em->createQuery($dql2)->setParameter("codigo", $_REQUEST['cod_esp'])->setMaxResults(1);
-						$codigoEspecialidad = $query2->getSingleResult();
-						$usuario = new Usuario();
-						$usuario->setUsername($_REQUEST['username']);
-						$usuario->setPassword($_REQUEST['password']);
-						$factory  = $this->get('security.encoder_factory');
-						$encoder  = $factory->getEncoder($usuario);
-						$password = $encoder->encodePassword($usuario->getPassword(), $usuario->getSalt());
-						$usuario->setPassword($password);
-						$usuario->addRole("ROLE_USER");
-						
-						$entity = new Alumno();
-						$entity->setCondicion($_REQUEST['cond']);
-						$entity->setNie($aspirante);
-						$entity->setUsuario($usuario);
-						$entity->setCodigoEspecialidad($codigoEspecialidad);
-						$em->persist($entity->getUsuario());
-						$em->persist($entity);
-						$em->flush();
-						
-						return new Response($this->generateUrl('alumno_show', array('nie' => $entity->getNie()->getNie())));
-					}else
-						return new Response("U");
-				}else
-					return new Response("M");
-		} catch (\Doctrine\Orm\NoResultException $e) {
-			return new Response("N");
-		}
 	}
 
 	/**

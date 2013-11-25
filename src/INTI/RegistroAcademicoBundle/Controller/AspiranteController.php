@@ -177,6 +177,26 @@ class AspiranteController extends Controller
 	}
 
 	/**
+	 * Muestra todos los DUI que concuerdan con el patrón
+	 * 
+	 * @Route("/encargado", name="encargado_index", options={"expose"=true})
+	 */
+	public function encargadoIndexAction($dui)
+	{
+		$serializer = $this->get("jms_serializer");
+        $request = $this->getRequest();
+        if($request->isXmlHttpRequest())
+            $duis = $this->getDoctrine()
+                ->getRepository('RegistroAcademicoBundle:Encargado')
+                ->getDUIs($dui);
+        else
+            $duis = $this->getDoctrine()
+                ->getRepository('RegistroAcademicoBundle:Encargado')
+                ->getAllDUI($dui);
+		return new Response($serializer->serialize($duis, 'json'), 200, array("Content-Type" => "application/json; charset=UTF-8"));
+	}
+
+	/**
 	 * Return Encargado Aspirante
 	 *
 	 * @Route("/encargado/{dui}", name="encargado_show", requirements={"dui"="\d{8}-\d"}, options={"expose"=true})
@@ -188,87 +208,69 @@ class AspiranteController extends Controller
 		return new Response($serializer->serialize($encargado, 'json'), 200, array("Content-Type" => "application/json; charset=UTF-8"));
 	}
 
-	/**
-	 * Muestra todos los DUI que concuerdan con el patrón
-	 * 
-	 * @Route("/encargado/{dui}", name="encargado_index", options={"expose"=true})
-	 */
-	public function encargadoIndexAction($dui)
-	{
-		$query = $this->getDoctrine()
-			->getManager()
-			->createQuery('SELECT e.dui FROM RegistroAcademicoBundle:Encargado e WHERE e.dui LIKE :dui')
-			->setParameter(':dui', $dui.'%');
-		$serializer = $this->get("jms_serializer");
-		$duis = $query->getArrayResult();
-		return new Response($serializer->serialize($duis, 'json'), 200, array("Content-Type" => "application/json; charset=UTF-8"));
-	}
-
-	/**
+    /**
      * List Aspirantes Aprobados entities.
      *
      * @Route("/buscarAjax", name="BuscarAspiranteAjax")
      * @Method("GET")
      */
-    function listAspiranteSelectAction()
-    {
-		$search=$_REQUEST['searchValue'];
-		$parameters=Array(
-				'nombres'=>"%".$search."%",
-				'nie'=>$search."%",
-			);
+    function listAspiranteSelectAction() {
+        $search = $_REQUEST['searchValue'];
+        $parameters = Array(
+            'nombres' => "%" . $search . "%",
+            'nie' => $search . "%",
+        );
         $em = $this->getDoctrine()->getManager();
-		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p JOIN p.especialidad u WHERE CONCAT(CONCAT(CONCAT(CONCAT(p.nombres,' '),p.primerApellido),' '),p.segundoApellido) LIKE :nombres or p.nie LIKE :nie";
-		if(($_REQUEST['esp']!="todas")&&($_REQUEST['esp']!="")){
-			$parameters['especialidad']=$_REQUEST['esp'];
-			$dql.=" AND u.codigo=:especialidad";
-		}
-		$query=$em->createQuery($dql)->setParameters($parameters);
-		try{
-			$aspirante = $query->getResult();
-			$text="<br><table class='table table-hover'>";
-			$text.="<tr class='header'><th>NIE</th><th>Nombre Completo</th><th>Especialidad</th><th>Opciones</th></tr>";
-			if(count($aspirante)>0){
-				for($i=0;$i<count($aspirante) and $i<10;$i++){
-					$text.="<tr class='aspirante'><td class='n_nie' value='".$aspirante[$i]->getNie()."'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $aspirante[$i]->getNie())."</td>";
-					$text.="<td class='aspName'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $aspirante[$i]->getNombres()." ".$aspirante[$i]->getPrimerapellido()." ".$aspirante[$i]->getSegundoapellido())."</td>";
-					$text.="<td>".$aspirante[$i]->getEspecialidad()->getNombre();
-					$text.="<input type='hidden' class='uH' value='".substr(strtoupper($aspirante[$i]->getPrimerapellido()), 0, 1).substr(strtolower($aspirante[$i]->getSegundoapellido()), 0, 1).$aspirante[$i]->getNie()."'>";
-					$text.="<input type='hidden' class='pH' value='".substr(md5($aspirante[$i]->getNie()), 0, 8)."'></td>";
-					$text.='<td><div class="btn-group btn-group-horizontal">';
-					$text.="<a class='btn btn-info' href='../aspirante/".$aspirante[$i]->getNie()."'><span class='icon-eye-open icon-white'></span></a>";
-                    $text.="<a class='btn btn-info' href='../aspirante/".$aspirante[$i]->getNie()."/edit'><span class='icon-edit icon-white'></span></a></div></td></tr>";
-				}
-			}else{
-				$text.="<tr><td colspan='4'>No se encuentran aspirantes que coincidan con el criterio de busqueda</td></tr>";
-			}
-			$text.="</table>";
-		} catch (\Doctrine\Orm\NoResultException $e) {
-			$text = "<table class='table table-hover'><tr><td>No se encuentra el aspirante</td></tr></table>";
-		}	
+        $dql = "SELECT p FROM RegistroAcademicoBundle:Aspirante p JOIN p.especialidad u WHERE CONCAT(CONCAT(CONCAT(CONCAT(p.nombres,' '),p.primerApellido),' '),p.segundoApellido) LIKE :nombres or p.nie LIKE :nie";
+        if (($_REQUEST['esp'] != "todas") && ($_REQUEST['esp'] != "")) {
+            $parameters['especialidad'] = $_REQUEST['esp'];
+            $dql.=" AND u.codigo=:especialidad";
+        }
+        $query = $em->createQuery($dql)->setParameters($parameters);
+        try {
+            $aspirante = $query->getResult();
+            $text = "<br><table class='table table-hover'>";
+            $text.="<tr class='header'><th>NIE</th><th>Nombre Completo</th><th>Especialidad</th><th>Opciones</th></tr>";
+            if (count($aspirante) > 0) {
+                for ($i = 0; $i < count($aspirante) and $i < 10; $i++) {
+                    $text.="<tr class='aspirante'><td class='n_nie' value='" . $aspirante[$i]->getNie() . "'>" . str_ireplace($search, '<span style="color:#00f">' . $search . '</span>', $aspirante[$i]->getNie()) . "</td>";
+                    $text.="<td class='aspName'>" . str_ireplace($search, '<span style="color:#00f">' . $search . '</span>', $aspirante[$i]->getNombres() . " " . $aspirante[$i]->getPrimerapellido() . " " . $aspirante[$i]->getSegundoapellido()) . "</td>";
+                    $text.="<td>" . $aspirante[$i]->getEspecialidad()->getNombre();
+                    $text.="<input type='hidden' class='uH' value='" . substr(strtoupper($aspirante[$i]->getPrimerapellido()), 0, 1) . substr(strtolower($aspirante[$i]->getSegundoapellido()), 0, 1) . $aspirante[$i]->getNie() . "'>";
+                    $text.="<input type='hidden' class='pH' value='" . substr(md5($aspirante[$i]->getNie()), 0, 8) . "'></td>";
+                    $text.='<td><div class="btn-group btn-group-horizontal">';
+                    $text.="<a class='btn btn-info' href='../aspirante/" . $aspirante[$i]->getNie() . "'><span class='icon-eye-open icon-white'></span></a>";
+                    $text.="<a class='btn btn-info' href='../aspirante/" . $aspirante[$i]->getNie() . "/edit'><span class='icon-edit icon-white'></span></a></div></td></tr>";
+                }
+            } else {
+                $text.="<tr><td colspan='4'>No se encuentran aspirantes que coincidan con el criterio de busqueda</td></tr>";
+            }
+            $text.="</table>";
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $text = "<table class='table table-hover'><tr><td>No se encuentra el aspirante</td></tr></table>";
+        }
         return new Response($text);
     }
 
-	/**
+    /**
      * Buscar un aspirante dado.
      *
      * @Route("/buscar", name="BuscarAspiranteEspecificoAjax")
      * @Method("GET")
      */
-    function searchAspiranteAction()
-    {
-		$dql="SELECT p FROM RegistroAcademicoBundle:Aspirante p WHERE p.nie=:nie";
-		$em = $this->getDoctrine()->getManager();
-		$query=$em->createQuery($dql)->setParameter("nie", $_REQUEST['nie']);
-		$text="";
-		try{
-			$aspirante = $query->getSingleResult();
-			$text=$aspirante->getNombres()." ".$aspirante->getPrimerapellido()." ".$aspirante->getSegundoapellido();
-			$text.="<input type='hidden' id='userNameH' value='".substr(strtoupper($aspirante->getPrimerapellido()), 0, 1).substr(strtolower($aspirante->getSegundoapellido()), 0, 1).$aspirante->getNie()."'>";
-			$text.="<input type='hidden' id='passwordH' value='".substr(md5($aspirante->getNie()), 0, 8)."'>";
-		} catch (\Doctrine\Orm\NoResultException $e) {
-			$text = "No se ha seleccionado ningun aspirante valido";
-		}	
+    function searchAspiranteAction() {
+        $dql = "SELECT p FROM RegistroAcademicoBundle:Aspirante p WHERE p.nie=:nie";
+        $em = $this->getDoctrine()->getManager();
+        $query = $em->createQuery($dql)->setParameter("nie", $_REQUEST['nie']);
+        $text = "";
+        try {
+            $aspirante = $query->getSingleResult();
+            $text = $aspirante->getNombres() . " " . $aspirante->getPrimerapellido() . " " . $aspirante->getSegundoapellido();
+            $text.="<input type='hidden' id='userNameH' value='" . substr(strtoupper($aspirante->getPrimerapellido()), 0, 1) . substr(strtolower($aspirante->getSegundoapellido()), 0, 1) . $aspirante->getNie() . "'>";
+            $text.="<input type='hidden' id='passwordH' value='" . substr(md5($aspirante->getNie()), 0, 8) . "'>";
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $text = "No se ha seleccionado ningun aspirante valido";
+        }
         return new Response($text);
     }
 }

@@ -9,7 +9,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  * Encargado
  *
  * @ORM\Table(name="Encargado")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="INTI\RegistroAcademicoBundle\Repository\EncargadoRepository")
  */
 class Encargado
 {
@@ -152,5 +152,10 @@ class Encargado
 	public function getTelefono()
 	{
 		return $this->telefono;
+	}
+
+	public function __toString()
+	{
+		return $this->dui;
 	}
 }

@@ -1,7 +1,7 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
 {% block style %}
-{{ load.css({ calendar: true }) }}
+{{ load.css({ calendar: true, select2: true }) }}
 {% endblock %}
 
 {% block breadcrumb %}
@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block content %}
-<form action="{{ path('aspirante_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+<form id="aspirantetype" action="{{ path('aspirante_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 	{{ form_label(form.foto) }}
     <input type="file" id="filePicker" name="filePicker" accept="image/jpg" class="btn" required />
     {{ form_widget(form, {'form_type': 'horizontal'}) }}
@@ -23,8 +23,27 @@
 {% endblock %}
 
 {% block javascript %}
-{{ load.script({ form: true, foto: true, calendar: true })}}
+{{ load.script({ form: true, foto: true, calendar: true, select2: true })}}
 <script>
+$('#aspirantetype_especialidad').select2();
+$('#aspirantetype_encargado_dui').select2({
+    minimumInputLength: 2,
+    query: function (query) {
+        var data = {results: []};
+        $.get(
+            Routing.generate('encargado_index', { 'dui': query.term }),
+            function (json) {
+                console.table(json);
+                for(e in json){
+                    data.results.push({id: json[e].dui, text: json[e].dui});
+                console.log(json[e].dui);
+                console.table(data.results);
+                }
+        query.callback(data);
+        });
+        console.table(data);
+    }
+});
 $('#aspirantetype_encargado_dui').keyup(function() {
 	$.getJSON(
 		Routing.generate('encargado_show', { 'dui': $(this).val() }),
