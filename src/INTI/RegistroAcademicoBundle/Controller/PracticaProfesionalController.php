@@ -101,7 +101,7 @@ $em = $this->getDoctrine()->getManager();
 
         $entities = $em->getRepository('RegistroAcademicoBundle:PracticaProfesional')->findAll();
 
-        return $this->render('RegistroAcademicoBundle:practicaprofesional:estadistic.html.twig',array(
+        return $this->render('RegistroAcademicoBundle:PracticaProfesional:estadistic.html.twig',array(
             'entities' => $entities,
             'title'    => 'Evaluacion practicaprofesional'
         ));
