@@ -1,53 +1,60 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
 {% block style %}
-{{ load.css({ watable:true }) }}
-{% endblock %}
-
-{% block breadcrumb %}
-<li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span><a href="{{ path('especialidad_index') }}">Especialidades</a></li>
-<li class="active"><span class="divider">&gt;</span> Codigos</li>
+{{ parent() }}
+<link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}">
 {% endblock %}
 
 {% block content %}
-<table id="tablaCodigos" class="table table-hover">
-    <thead>
-        <tr>
-            <th>Codigo</th>
-            <th>Año</th>
-			<th>Sección</th>
-			<th>Especialidad</th>
-            <th>Opciones</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for entity in entities %}
-        <tr>
-            <td><a href="{{ path('codigoespecialidad_index', { 'codigo': entity.codigo }) }}">{{ entity.codigo }}</a></td>
-            <td>{{ entity.anho }}°</td>
-			<td>{{ entity.seccion }}</td>
-			<td>{{ entity.especialidad.nombre }}</td>
-            <td>
-                <div class="btn-group btn-group-vertical">
-                    <a class="btn btn-info btn-mini" href="{{ path('codigoespecialidad_show', { 'codigo': entity.codigo }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
-                    <a class="btn btn-info btn-mini" href="{{ path('codigoespecialidad_edit', { 'codigo': entity.codigo }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
-                </div>
-            </td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
-<a class="btn btn-primary" href="{{ path('codigoespecialidad_new') }}">{{ '.icon-plus-sign Añadir un nuevo codigo'|parse_icons('white') }}</a>
-{% for flashMessage in app.session.flashbag.get('notice') %}
-    <div class="alert alert-success">
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-        {{ flashMessage }}
-    </div>
+    <h1>Lista de codigo especialidades</h1>
+
+    <table id="tabla" class="table table-hover">
+    
+        <thead>
+            <tr>
+                <th>Codigo</th>
+                <th>Año</th>
+				<th>Sección</th>
+				<th>Especialidad</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('codigoespecialidad_index', { 'codigo': entity.codigo }) }}">{{ entity.codigo }}</a></td>
+                
+                <td>{{ entity.anho }}</td>
+				<td>{{ entity.seccion }}</td>
+				<td>{{ entity.especialidad.codigo }}</td>
+                <td>
+                <ul>
+                   
+                        <a class="btn btn-info" href="{{ path('codigoespecialidad_show', { 'codigo': entity.codigo }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
+                   
+                        <a class="btn btn-info" href="{{ path('codigoespecialidad_edit', { 'codigo': entity.codigo }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+               
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    
+       
+            <a class="btn btn-primary" href="{{ path('codigoespecialidad_new') }}">
+                {{ '.icon-plus-sign Ingresar un nuevo codigo de especialidad'|parse_icons('white') }}
+            </a>
+            {% for flashMessage in app.session.flashbag.get('notice') %}
+<div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ flashMessage }}
+</div>
 {% endfor %}
 {% endblock %}
 
 {% block javascript %}
-{{ load.script({ watable: true }) }}
+{{ parent() }}
+<script src="{{ asset('assets/watable/jquery.watable.js') }}"></script>
 {% endblock %}
 

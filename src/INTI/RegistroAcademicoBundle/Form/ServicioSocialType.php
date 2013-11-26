@@ -16,7 +16,13 @@ class ServicioSocialType extends AbstractType
     {
         $builder
             ->add('horasRealizadas')
-            ->add('alumno');
+            ->add('alumno','entity',array(
+                    'class'         =>  'RegistroAcademicoBundle:Alumno',
+                    'empty_value'   =>  'Escoja un alumno',
+                    'property'      =>  'nie',
+                    'label'         =>  'Alumno (NIE)',
+                    
+                    ));
     }
     
     /**
