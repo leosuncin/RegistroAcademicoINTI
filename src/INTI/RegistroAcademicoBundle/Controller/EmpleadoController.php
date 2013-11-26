@@ -66,7 +66,7 @@ class EmpleadoController extends Controller
 			  $usuario->addRole("ROLE_ACADEMIC");
 			else if($puesto == "encargado_serv_soc")
 				$usuario->addRole("ROLE_SERV_SOC");
-			else if($puesto == "encargado_serv_soc")
+			else if($puesto == "encargado_prac_prof")
 				$usuario->addRole("ROLE_PRAC_PROF");
 			$em->persist($usuario);
 			$em->persist($entity);
@@ -206,7 +206,7 @@ class EmpleadoController extends Controller
 	/**
      * Lists all Empleado Secretaria entities.
      *
-     * @Route("/responsabilities", name="empleado_responsabilities")
+     * @Route("/responsabilities/set", name="empleado_responsabilities")
      * @Method("GET")
      */
     public function asignarResponsabilidades()

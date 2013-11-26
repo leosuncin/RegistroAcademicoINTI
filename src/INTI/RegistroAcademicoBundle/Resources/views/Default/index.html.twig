@@ -88,7 +88,7 @@
  			</ul>
 		</div>
 		{% endif %}
-		{% if is_granted('ROLE_ACADEMIC') %}
+		{% if is_granted('ROLE_SERV_SOC')  %}
 		<div class="span3 ig-grid">
  			<img class="ig-img" src="{{ asset('bundles/registroacademico/images/flat-icons/tag-1.png') }}" />
  			<h3 class="ig-category">Gestionar</h3>
@@ -108,6 +108,31 @@
  				</li>
 		</div>
 		{% endif %}
+
+		{% if is_granted('ROLE_PRAC_PROF') %}
+		<div class="span3 ig-grid">
+ 			<img class="ig-img" src="{{ asset('bundles/registroacademico/images/flat-icons/folder.png') }}" />
+ 			<h3 class="ig-category">Gestionar</h3>
+
+ 			<h2 class="ig-title">Horas Practica profesional</h2>
+ 			<ul class="unstyled ig-options">
+ 				<li>
+ 					<a href="{{ path('empresa_new') }}" class="badge badge-inverse"><span class="icon-plus-sign"></span> Añadir Empresa</a>
+ 				</li>
+ 				<li>
+ 					<a href="{{ path('practicaprofesional_new') }}" class="badge badge-inverse"><span class="icon-plus-sign"></span> Añadir Practica Profesional</a>
+ 				</li>
+
+ 				<li>
+ 					<a href="{{ path('practicaprofesional_evaluacion') }}" class="badge badge-inverse"><span class="icon-plus-sign"></span>Asignar nota</a>
+
+ 			
+ 			
+ 				
+ 			
+		</div>
+		{% endif %}
+
 		{% if is_granted('ROLE_ADMIN') %}
 		<div class="span3 ig-grid">
  			<img class="ig-img" src="{{ asset('bundles/registroacademico/images/flat-icons/user.png') }}" />

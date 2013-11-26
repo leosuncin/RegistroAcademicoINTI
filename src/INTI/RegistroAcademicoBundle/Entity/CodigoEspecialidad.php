@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * CodigoEspecialidad
  *
  * @ORM\Table(name="Codigo_especialidad")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="INTI\RegistroAcademicoBundle\Repository\CodigoEspecialidadRepository")
  * @UniqueEntity(fields = "codigo", message = "El código ya esta registrado")
  */
 class CodigoEspecialidad

@@ -7,14 +7,14 @@
 {% endblock %}
 
 {% block content -%}
-<form action="{{ path('alumno_update', { 'nie': entity.nie.nie }) }}" method="POST" {{ form_enctype(edit_form) }} class="form-horizontal">
-    <table><tr><td style='padding-right:20px;'>{{ form_label(edit_form.nie.foto) }}</td><td style='padding-bottom:20px'><input type="file" id="filePicker" class="btn"/></td></tr></table>
+<form action="{{ path('alumno_update', { 'nie': entity.nie }) }}" method="POST" {{ form_enctype(edit_form) }} class="form-horizontal">
+    <table><tr><td style='padding-right:20px;'>{{ form_label(edit_form.foto) }}</td><td style='padding-bottom:20px'><input type="file" id="filePicker" class="btn"/></td></tr></table>
 	<input type="hidden" name="_method" value="PUT" />
     {{ form_widget(edit_form, {'form_type': 'horizontal'}) }}
     <div class="form-actions">
         <input type="submit" value="Modificar" class="btn btn-primary" />
         <a class="btn" href="{{ path('alumno_index') }}">Cancelar</a>
-        <a href="{{ path('alumno_erase', {'nie':entity.nie.nie}) }}" class="btn btn-danger">Eliminar</a>
+        <a href="{{ path('alumno_erase', {'nie':entity.nie}) }}" class="btn btn-danger">Eliminar</a>
     </div>
 </form>
 {% endblock %}

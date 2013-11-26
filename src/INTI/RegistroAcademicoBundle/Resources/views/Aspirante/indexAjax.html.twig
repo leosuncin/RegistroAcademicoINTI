@@ -1,5 +1,5 @@
 {% if app.request.isXmlHttpRequest and aspirantes|length <= 0 %}
-<tr><td>No hay aspirantes que concuerden con la búsqueda</td></tr>
+<tr class="error"><td>No hay aspirantes que concuerden con la búsqueda</td></tr>
 {% endif %}
 {% for aspirante in aspirantes %}
 <tr>
@@ -10,6 +10,7 @@
         <div class="btn-group btn-group-vertical">
             <a class="btn btn-info btn-mini" href="{{ path('aspirante_show', { 'nie': aspirante.nie }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
             <a class="btn btn-info btn-mini" href="{{ path('aspirante_edit', { 'nie': aspirante.nie }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+            <a href="{{ path('alumno_inscribir', {'aspirante': aspirante.nie }) }}" class="btn btn-info btn-mini">{{ '.icon-ok-sign Matricular'|parse_icons('white') }}</a>
         </div>
     </td>
 </tr>

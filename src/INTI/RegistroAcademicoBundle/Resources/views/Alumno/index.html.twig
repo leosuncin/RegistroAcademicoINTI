@@ -1,69 +1,42 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
 {% block style %}
-{{ parent() }}
-<link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}">
+{{ load.css({ watable: true }) }}
 {% endblock %}
 
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span><a href="#">Alumno</a></li>
-<li class="active"><span class="divider">&gt;</span> Consultar</li>
+<li class="active"><span class="divider">&gt;</span> Alumnos</li>
 {% endblock %}
 
 {% block content %}
-	<form class="form-inline">
-		<table style='width:100%'><tr>
-			<td><div class="input-append"><input type="search" placeholder="Buscar por apellidos o NIE" id='search'><button class="btn"><i class="icon-search"></i> Buscar</button></div></td>
-			<td>Especialidad: 
-				<select id='especialidad'>
-					<option value='todas'>Todas</option>
-					{% for entity in especialidades %}
-						<option value='{{ entity.codigo }}'> {{ entity.nombre }} </option>
-					{% endfor %}
-				</select>
-			</td>
-			<td style='text-align:right'>Numero de Resultados: <select id='nResults' class='span2'><option value='10'>10</option><option value='20'>20</option></select>
-		</td></table>
-		<div id="tableResult" style='padding-top:20px;'></div>
-	</form>
+<div id="buscarAlumnos" class="input-append">
+	<select id="codigo">
+			<option value="" selected>Seleccione un codigo</option>
+		{% for cod in especialidades %}
+		    <option value="{{ cod.codigo }}">{{ cod.codigo }}</option>
+		{% endfor %}
+	</select>
+	<input id="apellidos" type="search" placeholder="Buscar por apellido" required>
+	<button class="btn"><i class="icon-search"></i> Buscar</button>
+</div>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>NIE</th>
+            <th>Nombre</th>
+            <th>Codigo</th>
+            <th>Sexo</th>
+            <th>Opciones</th>
+        </tr>
+    </thead>
+    <tbody id="tablaAlumnos">
+    {% include 'RegistroAcademicoBundle:Alumno:indexAjax.html.twig' %}
+    </tbody>
+</table>
 <a class="btn btn-primary" href="{{ path('alumno_new') }}">{{ '.icon-plus-sign Ingresar un nuevo alumno'|parse_icons('white') }}</a>
 {% endblock %}
 
 {% block javascript %}
-{{ parent() }}
-<script>
-	var order_field, sence, actual;
-	$(document).ready(function(){
-		order_field="0";
-		sence="ASC";
-		actual=1;
-		generateTable(actual, actual);
-		$("#search").keyup(function(){generateTable(actual,actual);});
-		$("#nResults").change(function(){generateTable(actual,actual);});
-		$("#especialidad").change(function(){generateTable(actual,actual);});
-	});
-
-	function generateTable(actual, anterior){
-		$.get("{{ path('IndexAlumnoAjax') }}", {"especialidad":$("#especialidad").val(), "order_field":order_field, "search":$("#search").val() ,"sence":sence, "n_result":$("#nResults").val(), "actual":actual, "anterior":anterior}, function(e){
-			$("#tableResult").html(e);
-			actual=$(".actual").attr('value');
-			$("tr.header th").click(function(){
-				if($(this).attr('class')==order_field){
-					if(sence=="ASC")
-						sence="DESC";
-					else
-						sence="ASC";
-				}else{
-					order_field=$(this).attr('class');
-					sence="ASC";
-				}
-				generateTable(actual,actual);
-			});
-			$(".pag").click(function(){
-				generateTable($(this).attr('value'),actual);
-			});
-		});
-	}
-</script>
+{{ load.script({ watable: true, buscarAjax: true }) }}
 {% endblock %}

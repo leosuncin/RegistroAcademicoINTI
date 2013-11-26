@@ -26,13 +26,14 @@ class PracticaProfesionalType extends AbstractType
 			->add('inicio',
 				'date',
 				array(
+					 'input'		  => 'datetime',	 
 					'label'           => 'Fecha de inicio',
 					'widget'          => 'single_text',
 					'format'          => 'dd/MM/yyyy',
 					'invalid_message' => 'La fecha debe tener mel formato dd/mm/yyyy',
 					'attr'            => array(
 					'placeholder'     => 'Por ejemplo: 17/10/1990',
-						'class'            => 'date',
+						'class'            => 'date1',
 						'data-provide'     => 'datepicker',
 						'data-date-format' => 'dd/mm//yyyy',
 						'data-language'    => 'es'
@@ -40,28 +41,45 @@ class PracticaProfesionalType extends AbstractType
 			->add('fin',
 				'date',
 				array(
+					'input'			  => 'datetime',		
 					'label'           => 'Fecha en que finalizo',
 					'widget'          => 'single_text',
 					'format'          => 'dd/MM/yyyy',
 					'invalid_message' => 'La fecha debe tener mel formato dd/mm/yyyy',
 					'attr'            => array(
 					'placeholder'     => 'Por ejemplo: 17/11/1990',
-						'class'            => 'date',
+						'class'            => 'date2',
 						'required'         => false,
 						'data-provide'     => 'datepicker',
 						'data-date-format' => 'dd/mm//yyyy',
 						'data-language'    => 'es'
 				)))
 			->add('evaluacion',
-				'number',
+				'text',
 				array(
 					'label'           => 'Evaluación',
-					'precision'       => 2,
+
 					'read_only'       => true,
 					'invalid_message' => 'Ingrese un numero decimal valido',
-					'attr'			  => array(
+					'attr'			  =>	
+					array(
 						'placeholder' => 'por ejemplo: 10.00'
 				)))
+
+			->add('alumno','entity',
+				array(
+					'class'			=>	'RegistroAcademicoBundle:Alumno',
+					'empty_value' 	=> 	'Escoja un alumno',
+					'property'		=>	'nie',
+					'label'			=>	'Alumno (NIE)',
+					
+					))
+			->add('empresa','entity',
+				array(
+					'class'			=>	'RegistroAcademicoBundle:Empresa',
+					'property'		=>	'nombre',
+					'label'			=>	'Empresa'
+					))
 			;
 	}
 

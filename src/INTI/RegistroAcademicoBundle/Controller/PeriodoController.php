@@ -30,7 +30,7 @@ class PeriodoController extends Controller {
 	public function indexAction() {
 		$em = $this->getDoctrine()->getManager();
 
-		$entity = $em->getRepository("RegistroAcademicoBundle:Anho")->findBy(array("encurso" => true));
+		$entity = $em->getRepository("RegistroAcademicoBundle:Anho")->findBy(array("enCurso" => true));
 		
 		if ($entity) {
 			$queryPeriodo = $em->createQuery('SELECT p FROM RegistroAcademicoBundle:Periodo p WHERE p.anho = :anho')
