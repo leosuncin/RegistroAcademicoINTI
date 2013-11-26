@@ -1,7 +1,7 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
 {% block style %}
-{{ load.css({ calendar: true }) }}
+{{ load.css({ calendar: true, select2: true }) }}
 {% endblock %}
 
 {% block breadcrumb %}
@@ -25,16 +25,40 @@
 {% endblock %}
 
 {% block javascript %}
-{{ load.script({ form: true, foto: true, calendar: true, twig: true }) }}
+{{ load.script({ form: true, foto: true, calendar: true, twig: true, select2: true }) }}
 <script>
-$('#alumnotype_especialidad').change(function () {
+$('#alumnotype_condicion').select2().addClass("span4");
+$('#alumnotype_especialidad').select2().change(function () {
+	if($(this).val() != 'DS' && $(this).val() != 'COMP')
+		$.getJSON(
+			Routing.generate('codigoespecialidad_index'),
+			{ especialidad: $(this).val() },
+			function (data) {
+				$('#alumnotype_codigoEspecialidad').empty().html(cmbCodigo.render({ 'codigos': data }));
+			}
+		)
+}).addClass("span4");
+$('#alumnotype_codigoEspecialidad').select2({minimumInputLength: 2}).addClass("span4");
+$('#alumnotype_encargado_dui').typeahead({
+	source: function (query, process) {
+		return $.get(
+			Routing.generate('encargado_index', { 'dui': query }),
+			function(data) {
+				var duis = [];
+				for(d in data)
+					duis.push(data[d].dui);
+				return typeof data == 'undefined' ? false : process(duis);
+			});
+	},
+	minLength: 2
+}).focusout(function () {
 	$.getJSON(
-		Routing.generate('codigoespecialidad_index'),
-		{ especialidad: $(this).val() },
-		function (data) {
-			$('#alumnotype_codigoEspecialidad').empty().html(cmbCodigo.render({ 'codigos': data }));
+		Routing.generate('encargado_show', { 'dui': $(this).val() }),
+		function(enc) {
+			$('#alumnotype_encargado_nombre').val(enc.nombre);
+			$('#alumnotype_encargado_telefono').val(enc.telefono);
 		}
-	)
+	);
 });
 </script>
 {% endblock %}

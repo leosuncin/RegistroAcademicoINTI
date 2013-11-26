@@ -3,6 +3,7 @@
 {% endif %}
 {% for entity in entities %}
 <tr>
+	<td><a href="{{ path('alumno_show', { 'nie': entity.nie }) }}">{{ entity.nie }}</a></td>
     <td>{{ entity.primerapellido~' '~entity.segundoapellido~', '~entity.nombres }}</td>
     <td>{{ entity.codigoEspecialidad.codigo }}</td>
     <td>{% if entity.sexo == 'M' %}Masculino{% else %}Femenino{% endif %}</td>

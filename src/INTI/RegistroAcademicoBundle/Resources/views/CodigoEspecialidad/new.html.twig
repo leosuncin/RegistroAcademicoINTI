@@ -1,30 +1,24 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
 {% block breadcrumb %}
-<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span> <a href="{{ path('codigoespecialidad_index') }} ">Especialidad</a></li>
+<li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span><a href="{{ path('especialidad_index') }}">Especialidades</a></li>
+<li><span class="divider">&gt;</span><a href="{{ path('codigoespecialidad_index') }}">Codigos</a></li>
 <li class="active"><span class="divider">&gt;</span> Crear</li>
 {% endblock %}
 
 {% block content %}
-
-<h1>Creacion de una especialidad</h1>
-
 <form action="{{ path('codigoespecialidad_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
-	
     {{ form_widget(form, {'form_type': 'horizontal'}) }}
-	
     <div class="form-actions">
        <input  type="submit" value="Crear" class="btn btn-primary" />
         <a href="{{ path('codigoespecialidad_index') }}" class="btn">Regresar</a>
     </div>
 </form>
-
 {% endblock %}
 
 {% block javascript %}
-{{ parent() }}
-{{ load.script({form: true})}}
+{{ load.script({ form: true }) }}
 <script>
     $('select').change(function(){
         var e = $('#codigoespecialidadtype_especialidad :selected').val();

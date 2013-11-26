@@ -26,31 +26,44 @@
 {{ load.script({ form: true, foto: true, calendar: true, select2: true })}}
 <script>
 $('#aspirantetype_especialidad').select2();
-$('#aspirantetype_encargado_dui').select2({
-    minimumInputLength: 2,
-    query: function (query) {
-        var data = {results: []};
-        $.get(
-            Routing.generate('encargado_index', { 'dui': query.term }),
-            function (json) {
-                console.table(json);
-                for(e in json){
-                    data.results.push({id: json[e].dui, text: json[e].dui});
-                console.log(json[e].dui);
-                console.table(data.results);
-                }
-        query.callback(data);
-        });
-        console.table(data);
-    }
-});
-$('#aspirantetype_encargado_dui').keyup(function() {
+$('#aspirantetype_encargado_dui').typeahead({
+	source: function (query, process) {
+		return $.get(
+			Routing.generate('encargado_index', { 'dui': query }),
+			function(data) {
+				var duis = [];
+				for(d in data)
+					duis.push(data[d].dui);
+				return typeof data == 'undefined' ? false : process(duis);
+			});
+	},
+	minLength: 2
+}).focusout(function () {
 	$.getJSON(
 		Routing.generate('encargado_show', { 'dui': $(this).val() }),
 		function(enc) {
 			$('#aspirantetype_encargado_nombre').val(enc.nombre);
 			$('#aspirantetype_encargado_telefono').val(enc.telefono);
 		}
-	)});
+	);
+});
+// $('#aspirantetype_encargado_dui').select2({
+//     minimumInputLength: 2,
+//     query: function (query) {
+//         var data = {results: []};
+//         $.get(
+//             Routing.generate('encargado_index', { 'dui': query.term }),
+//             function (json) {
+//                 console.table(json);
+//                 for(e in json){
+//                     data.results.push({id: json[e].dui, text: json[e].dui});
+//                 console.log(json[e].dui);
+//                 console.table(data.results);
+//                 }
+//         query.callback(data);
+//         });
+//         console.table(data);
+//     }
+// });
 </script>
 {% endblock %}

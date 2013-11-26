@@ -62,6 +62,7 @@
         <div class="form-actions">
           <a href="{{ path('aspirante_edit', { 'nie': aspirante.nie }) }}" class="btn btn-info">Modificar</a>
           <a href="{{ path('aspirante_erase', { 'nie': aspirante.nie }) }}" class="btn btn-danger">Eliminar</a>
+          <a href="{{ path('alumno_inscribir', { 'aspirante': aspirante.nie }) }}" class="btn btn-success">Matricular</a>
           <a href="{{ path('aspirante_index') }}" class="btn">Regresar</a>
         </div>
     </li>

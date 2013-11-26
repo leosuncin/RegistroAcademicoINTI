@@ -66,7 +66,7 @@ class AlumnoType extends AbstractType
 				'entity',
 				array(
 					'label'       => 'Código de especialidad',
-					'empty_value' => 'Asigne a un codigo',
+					'empty_value' => 'Escoja un codigo',
 					'class'       => 'RegistroAcademicoBundle:CodigoEspecialidad',
 					'property'    => 'codigo'
 				))

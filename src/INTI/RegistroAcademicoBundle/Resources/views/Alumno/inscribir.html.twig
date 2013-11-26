@@ -1,7 +1,7 @@
-{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+{% extends 'RegistroAcademicoBundle:Alumno:new.html.twig' %}
 
 {% block style %}
-{{ load.css({ calendar: true }) }}
+{{ parent() }}
 {% endblock %}
 
 {% block breadcrumb %}
@@ -23,7 +23,7 @@
 {% endblock %}
 
 {% block javascript %}
-{{ load.script({ form: true, foto: true, calendar: true, twig: true }) }}
+{{ parent() }}
 <script>
 $(document).ready(function() {
 	$('#alumnotype_primerApellido').val("{{ entity.primerApellido }}");
@@ -39,16 +39,6 @@ $(document).ready(function() {
 	$('#alumnotype_encargado_nombre').val("{{ entity.encargado.nombre }}");
 	$('#alumnotype_encargado_parentesco').val("{{ entity.encargado.parentesco }}");
 	$('#alumnotype_encargado_telefono').val("{{ entity.encargado.telefono }}");
-
-	$('#alumnotype_especialidad').change(function () {
-		$.getJSON(
-			Routing.generate('codigoespecialidad_index'),
-			{ especialidad: $(this).val() },
-			function (data) {
-				$('#alumnotype_codigoEspecialidad').empty().html(cmbCodigo.render({ 'codigos': data }));
-			}
-		)
-	});
 });
 </script>
 {% endblock %}

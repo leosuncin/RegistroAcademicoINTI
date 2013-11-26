@@ -22,10 +22,17 @@ class AlumnoRepository extends EntityRepository {
      * @return array
      */
     public function findByApellidos($apellidos, CodigoEspecialidad $codigo = null) {
-        $query = $this->getEntityManager()
-                ->createQuery("SELECT al FROM RegistroAcademicoBundle:Alumno al WHERE al.primerApellido LIKE :apellido OR al.segundoApellido LIKE :apellido")
+        $qb = $this->getEntityManager()
+                ->createQueryBuilder()
+                ->select('al')
+                ->from('RegistroAcademicoBundle:Alumno', 'al')
+                ->where('al.primerApellido LIKE :apellido')
+                ->orWhere('al.segundoApellido LIKE :apellido')
                 ->setParameter(':apellido', $apellidos);
-        return $query->getResult();
+        if($codigo != null)
+            $qb->andWhere('al.codigoEspecialidad = :codigo')
+            ->setParameter(':codigo', $codigo->getCodigo());
+        return $qb->getQuery()->getResult();
     }
 
     /**

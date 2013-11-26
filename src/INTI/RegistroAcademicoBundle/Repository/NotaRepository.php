@@ -55,7 +55,7 @@ class NotaRepository extends EntityRepository {
 	public function findByAlumno(Alumno $alumno)
 	{
 		$query = $this->getEntityManager()
-				->createQuery("SELECT n FROM RegistroAcademicoBundle:Nota n WHERE n.alumno = :alumno AND n.periodo IN (SELECT p.periodo FROM RegistroAcademicoBundle:Periodo p WHERE p.anho = anho_actual()) GROUP BY n.periodo ORDER BY n.materia")
+				->createQuery("SELECT n FROM RegistroAcademicoBundle:Nota n WHERE n.alumno = :alumno AND n.periodo IN (SELECT MAX(p.periodo) FROM RegistroAcademicoBundle:Periodo p WHERE p.enCurso = TRUE) GROUP BY n.periodo ORDER BY n.materia")
 				->setParameter(':alumno', $alumno->getNie());
 		return $query->getResult();
 	}

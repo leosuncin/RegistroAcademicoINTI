@@ -30,7 +30,6 @@ class CodigoEspecialidadController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
-
 		if($this->getRequest()->isXmlHttpRequest()) {
 			$serializer = $this->get("jms_serializer");
 			$especialidad = $em->getRepository('RegistroAcademicoBundle:Especialidad')->find($this->getRequest()->query->get('especialidad'));

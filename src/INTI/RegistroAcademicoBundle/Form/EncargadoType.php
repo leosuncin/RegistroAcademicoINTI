@@ -19,8 +19,9 @@ class EncargadoType extends AbstractType
 				'label'      => 'DUI',
 				'max_length' => 10,
 				'attr'       => array(
-					'class'       => 'dui span4',
-					'placeholder' => 'Por ejemplo: 12345678-9'
+					'class'        => 'dui',
+					'placeholder'  => 'Por ejemplo: 12345678-9',
+					'data-provide' => 'typeahead'
 				)))
 			->add('nombre', 'text', array('label' => 'Nombre completo'))
 			->add('parentesco', 'text', array('label' => 'Parentesco'))

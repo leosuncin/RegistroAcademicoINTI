@@ -25,5 +25,32 @@
 {% endblock %}
 
 {% block javascript %}
-{{ load.script({ form: true, foto: true, calendar: true }) }}
+{{ load.script({ form: true, foto: true, calendar: true, select2: true }) }}
+<script>
+$('#aspirantetype_especialidad').select2();
+
+$('#aspirantetype_encargado_dui').typeahead({
+	source: function (query, process) {
+		return $.get(
+			Routing.generate('encargado_index', { 'dui': query }),
+			function(data) {
+				var duis = [];
+				for(d in data)
+					duis.push(data[d].dui);
+				// 	console.log(duis);
+				// return duis;
+				return typeof data == 'undefined' ? false : process(duis);
+			});
+	},
+	minLength: 2
+}).focusout(function () {
+	$.getJSON(
+		Routing.generate('encargado_show', { 'dui': $(this).val() }),
+		function(enc) {
+			$('#aspirantetype_encargado_nombre').val(enc.nombre);
+			$('#aspirantetype_encargado_telefono').val(enc.telefono);
+		}
+	);
+});
+</script>
 {% endblock %}
