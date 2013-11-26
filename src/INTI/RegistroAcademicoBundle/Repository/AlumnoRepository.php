@@ -37,6 +37,19 @@ class AlumnoRepository extends EntityRepository {
     }
 
     /**
+     * Buscar alumnos por apellido
+     * 
+     * @param string $apellido
+     * @return array
+     */
+    public function findByApellido($apellidos) {
+        $query = $this->getEntityManager()
+                ->createQuery("SELECT al.nie, al.nombres, al.primerApellido, al.segundoApellido FROM RegistroAcademicoBundle:Alumno al WHERE al.primerApellido LIKE :apellido OR al.segundoApellido LIKE :apellido")
+                ->setParameter(':apellido', $apellidos);
+        return $query->getResult();
+    }
+
+    /**
      * Buscar alumnos por especialidad
      * 
      * @param \INTI\RegistroAcademicoBundle\Entity\Especialidad $especialidad

@@ -1,5 +1,9 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
+{% block style %}
+{{ load.css({ calendar: true, select2: true }) }}
+{% endblock %}
+
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
 <li><span class="divider">&gt;</span> <a href="{{ path('practicaprofesional') }} ">Practica Profesional</a></li>
@@ -29,4 +33,29 @@
     </div>
 </form>
 
+{% endblock %}
+
+{% block javascript %}
+{{ load.script({ calendar: true, select2: true }) }}
+<script>
+$('#practicaprofesionaltype_alumno').addClass('span4').select2({
+    minimumInputLength: 2,
+    query: function (query) {
+        var data = {results: []};
+		console.log(query);
+        $.ajax({
+            url: Routing.generate('alumno_ajax'),
+			data: { apellidos: query.term },
+            dataType: 'json',
+            success: function (json) {
+                console.table(json);
+                for(e in json){
+                    data.results.push({id: json[e].nie, text: json[e].nombres + ' ' + json[e].primerApellido + ' ' + json[e].segundoApellido });
+                }
+                query.callback(data);
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

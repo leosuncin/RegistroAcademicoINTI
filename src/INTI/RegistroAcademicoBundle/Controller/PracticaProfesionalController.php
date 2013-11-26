@@ -142,7 +142,7 @@ class PracticaProfesionalController extends Controller
     public function createAction(Request $request)
     {
         $entity = new PracticaProfesional();
-        $form = $this->createForm(new PracticaProfesionalType(),$entity);
+        $form = $this->createForm(new PracticaProfesionalType(),$entity,array('em' => $this->getDoctrine()->getManager()));
         $form->submit($request);
 
         if ($form->isValid()) {
@@ -171,7 +171,7 @@ class PracticaProfesionalController extends Controller
     public function newAction()
     {
         $entity = new PracticaProfesional();
-        $form   = $this->createForm(new PracticaProfesionalType(),$entity);
+        $form   = $this->createForm(new PracticaProfesionalType(),$entity,array('em' => $this->getDoctrine()->getManager()));
 
         return array(
             'entity' => $entity,
@@ -221,7 +221,7 @@ class PracticaProfesionalController extends Controller
             throw $this->createNotFoundException('Unable to find PracticaProfesional entity.');
         }
 
-        $editForm = $this->createForm(new PracticaProfesionalType(),$entity);
+        $editForm = $this->createForm(new PracticaProfesionalType(),$entity,array('em' => $this->getDoctrine()->getManager()));
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
@@ -250,7 +250,7 @@ class PracticaProfesionalController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createForm(new PracticaProfesionalType(),$entity);
+        $editForm = $this->createForm(new PracticaProfesionalType(),$entity,array('em' => $this->getDoctrine()->getManager()));
         $editForm->submit($request);
 
         if ($editForm->isValid()) {

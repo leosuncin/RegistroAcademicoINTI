@@ -5,6 +5,7 @@ namespace INTI\RegistroAcademicoBundle\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
+use INTI\RegistroAcademicoBundle\Form\DataTransform\AlumnoToTextTransformer;
 
 class PracticaProfesionalType extends AbstractType
 {
@@ -14,6 +15,8 @@ class PracticaProfesionalType extends AbstractType
 	*/
 	public function buildForm(FormBuilderInterface $builder, array $options)
 	{
+		$entityManager = $options['em'];
+		$transformer = new AlumnoToTextTransformer($entityManager);
 		$builder
 			->add('horario',
 				'choice',
@@ -34,7 +37,7 @@ class PracticaProfesionalType extends AbstractType
 					'placeholder'     => 'Por ejemplo: 17/10/1990',
 						'class'            => 'datepicker',
 						'data-provide'     => 'datepicker',
-						'data-date-format' => 'dd/mm//yyyy',
+						'data-date-format' => 'dd/mm/yyyy',
 						'data-language'    => 'es'
 				)))
 			->add('fin',
@@ -49,7 +52,7 @@ class PracticaProfesionalType extends AbstractType
 						'class'            => 'datepicker',
 						'required'         => false,
 						'data-provide'     => 'datepicker',
-						'data-date-format' => 'dd/mm//yyyy',
+						'data-date-format' => 'dd/mm/yyyy',
 						'data-language'    => 'es'
 				)))
 			->add('evaluacion',
@@ -62,14 +65,9 @@ class PracticaProfesionalType extends AbstractType
 						'placeholder' => 'por ejemplo: 10.00'
 				)))
 
-			->add('alumno','entity',
-				array(
-					'class'			=>	'RegistroAcademicoBundle:Alumno',
-					'empty_value' 	=> 	'Escoja un alumno',
-					'property'		=>	'nie',
-					'label'			=>	'Alumno (NIE)',
-					
-					))
+			->add($builder
+				->create('alumno', 'text', array('label' => 'Alumno (NIE)'))
+                ->addModelTransformer($transformer))
 			->add('empresa','entity',
 				array(
 					'class'			=>	'RegistroAcademicoBundle:Empresa',
@@ -87,6 +85,12 @@ class PracticaProfesionalType extends AbstractType
 		$resolver->setDefaults(array(
 			'data_class' => 'INTI\RegistroAcademicoBundle\Entity\PracticaProfesional'
 		));
+		$resolver->setRequired(array(
+            'em',
+        ));
+        $resolver->setAllowedTypes(array(
+            'em' => 'Doctrine\Common\Persistence\ObjectManager',
+        ));
 	}
 
 	/**

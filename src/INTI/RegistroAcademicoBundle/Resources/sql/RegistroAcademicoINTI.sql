@@ -234,7 +234,7 @@ CREATE TABLE IF NOT EXISTS `Practica_profesional` (
   `horario` CHAR NOT NULL,
   `inicio` DATE NOT NULL,
   `fin` DATE NULL,
-  `evaluacion` DOUBLE(2,2) NULL,
+  `evaluacion` DOUBLE NULL,
   `Alumno` INT NOT NULL,
   `Empresa` INT NOT NULL,
   PRIMARY KEY (`id`),
@@ -424,8 +424,6 @@ DECLARE a_actual INT;
 SELECT MAX(anho) INTO a_actual FROM Anho WHERE en_curso = TRUE;
 RETURN a_actual;
 END$$
-
-DELIMITER ;
 
 -- -----------------------------------------------------
 -- View `Alumno_inscrito`

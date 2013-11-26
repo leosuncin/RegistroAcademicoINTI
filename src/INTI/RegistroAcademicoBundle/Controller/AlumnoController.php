@@ -3,6 +3,7 @@
 namespace INTI\RegistroAcademicoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -275,5 +276,23 @@ class AlumnoController extends Controller
 		$em->remove($aspirante);
 		$em->flush();
 		return $this->redirect($this->generateUrl('alumno_index'));
+	}
+
+	/**
+	 * Buscar por apellidos
+	 * @Route("/ajax", name="alumno_ajax", options={"expose"=true})
+	 * @Method("GET")
+	 * @return JSON
+	 */
+	public function searchAction()
+	{
+		$em = $this->getDoctrine()->getManager();
+		$request = $this->getRequest();
+		$serializer = $this->get("jms_serializer");
+
+		$alumnos = $em->getRepository('RegistroAcademicoBundle:Alumno')
+		->findByApellido($request->query->get('apellidos').'%');
+
+		return new Response($serializer->serialize($alumnos, 'json'), 200, array("Content-Type" => "application/json; charset=UTF-8"));
 	}
 }
