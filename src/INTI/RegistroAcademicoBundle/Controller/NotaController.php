@@ -36,11 +36,15 @@ class NotaController extends Controller
     }
 
     /**
-     * @Route("/edit", name="nota_edit")
+     * @Route("/expedientes/edit", name="nota_edit")
      * @Template()
      */
     public function editAction()
     {
+        return array(
+            'status_code' => 404,
+            'status_text' => 'NOT FOUND'
+            );
     }
 
 }

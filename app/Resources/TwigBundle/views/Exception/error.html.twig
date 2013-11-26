@@ -13,11 +13,11 @@
     </header>
     <img class="error-image" src="{% spaceless %}
     {% if status_code == 400 %}
-        {{ assets('bundles/registroacademico/images/ghost.png') }}
+        {{ asset('bundles/registroacademico/images/ghost.png') }}
     {% elseif status_code == 403 %}
-        {{ assets('bundles/registroacademico/images/ctrl.png') }}
+        {{ asset('bundles/registroacademico/images/ctrl.png') }}
     {% else %}
-        {{ assets('bundles/registroacademico/images/warning.svg') }}
+        {{ asset('bundles/registroacademico/images/warning.svg') }}
     {% endif %}
     {% endspaceless %}">
     <p>Si el problema persiste por favor contacta al encargado del sistema y

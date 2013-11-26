@@ -1,7 +1,26 @@
-{% extends "::base.html.twig" %}
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
 {% block title %}RegistroAcademicoBundle:Nota:edit{% endblock %}
 
-{% block body %}
-<h1>Welcome to the Nota:edit page</h1>
+{% block content %}
+<header>
+    	<hgroup>
+    		<h1>¡Lo siento! Ocurrió un error fatal</h1>
+    		<h2 class="error-code">{{ status_code }}</h2>
+    		<h3 class="error-status">{{ status_text }}</h3>
+    	</hgroup>
+    </header>
+    <img class="error-image" src="{% spaceless %}
+    {% if status_code == 400 %}
+        {{ asset('bundles/registroacademico/images/ghost.png') }}
+    {% elseif status_code == 403 %}
+        {{ asset('bundles/registroacademico/images/ctrl.png') }}
+    {% else %}
+        {{ asset('bundles/registroacademico/images/warning.svg') }}
+    {% endif %}
+    {% endspaceless %}">
+    <p>Si el problema persiste por favor contacta al encargado del sistema y
+    cuéntale que es lo que ocurrió y que estabas haciendo cuando sucedió
+    el error. Para poder arreglarlo lo mas pronto posible. Disculpa por el
+    inconveniente causado :(.</p>
 {% endblock %}

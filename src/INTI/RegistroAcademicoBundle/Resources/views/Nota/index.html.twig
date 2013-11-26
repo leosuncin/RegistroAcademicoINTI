@@ -39,4 +39,8 @@
 
 {% block javascript %}
 {{ load.script({ select2: true }) }}
+<script>
+$('#codigos').select2();
+$('#materias').select2();
+</script>
 {% endblock %}

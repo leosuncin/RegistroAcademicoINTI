@@ -30,7 +30,7 @@ class CodigoEspecialidadRepository extends EntityRepository {
 	public function findByResponsable(Empleado $responsable)
 	{
 		$query = $this->getEntityManager()
-				->createQuery("SELECT cod FROM RegistroAcademicoBundle:CodigoEspecialidad cod WHERE cod.especialidad = IN (SELECT em.responsabilidad FROM RegistroAcademicoBundle:CodigoEspecialidad em WHERE em.dui = :dui)")
+				->createQuery("SELECT cod FROM RegistroAcademicoBundle:CodigoEspecialidad cod WHERE cod.especialidad IN (SELECT em.responsabilidad FROM RegistroAcademicoBundle:Empleado em WHERE em.dui = :dui)")
 				->setParameter(':dui', $responsable->getDui());
 		return $query->getResult();
 

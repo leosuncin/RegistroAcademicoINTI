@@ -1,16 +1,16 @@
 <ul class="nav nav-list">
 	<li class="nav-header current_ancestor first">
-        <li class="first"><a href="{{ path('index') }}"><i class="icon-home"></i> Inicio</a></li>
+		<li class="first"><a href="{{ path('index') }}"><i class="icon-home"></i> Inicio</a></li>
 	</li>
-    <li divider="divider" class="divider"></li>
-    <li class="nav-header">
-    	<span>Opciones de gestión</span>
-    	<div class="accordion" id="acc-gestion">
-    		<div class="accordion-group">
-    			{% if is_granted('ROLE_ADMIN') %}
-    			<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-empleado"><span class="icon-briefcase"></span> Empleados</a>
-    			</div>
+	<li divider="divider" class="divider"></li>
+	<li class="nav-header">
+		<span>Opciones de gestión</span>
+		<div class="accordion" id="acc-gestion">
+			<div class="accordion-group">
+				{% if is_granted('ROLE_ADMIN') %}
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-empleado"><span class="icon-briefcase"></span> Empleados</a>
+				</div>
 				<ul id="acc-gestion-empleado" class="accordion-body collapse list-unstyled">
 					<li class="accordion-inner"><a href="{{ path('empleado_new') }}"><span class="icon-plus-sign"></span> Añadir un empleado</a></li>
 					<li class="accordion-inner"><a href="{{ path('empleado_index') }}"><span class="icon-eye-open"></span> Consultar empleados</a></li>
@@ -19,44 +19,40 @@
 				{% endif %}
 				{% if is_granted('ROLE_ACADEMIC') %}
 				<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-aspirante"><span class="icon-user"></span> Aspirante</a>
-    			</div>
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-aspirante"><span class="icon-user"></span> Aspirante</a>
+				</div>
 				<ul id="acc-gestion-aspirante" class="accordion-body collapse list-unstyled">
 					<li class="accordion-inner"><a href="{{ path('aspirante_new') }}"><span class="icon-plus-sign"></span> Añadir aspirante</a></li>
 					<li class="accordion-inner"><a href="{{ path('aspirante_index') }}"><span class="icon-eye-open"></span> Consultar aspirantes</a></li>
 				</ul>
 				<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-alumno"><span class="icon-user"></span> Alumno</a>
-    			</div>
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-alumno"><span class="icon-user"></span> Alumno</a>
+				</div>
 				<ul id="acc-gestion-alumno" class="accordion-body collapse list-unstyled">
 					<li class="accordion-inner"><a href="{{ path('alumno_new') }}"><span class="icon-plus-sign"></span> Matricular alumno</a></li>
 					<li class="accordion-inner"><a href="{{ path('alumno_index') }}"><span class="icon-eye-open"></span> Consultar alumno</a></li>
 				</ul>
 				{% endif %}
-
 				{% if is_granted('ROLE_ACADEMIC') %}
-    			<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-materias"><span class="icon-book"></span> Materias</a>
-    			</div>
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-materias"><span class="icon-book"></span> Materias</a>
+				</div>
 				<ul id="acc-gestion-materias" class="accordion-body collapse list-unstyled">
 					<li class="accordion-inner"><a href="{{path('materia_new')}}"><span class="icon-plus-sign"></span> Agregar materia</a></li>
 					<li class="accordion-inner"><a href="{{path('materia')}}"><span class="icon-eye-open"></span>Mostrar materias </a></li>
 					
 				</ul>
-    			<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-notas"><span class="icon-th-list"></span> Notas</a>
-    			</div>
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-notas"><span class="icon-th-list"></span> Notas</a>
+				</div>
 				<ul id="acc-gestion-notas" class="accordion-body collapse list-unstyled">
-					<li class="accordion-inner"><a href=""><span class="icon-plus-sign"></span> </a></li>
-					<li class="accordion-inner"><a href=""><span class="icon-eye-open"></span> </a></li>
-					<li class="accordion-inner"><a href=""><span class="icon-remove-sign"> </span></a></li>
-					<li class="accordion-inner"><a href=""><span class="icon-edit"></span> </a></li>
+					<li class="accordion-inner"><a href="{{ path('nota_index') }}"><span class="icon-eye-open"></span> Consultar notas</a></li>
 				</ul>
 				{% endif %}
 				{% if is_granted('ROLE_ACADEMIC') %}
 				<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-especialidad" href="#acc-gestion-especialidad"><span class="icon-list-alt"></span> Especilidades</a>
-    			</div>
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-especialidad" href="#acc-gestion-especialidad"><span class="icon-list-alt"></span> Especilidades</a>
+				</div>
 				<ul id="acc-gestion-especialidad" class="accordion-body collapse list-unstyled">
 					{% if is_granted('ROLE_ACADEMIC_ADMIN') %}
 					<li class="accordion-inner"><a href="{{ path('especialidad_new') }}"><span class="icon-plus-sign"></span> Añadir especialidad</a></li>
@@ -67,12 +63,10 @@
 					{% endif %}
 				</ul>
 				{% endif %}
-
-
 				{% if is_granted('ROLE_SERV_SOC') %}
 				<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-serviciosocial" href="#acc-gestion-serviciosocial"><span class="icon-list-alt"></span> Servicio social</a>
-    			</div>
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-serviciosocial" href="#acc-gestion-serviciosocial"><span class="icon-list-alt"></span> Servicio social</a>
+				</div>
 				<ul id="acc-gestion-serviciosocial" class="accordion-body collapse list-unstyled">
 					{% if is_granted('ROLE_SERV_SOC') %}
 					<li class="accordion-inner"><a href="{{ path('encargado_proyecto_new') }}"><span class="icon-plus-sign"></span> Añadir encargado proyecto</a></li>
@@ -83,12 +77,10 @@
 					{% endif %}
 				</ul>
 				{% endif %}
-
-
-					{% if is_granted('ROLE_PRAC_PROF') %}
+				{% if is_granted('ROLE_PRAC_PROF') %}
 				<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-practicaprofesional" href="#acc-gestion-practicaprofesional"><span class="icon-tasks"></span> Practica profesional</a>
-    			</div>
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-practicaprofesional" href="#acc-gestion-practicaprofesional"><span class="icon-tasks"></span> Practica profesional</a>
+				</div>
 				<ul id="acc-gestion-practicaprofesional" class="accordion-body collapse list-unstyled">
 					{% if is_granted('ROLE_PRAC_PROF') %}
 					<li class="accordion-inner"><a href="{{ path('empresa_new') }}"><span class="icon-plus-sign"></span> Añadir empresa</a></li>
@@ -101,45 +93,35 @@
 					{% endif %}
 				</ul>
 				{% endif %}
-
 				{% if is_granted('ROLE_ACADEMIC') %}
-    			<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-periodos"><span class="icon-calendar"></span> Periodos</a>
-    			</div>
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-periodos"><span class="icon-calendar"></span> Periodos</a>
+				</div>
 				<ul id="acc-gestion-periodos" class="accordion-body collapse list-unstyled">
-					{#
-					<li class="accordion-inner"><a href="{{ path('periodo_new')}}">
-					<span class="icon-plus-sign"> Abrir Periodo</span>
-					</a> </a></li>
-					<li class="accordion-inner"><a href="{{ path('periodo')}}"><span class="icon-eye-open"></span> Mostrar Periodos</a></li>
-					<li class="accordion-inner"><a href=""><span class="icon-remove-sign"> Cerrar Periodo </span></a></li>
-
-					#}
 					<li class="accordion-inner"><a href="{{ path('periodo_index')}}"><span class="icon-edit"></span>Abrir/Cerrar</a></li>
 				</ul>
 				{% endif %}
-
 				{% if is_granted('ROLE_ACADEMIC') %}
-    			<div class="accordion-heading">
-    				<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-anhos"><span class="icon-calendar"></span> Años</a>
-    			</div>
+				<div class="accordion-heading">
+					<a class="accordion-toggle" data-toggle="collapse" data-parent="#acc-gestion" href="#acc-gestion-anhos"><span class="icon-calendar"></span> Años</a>
+				</div>
 				<ul id="acc-gestion-anhos" class="accordion-body collapse list-unstyled">
 					<li class="accordion-inner"><a href="{{ path('iniciar_anho')}}">
-					<span class="icon-plus-sign"> Abrir Año </span>
+						<span class="icon-plus-sign"> Abrir Año </span>
 					</a> </a></li>
 					<li class="accordion-inner"><a href="{{ path('periodo_index')}}"><span class="icon-eye-open"></span> Mostrar Años </a></li>
 					<li class="accordion-inner"><a href=""><span class="icon-remove-sign"> Cerrar Año </span></a></li>
-{#
+					{#
 					<li class="accordion-inner"><a href=""><span class="icon-edit"></span> </a></li>
 					#}
 				</ul>
 				{% endif %}
-			
-    		</div>
-    	</div>
-    </li>
-    <li class="nav-header">
-	    <span>Otras opciones</span>
-	    <li class="last"><a href="#"><span class="icon-question-sign"></span> Ayuda</a></li>
-    </li>
+				
+			</div>
+		</div>
+	</li>
+	<li class="nav-header">
+		<span>Otras opciones</span>
+		<li class="last"><a href="#"><span class="icon-question-sign"></span> Ayuda</a></li>
+	</li>
 </ul>
