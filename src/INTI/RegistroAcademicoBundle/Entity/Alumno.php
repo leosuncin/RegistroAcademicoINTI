@@ -135,6 +135,6 @@ class Alumno extends Aspirante
 
 	public function __toString()
 	{
-		return (string)$this->nie;
+		return (string) $this->nie;
 	}
 }

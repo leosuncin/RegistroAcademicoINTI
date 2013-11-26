@@ -2,7 +2,7 @@
 
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span> <a href="{{ path('encargadoproyecto') }} ">EncargadoProyecto</a></li>
+<li><span class="divider">&gt;</span> <a href="{{ path('encargado_proyecto') }} ">EncargadoProyecto</a></li>
 <li class="active"><span class="divider">&gt;</span> Crear</li>
 {% endblock %}
 
@@ -10,13 +10,13 @@
 
     <h1>Nuevo Encargado de proyecto</h1>
 
-   <form action="{{ path('encargadoproyecto_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+   <form action="{{ path('encargado_proyecto_create') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
 	
     {{ form_widget(form, {'form_type': 'horizontal'}) }}
 	
     <div class="form-actions">
        <input  type="submit" value="Crear" class="btn btn-primary" />
-        <a href="{{ path('encargadoproyecto') }}" class="btn">Regresar</a>
+        <a href="{{ path('encargado_proyecto') }}" class="btn">Regresar</a>
     </div>
     <div class="control-group error">
         {{ form_errors(form) }}

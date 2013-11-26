@@ -6,6 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use INTI\RegistroAcademicoBundle\Entity\Especialidad;
 use INTI\RegistroAcademicoBundle\Entity\CodigoEspecialidad;
 use INTI\RegistroAcademicoBundle\Entity\Empleado;
+use INTI\RegistroAcademicoBundle\Entity\Usuario;
 
 /**
  * AlumnoRepository
@@ -76,4 +77,17 @@ class AlumnoRepository extends EntityRepository {
         }
     }
 
+    /**
+     * Busca un alumno usuando su usuario
+     *
+     * @param  Usuario $usuario
+     * @return \INTI\RegistroAcademicoBundle\Entity\Alumno
+     */
+    public function findByUsuario(Usuario $usuario)
+    {
+        $query = $this->getEntityManager()
+                ->createQuery("SELECT al FROM RegistroAcademicoBundle:Alumno al WHERE al.usuario = :usuario")
+                ->setParameter(':usuario', $usuario->getUsername());
+        return $query->getResult();
+    }
 }

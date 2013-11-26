@@ -26,7 +26,7 @@ class Periodo
 	 *
 	 * @ORM\Column(name="periodo", type="integer", nullable=false)
 	 * @ORM\Id
-	 * @ORM\GeneratedValue(strategy="IDENTITY")
+	 * @ORM\GeneratedValue(strategy="NONE")
 	 */
 	private $periodo;
 
@@ -61,7 +61,19 @@ class Periodo
 	 */
 	private $anho;
 
+	/**
+	 * Set Periodo
+	 *
+	 * @param integer $periodo
+	 * @return Periodo
+	 */
 
+	public function setPeriodo($periodo)
+	{
+		$this->periodo=$periodo;
+
+		return $this;
+	}
 
 	/**
 	 * Get periodo

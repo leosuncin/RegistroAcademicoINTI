@@ -1,6 +1,12 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 
 {% block content %}
+{% for flashMessage in app.session.flashbag.get('notice') %}
+<div class="alert alert-success">
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    {{ flashMessage }}
+</div>
+{% endfor %}
 <table class="record_properties">
     <tbody>
         <tr>
@@ -22,23 +28,17 @@
     </tbody>
 </table>
 <div class="form-actions">
-    <form action="{{ path('codigoespecialidad_delete', { 'codigo': entity.codigo }) }}" method="post" class="form-acctions">
-        <table>
-            <tr>
-                <td><a href="{{ path('codigoespecialidad_index') }}" class="btn">Regresar a la lista</a></td>
-                <td><a href="{{ path('codigoespecialidad_edit', { 'codigo': entity.codigo }) }}" class="btn btn-info">Editar</a></td>
-                <td><input type="hidden" name="_method" value="DELETE" />
-                {{ form_widget(delete_form) }}
-                <button type="submit"  class="btn btn-danger">Borrar</button>
-            </td>
-        </tr>
-    </table>
+<form action="{{ path('codigoespecialidad_delete', { 'codigo': entity.codigo }) }}" method="post" class="form-acctions">
+
+    <table>
+        <tr>
+   <td><a href="{{ path('codigoespecialidad_index') }}" class="btn">Regresar a la lista</a></td>
+   
+ <td><a href="{{ path('codigoespecialidad_edit', { 'codigo': entity.codigo }) }}" class="btn btn-info">Editar</a></td>
+ <td><input type="hidden" name="_method" value="DELETE" /> 
+    {{ form_widget(delete_form) }}
+     <button type="submit"  class="btn btn-danger">Borrar</button> 
+	</td></tr></table>
 </form>
 </div>
-{% for flashMessage in app.session.flashbag.get('notice') %}
-<div class="alert alert-success">
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-    {{ flashMessage }}
-</div>
-{% endfor %}
 {% endblock %}

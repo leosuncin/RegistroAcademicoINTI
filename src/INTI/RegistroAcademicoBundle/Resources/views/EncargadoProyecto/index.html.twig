@@ -32,10 +32,10 @@
                 <td>
               
                    
-                        <a class="btn btn-info" href="{{ path('encargadoproyecto_show', { 'id': entity.id }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
+                        <a class="btn btn-info" href="{{ path('encargado_proyecto_show', { 'id': entity.id }) }}">{{ '.icon-eye-open Consultar'|parse_icons('white') }}</a>
                     
                    
-                        <a class="btn btn-info"  href="{{ path('encargadoproyecto_edit', { 'id': entity.id }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+                        <a class="btn btn-info"  href="{{ path('encargado_proyecto_edit', { 'id': entity.id }) }}">{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
                    
                 
                 </td>
@@ -44,7 +44,7 @@
         </tbody>
     </table>
 
-        <a class="btn btn-primary" href="{{ path('encargadoproyecto_new') }}">
+        <a class="btn btn-primary" href="{{ path('encargado_proyecto_new') }}">
                 {{ '.icon-plus-sign Ingresar Encargado hora social'|parse_icons('white') }}
             </a>
 {% endblock %}

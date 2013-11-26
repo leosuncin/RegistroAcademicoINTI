@@ -29,6 +29,92 @@
         </table>
     {% endfor %}
     {% if periodos is defined %}
+	<table>
+            <tr>
+		{% set nextp="" %}
+		{% set ffinultimp="" %}
+		{% for periodos in periodos %}
+			{% if (loop.last or (periodos.periodo % 5 == 0) and (periodos.periodo != 0)) %}
+			{% set nextp=((periodos.periodo%5)+1) %}
+			{% set ffinultimp=periodos.fin %}
+                <td>
+					<h4>Periodo escolar {% if ((periodos.periodo % 5)!=0 )%}
+					{{ periodos.periodo % 5}}
+					{% else %}
+					 5 
+					{% endif %} </h4> 
+                </td>
+                <td>&emsp;
+					{% if periodos.EnCurso == 0 %}
+	                <div class="slideThree">    
+						<input type="checkbox" id="unperiodo" 
+						checked="0" name="unperiodo" value="0" />
+                        <label class="control-label" for="unperiodo"></label>
+                    </div>&emsp;
+
+					{% else %}
+	                <div class="slideThree">    
+						<input type="checkbox" id="unperiodo" 
+						checked="1" name="unperiodo" value="1"/>
+                        <label class="control-label" for="unperiodo"></label>
+                    </div>&emsp;
+					{% endif %}
+                </td>
+				<td><h4>Fecha inicio: {{ periodos.inicio|date('d M Y')}}</h4></td>
+			{% endif %}
+		{% endfor %}
+            </tr>
+			<tr id="finprow" style="visibility:hidden">
+				<th></th>
+				<th></th>
+				<td><h4 id="pfin"> Fecha Finalización: {{ ffinultimp|date('d M Y')}}</h4></td>
+			</tr>
+			{% if nextp!=1 %}
+			<tr id="sigp" style="visibility:hidden">
+				<th><h4>Periodo Escolar {{ nextp}}</h4></th>
+				<th>
+					<div class="slideThree">    
+						<input type="checkbox" id="sigper" 
+						checked="1" name="sigper" value="1"/>
+                        <label class="control-label" for="sigper"></label>
+                    </div>&emsp;
+				</th>
+				<th> <h4 id="ini"> </h4></th>
+			</tr>
+			{% else %}
+
+			{% endif %}
+        </table>
+	<h4>Periodos Registrados</h4>
+	<table class="table">
+		<tr>
+			<th>Numero Periodo:</th>
+			<th>Fecha Inicio:</th>
+			<th>Fecha Finalización</th>
+			<th>Estado:</th>
+		</tr>
+		{% for periodos in periodos %}
+		<tr>
+			<th><h4>{% if ((periodos.periodo % 5)!=0 )%}
+					{{ periodos.periodo % 5}}
+					{% else %}
+					 5 
+					{% endif %}
+			</h4></th>
+			<th><h4>{{ periodos.inicio|date('d M Y')}}</h4></th>
+			{% if periodos.fin != NULL %}
+			<th><h4>{{ periodos.fin|date('d M Y')}}</h4></th>	
+			{% else %}
+			<th><h4>No definida</h4></th>	
+			{% endif %}
+			{% if periodos.encurso == FALSE %}
+			<th><h4>Cerrado  </h4></th>	
+			{% else %}
+			<th><h4>Abierto</h4></th>	
+			{% endif %}
+		</tr>
+		{% endfor %}
+	</table>
         
     {% else %}
         <div class="alert alert-info">
@@ -38,15 +124,15 @@
         <table>
             <tr>
                 <td>
-                    <h3>Periodo escolar <span id="periodo"></span></h3>
+                    <h4>Periodo escolar 1<span id="periodo"></span></h4>
                 </td>
                 <td>&emsp;
                     <div class="slideThree">    
-                        <input type="checkbox" id="periodo" name="periodo" />
-                        <label class="control-label" for="periodo"></label>
+                        <input type="checkbox" id="nperiodo" name="nperiodo" />
+                        <label class="control-label" for="nperiodo"></label>
                     </div>&emsp;
                 </td>
-                <td></td>
+				<td><h4 id="ini"></h4></td>
             </tr>
         </table>
     {% endif %}
@@ -72,17 +158,35 @@
         </tr>
     </table>
 {% endif %}
-<div id="confirmClose" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="confirmCloseTitle" aria-hidden="true">
+<div id="confirmClose" class="modal hide fade" tabindex="-1" role="dialog" 
+	aria-labelledby="confirmCloseTitle" aria-hidden="true">
     <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<button type="button" class="close" data-dismiss="modal" 
+			aria-hidden="true">&times;</button>
         <h3 id="confirmCloseTitle">Confirmar cerrar periodo</h3>
     </div>
     <div class="modal-body">
         <p>¿Esta seguro de querer cerrar el periodo escolar seleccionado?</em></p>
         </div>
         <div class="modal-footer">
-        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+			<button class="btn" data-dismiss="modal" aria-hidden="true"
+				>Cancelar</button>
         <button id="cerrarPeriodo" class="btn btn-primary">Confirmar</button>
+    </div>
+</div>
+<div id="confirmCloseb" class="modal hide fade" tabindex="-1" role="dialog" 
+	aria-labelledby="confirmCloseTitle" aria-hidden="true">
+    <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" 
+			aria-hidden="true">&times;</button>
+        <h3 id="confirmClosebTitle">Confirmar cerrar periodo</h3>
+    </div>
+    <div class="modal-body">
+        <p>¿Esta seguro de querer cerrar el periodo escolar seleccionado?</em></p>
+        </div>
+        <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+        <button id="cerrarPeriodob" class="btn btn-primary">Confirmar</button>
     </div>
 </div>
 {% endblock %}
@@ -91,8 +195,90 @@
 {{ parent() }}
 <script>
 $(document).ready(function() {
+	if($('#unperiodo').val()==0)
+	{
+		//que se ponga como que esta cerrado
+		$('#unperiodo').removeAttr("checked");
+		//que se muestre la fecha de fin de periodo
+		$('#finprow').css('visibility','visible');
+		//que se ponga como cerrado el control del siguiente periodo
+		$('#sigper').removeAttr("checked");
+		$('#unperiodo').attr("disabled","disabled");
+		//que se muestre el botón para abrir el siguiente periodo
+		$('#sigp').css('visibility','visible');
+	}
+
+	function fin_p()
+	{
+			$.ajax({
+                url: "{{ url('periodo_fin') }}",
+                method: "POST",
+                success: function(data) {
+                    var respuesta = $.parseJSON(data);
+					$('#pfin').css('visibility','visible');
+					$('#pfin').text('Fecha Fin '+respuesta.fechfin);
+					$('#sigp').css('visibility','visible');
+					$('#sigper').css('visibility','visible');
+					$('#sigper').removeAttr("checked");
+		        }
+            });
+	}
+
+    $('#cerrarPeriodob').click(function() {
+		fin_p();
+		$('#confirmCloseb').modal('hide');
+		$('#unperiodo').attr("disabled","disabled");
+	});
+	
+	$('#sigper').change(function() {
+		if($('#sigper').is(":checked"))
+		{
+			$.ajax({
+                url: "{{ url('periodo_start') }}",
+                method: "POST",
+                success: function(data) {
+            var respuesta = $.parseJSON(data);
+                    $('#ini').text('Iniciado en: ' + respuesta.fechainicio);
+		        }
+            });
+			
+		}
+
+	});
+
+	$('#nperiodo').change(function() {
+		if($('#nperiodo').is(":checked"))
+		{
+			$.ajax({
+                url: "{{ url('periodo_start') }}",
+                method: "POST",
+                success: function(data) {
+                    var respuesta = $.parseJSON(data);
+                    $('#ini').text('Fecha de inicio: ' + respuesta.fechainicio);
+		        }
+            });
+			
+		}
+
+	});
+
+
+	$('#unperiodo').change(function() {
+        if($('#unperiodo').is(":checked")) {
+            $.ajax({
+                url: "{{ url('periodo_start') }}",
+                method: "POST",
+                success: function(data) {
+					$('#unperiodo').attr("disabled","disabled");
+		        }
+            });
+        } else {
+            $('#confirmCloseb').modal();
+        }
+    });
+
     $('#start').change(function() {
-        if($(this).is(":checked")) {
+        if($('#start').is(":checked")) {
             $.ajax({
                 url: "{{ url('anho_start') }}",
                 method: "POST",
@@ -114,6 +300,7 @@ $(document).ready(function() {
             success: function(data) {
                 var respuesta = $.parseJSON(data);
                 $('#fin').text('Cerrado el ' + respuesta.fin);
+				$('#confirmClose').modal('hide');
             }
         });
     });

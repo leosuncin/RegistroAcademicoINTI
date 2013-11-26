@@ -135,11 +135,11 @@ class SecurityController extends Controller
 	public function showUserInfoAction(Usuario $usuario)
 	{
 		$role = $usuario->getRoles();
+		$em = $this->getDoctrine()->getManager();
 
 		if ($role[0] == 'ROLE_USER') {
-			$response = new RedirectResponse($this->generateUrl('index'), 301);
+			$response = new RedirectResponse($this->generateUrl('alumno_show', array('nie' => $usuario->getUsername())), 301);
 		} else {
-			$em = $this->getDoctrine()->getManager();
 			$query = $em->createQuery("SELECT e FROM RegistroAcademicoBundle:Empleado e WHERE e.usuario = :username")
 			->setParameter('username', $usuario->getUsername());
 			$empleado = $query->getSingleResult();

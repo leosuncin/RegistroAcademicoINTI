@@ -75,6 +75,7 @@ class AlumnoController extends Controller
 			$usuario->setUsername($alumno->getNie());
 			$password = $encoder->encodePassword($alumno->getNie()*2, $usuario->getSalt());
 			$usuario->setPassword($password);
+			$usuario->addRole('ROLE_USER');
 			$alumno->setUsuario($usuario);
 
 			$encargado = $em->getRepository('RegistroAcademicoBundle:Encargado')->find($alumno->getEncargado()->getDui());
@@ -152,7 +153,7 @@ class AlumnoController extends Controller
 	 * @Method("POST")
 	 * @Template("RegistroAcademicoBundle:Alumno:inscribir.html.twig")
 	 */
-	public function matricularAction(Request $request)
+	public function matricularAction(Aspirante $aspirante, Request $request)
 	{
 		$alumno = new Alumno();
 		$form = $this->createForm(new AlumnoType(), $alumno);
@@ -167,6 +168,7 @@ class AlumnoController extends Controller
 			$usuario->setUsername($alumno->getNie());
 			$password = $encoder->encodePassword($alumno->getNie()*2, $usuario->getSalt());
 			$usuario->setPassword($password);
+			$usuario->addRole('ROLE_USER');
 			$alumno->setUsuario($usuario);
 
 			$encargado = $em->getRepository('RegistroAcademicoBundle:Encargado')->find($alumno->getEncargado()->getDui());
@@ -175,6 +177,7 @@ class AlumnoController extends Controller
 
 			$em->persist($usuario);
 			$em->persist($alumno);
+			$em->remove($aspirante);
 			$em->flush();
 
 			return $this->redirect($this->generateUrl('alumno_show', array('nie' => $alumno->getNie())));

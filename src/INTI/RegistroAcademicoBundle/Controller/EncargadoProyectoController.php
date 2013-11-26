@@ -53,7 +53,7 @@ class EncargadoProyectoController extends Controller
             $em->persist($entity);
             $em->flush();
             $this->get('session')->getFlashBag()->add('notice', 'Se inserto correctamente');
-            return $this->redirect($this->generateUrl('encargadoproyecto_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('encargado_proyecto_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -159,7 +159,7 @@ class EncargadoProyectoController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('encargadoproyecto_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('encargado_proyecto_edit', array('id' => $id)));
         }
 
         return array(
@@ -191,7 +191,7 @@ class EncargadoProyectoController extends Controller
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('encargadoproyecto'));
+        return $this->redirect($this->generateUrl('encargado_proyecto'));
     }
 
     /**

@@ -3,12 +3,16 @@
 namespace INTI\RegistroAcademicoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use INTI\RegistroAcademicoBundle\Entity\PracticaProfesional;
 use INTI\RegistroAcademicoBundle\Form\PracticaProfesionalType;
+use INTI\RegistroAcademicoBundle\Entity\Alumno;
+use Doctrine\ORM\Tools\Pagination\Paginator;
+use INTI\RegistroAcademicoBundle\Form\AlumnoType;
 
 /**
  * PracticaProfesional controller.
@@ -35,6 +39,7 @@ class PracticaProfesionalController extends Controller
             'entities' => $entities,
         );
     }
+
     /**
      * Creates a new PracticaProfesional entity.
      *
@@ -153,7 +158,7 @@ class PracticaProfesionalController extends Controller
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createtForm(new PracticaProfesionalType(),$entity);
+        $editForm = $this->createForm(new PracticaProfesionalType(),$entity);
         $editForm->submit($request);
 
         if ($editForm->isValid()) {
