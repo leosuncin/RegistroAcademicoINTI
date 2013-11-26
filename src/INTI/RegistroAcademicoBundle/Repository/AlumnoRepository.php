@@ -101,6 +101,6 @@ class AlumnoRepository extends EntityRepository {
         $query = $this->getEntityManager()
                 ->createQuery("SELECT al FROM RegistroAcademicoBundle:Alumno al WHERE al.usuario = :usuario")
                 ->setParameter(':usuario', $usuario->getUsername());
-        return $query->getResult();
+        return $query->getSingleResult();
     }
 }

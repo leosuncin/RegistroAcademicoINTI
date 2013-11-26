@@ -1,0 +1,42 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block style %}
+{{ load.css({ select2: true }) }}
+{% endblock %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span><a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span><a href="{{ path('nota_index') }}">Notas</a></li>
+<li class="active"><span class="divider">&gt;</span> Ingresar</li>
+{% endblock %}
+
+{% block content %}
+<form id="buscarNotas" class="form-horizontal" method="post">
+	<fieldset>
+		<div class="control-group">
+			<label class="control-label">Codigos de especialidad</label>
+			<div class="controls">
+				<select id="codigo">
+					{% for cod in codigos %}
+					    <option value="{{ cod.codigo }}">{{ cod.codigo }}</option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+		<div class="control-group">
+			<label class="control-label">Materias</label>
+			<div class="controls">
+				<select id="materia">
+					{% for materia in materias %}
+					    <option value="{{ materia.id }}"></option>
+					{% endfor %}
+				</select>
+			</div>
+		</div>
+	</fieldset>
+</form>
+{% endblock %}
+
+{% block javascript %}
+{{ load.script({ select2: true }) }}
+{% endblock %}

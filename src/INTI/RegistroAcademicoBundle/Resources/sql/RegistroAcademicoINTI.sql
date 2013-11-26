@@ -468,6 +468,11 @@ GRANT UPDATE, SELECT, INSERT, DELETE ON TABLE `registro`.`Periodo` TO 'academico
 GRANT UPDATE, SELECT, INSERT, DELETE ON TABLE `registro`.`Practica_profesional` TO 'academico';
 GRANT EXECUTE ON function `registro`.`periodo_actual` TO 'academico';
 GRANT EXECUTE ON function `registro`.`anho_actual` TO 'academico';
+GRANT INSERT, UPDATE, SELECT, DELETE ON TABLE `registro`.`Encargado_proyecto` TO 'academico';
+GRANT DELETE, INSERT, SELECT, UPDATE ON TABLE `registro`.`Proyecto` TO 'academico';
+GRANT UPDATE, SELECT, INSERT, DELETE ON TABLE `registro`.`Servicio_social` TO 'academico';
+GRANT INSERT, SELECT, UPDATE, DELETE ON TABLE `registro`.`Alumno_inscrito` TO 'academico';
+GRANT EXECUTE ON function `registro`.`edad` TO 'academico';
 
 FLUSH PRIVILEGES;
 
