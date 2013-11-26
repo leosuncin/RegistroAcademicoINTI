@@ -166,12 +166,33 @@
         <h3 id="confirmCloseTitle">Confirmar cerrar periodo</h3>
     </div>
     <div class="modal-body">
-        <p>¿Esta seguro de querer cerrar el periodo escolar seleccionado?</em></p>
+        <p>¿Esta seguro de querer cerrar el Año Escolar?</em></p>
         </div>
         <div class="modal-footer">
 			<button class="btn" data-dismiss="modal" aria-hidden="true"
 				>Cancelar</button>
         <button id="cerrarPeriodo" class="btn btn-primary">Confirmar</button>
+    </div>
+</div>
+<div id="confirmCloseb" class="modal hide fade" tabindex="-1" role="dialog" 
+	aria-labelledby="confirmCloseTitle" aria-hidden="true">
+    <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" 
+			aria-hidden="true">&times;</button>
+        <h3 id="confirmClosebTitle">Confirmar cerrar periodo</h3>
+    </div>
+    <div class="modal-body">
+        <p>¿Esta seguro de querer cerrar el periodo escolar seleccionado?</em></p>
+        </div>
+        <div class="modal-footer">
+<<<<<<< Updated upstream
+			<button class="btn" data-dismiss="modal" aria-hidden="true"
+				>Cancelar</button>
+        <button id="cerrarPeriodo" class="btn btn-primary">Confirmar</button>
+=======
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+        <button id="cerrarPeriodob" class="btn btn-primary">Confirmar</button>
+>>>>>>> Stashed changes
     </div>
 </div>
 <div id="confirmCloseb" class="modal hide fade" tabindex="-1" role="dialog" 
@@ -299,7 +320,11 @@ $(document).ready(function() {
             data: { current: $('#current').val() },
             success: function(data) {
                 var respuesta = $.parseJSON(data);
+<<<<<<< Updated upstream
                 $('#fin').text('Cerrado el ' + respuesta.fin);
+=======
+                $('#fin').text('Cerrado el: ' + respuesta.fin);
+>>>>>>> Stashed changes
 				$('#confirmClose').modal('hide');
             }
         });

@@ -1,0 +1,61 @@
+
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+
+<li class="active"><span class="divider">&gt;</span> Servicio Social</li>
+{% endblock %}
+
+{% block style %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" 
+href="{{ asset('assets/watable/watable.css') }}">
+
+{% endblock %}
+
+{% block content %}
+    <h1>Servicio Social</h1>
+
+    <table id="tabla" class="table table-hover">
+        <thead>
+            <tr>
+               
+                <th>Horas realizadas</th>
+                <th>Alumno (NIE)</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+               
+                <td>{{ entity.horasRealizadas }}</td>
+               <td>{{ entity.alumno.nie }}</td>
+                 {# <td><a href="{{ path('alumno_show', 
+					{ 'nie': entity.alumno.nie }) }}">
+					{{ entity.alumno.nie }}</a></td>#}
+                <td>
+                <ul>
+					<a class="btn btn-info" 
+						href="{{ path('serviciosocial_show', 
+						{ 'id': entity.id }) }}">
+						{{ '.icon-eye-open Consultar'|parse_icons('white') }}
+					</a>
+					<a class="btn btn-info" 
+						href="{{ path('serviciosocial_edit', 
+						{ 'id': entity.id }) }}">
+					{{ '.icon-edit Modificar'|parse_icons('white') }}</a>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+           <a class="btn btn-primary" href="{{ path('serviciosocial_new') }}">
+	          {{ '.icon-plus-sign Ingresar nuevo servicio social'|parse_icons('white') }}
+            </a>
+    {% endblock %}
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/watable/jquery.watable.js') }}"></script>
+{% endblock %}

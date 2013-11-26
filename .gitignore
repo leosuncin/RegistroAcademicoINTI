@@ -22,3 +22,6 @@
 *.sublime-workspace
 desktop.ini
 .dropbox
+*.php~
+
+src/INTI/RegistroAcademicoBundle/Controller/.ServicioSocialController.php.swp

@@ -92,7 +92,7 @@ class Anho
 	{
 		$this->fin = $fin;
 
-		return $this;
+//		return $this;
 	}
 
 	/**

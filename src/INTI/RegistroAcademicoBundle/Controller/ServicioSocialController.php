@@ -3,11 +3,17 @@
 namespace INTI\RegistroAcademicoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use INTI\RegistroAcademicoBundle\Entity\ServicioSocial;
+use INTI\RegistroAcademicoBundle\Entity\Proyecto;
+use INTI\RegistroAcademicoBundle\Entity\Alumno;
+use INTI\RegistroAcademicoBundle\Entity\Aspirante;
+use INTI\RegistroAcademicoBundle\Entity\EncargadoProyecto;
 use INTI\RegistroAcademicoBundle\Form\ServicioSocialType;
 
 /**
@@ -33,10 +39,203 @@ class ServicioSocialController extends Controller
         $entities = $em->getRepository('RegistroAcademicoBundle:ServicioSocial')->findAll();
 
         return array(
-            'entities' => $entities,
+            'entities' => $entities
             
         );
     }
+
+	/*asignación de servicio social*/
+	/**
+     * Muestra el formulario de el servicio social.
+     *
+     * @Route("/asignar", name="asignarserviciosocial")
+     * @Method("GET")
+     * @Template("RegistroAcademicoBundle:ServicioSocial:asn.html.twig")
+     */
+    public function asignarAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+		$entities = $em->
+			getRepository('RegistroAcademicoBundle:ServicioSocial')->findAll();
+		$espec = $em->getRepository('RegistroAcademicoBundle:Especialidad')
+			->findAll();
+		$codespec=$em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')
+			->findAll();
+		$query=$em->createQuery('
+			SELECT DISTINCT p.nombre,p.id,e.id,e.nombre 
+			FROM RegistroAcademicoBundle:Proyecto p
+			JOIN p.encargado e 
+			WHERE e.rol = \'EI\'
+		');
+		$encargados = $query->getResult();
+		$query=$em->createQuery('
+			SELECT DISTINCT p.nombre,p.id,p.descripcion,e.id as idencargado,
+			e.nombre as nomencargado
+		   	FROM RegistroAcademicoBundle:Proyecto p
+			JOIN p.encargado e 
+			WHERE e.rol = \'EI\'
+		');
+		$proyint = $query->getResult();
+        return array(
+            'entities'		 => $entities,
+			'especialidades' => $espec,
+			'codespec'		 => $codespec,
+			'proyint'		 => $proyint
+        );
+    }
+
+	/*fin asignación de servicio social */
+
+
+	/**
+	 * Consultar alumnos en base a seccion
+	 * y en base a anho 
+	 **/
+	 /**
+     * @Route("/qalumn", name="consultar_alumnos")
+     * @Method("POST")
+     */
+    public function consultarAlumnoAction(Request $request)
+    {
+		$alumno = new Alumno();
+		$postData=$request->request->all();
+		$alnie=$postData["alnie"];
+		if(empty($alnie))
+		{
+		$respuesta = new JsonResponse(json_encode(
+			array(
+			'error'=>'nodato'
+			)));
+		$respuesta->headers->
+			set("Content-Type", "application/json; charset=UTF-8");
+		return $respuesta;
+			
+		}
+		
+        $em = $this->getDoctrine()->getManager();
+		$query=$em->createQuery('
+			SELECT a
+			FROM RegistroAcademicoBundle:Alumno a
+			WHERE a.nie = :nie
+		');
+		$query->setParameter(':nie',$alnie);
+		try{
+		$alumno = $query->getSingleResult();
+		} catch (\Doctrine\Orm\NoResultException $e){
+		$respuesta = new JsonResponse(json_encode(
+			array(
+			'error'=>'noencontrada'
+			)));
+		$respuesta->headers->
+			set("Content-Type", "application/json; charset=UTF-8");
+		return $respuesta;
+		}
+		$respuesta = new JsonResponse(json_encode(
+			array(
+			'nie'=>$alumno->getNie(),
+			'apellido'=>$alumno->getPrimerapellido(),
+			'apellido2'=>$alumno->getSegundoapellido(),
+			'nombres'=>$alumno->getNombres(),
+			'espe'=>$alumno->getCodigoEspecialidad()->getEspecialidad()->getNombre(),
+			'anho'=>$alumno->getCodigoEspecialidad()->getAnho(),
+			'seccion'=>$alumno->getCodigoEspecialidad()->getSeccion()
+			)));
+		$respuesta->headers->
+			set("Content-Type", "application/json; charset=UTF-8");
+		return $respuesta;
+    }
+	
+	/**
+	 * FinConsultar alumnos en base a seccion
+	 * y en base a anho 
+	 **/
+
+	/**
+	 * Asignar Servicio Social a Alumno
+	 **/
+	 /**
+     * @Route("/asignarAl", name="realizar_asignacion")
+     * @Method("POST")
+     */
+    public function asignarAlAction(Request $request)
+    {
+		$alumno = new Alumno();
+		$proyecto = new Proyecto();
+		$encargado = new EncargadoProyecto();
+		$ss=new ServicioSocial();
+        $em = $this->getDoctrine()->getManager();
+		$postData=$request->request->all();
+		$alnie=$postData["alnie"];
+		$lugar=$postData["lugar"];
+		if(strcmp($lugar,"in")==0)	
+		{
+			$query=$em->createQuery('
+			SELECT en
+			FROM RegistroAcademicoBundle:EncargadoProyecto en
+			WHERE en.id = :idenc
+				');
+			$query->setParameter(':idenc',$postData["idencproy"]);
+			$encargado=$query->getSingleResult();
+
+			$query=$em->createQuery('
+			SELECT en
+			FROM RegistroAcademicoBundle:Alumno en
+			WHERE en.nie = :alumno
+				');
+			$query->setParameter(':alumno',$postData["alnie"]);
+			
+			$alumno=$query->getSingleResult();
+
+			$ss->setHorasRealizadas(0);
+			$ss->setAlumno($alumno);
+			$proyecto->setNombre($postData["lproy"]);
+			$proyecto->setDescripcion($postData["iproy"]);
+			$proyecto->setEncargado($encargado);
+			$proyecto->setServicioSocial($ss);
+            $em->persist($ss);
+            $em->persist($proyecto);
+			$em->flush();
+		}
+		else
+		{
+			$query=$em->createQuery('
+			SELECT en
+			FROM RegistroAcademicoBundle:Alumno en
+			WHERE en.nie = :alumno
+				');
+			$query->setParameter(':alumno',$postData["alnie"]);
+			$alumno=$query->getSingleResult();
+			$encargado->setNombre($postData["encargado"]);
+			$encargado->setRol("EX");
+			$em->persist($encargado);
+			$ss->setHorasRealizadas(0);
+			$ss->setAlumno($alumno);
+			$em->persist($ss);
+			$proyecto->setNombre($postData["nproy"]);
+			$proyecto->setDescripcion($postData["dproy"]);
+			$proyecto->setEncargado($encargado);
+			$proyecto->setServicioSocial($ss);
+			$em->persist($proyecto);
+			$em->flush();
+		}
+
+        $em = $this->getDoctrine()->getManager();
+		$query=$em->createQuery('
+			SELECT a
+			FROM RegistroAcademicoBundle:Alumno a
+			WHERE a.nie = :nie
+		');
+		$query->setParameter(':nie',$alnie);
+		$alumno = $query->getSingleResult();
+		$respuesta = new JsonResponse(json_encode(
+			array(
+			'exito'=>'exito',
+			)));
+		$respuesta->headers->
+			set("Content-Type", "application/json; charset=UTF-8");
+		return $respuesta;
+    }
+
     /**
      * Creates a new ServicioSocial entity.
      *

@@ -30,14 +30,10 @@ class PeriodoController extends Controller {
 	public function indexAction() {
 		$em = $this->getDoctrine()->getManager();
 
-<<<<<<< Updated upstream
-		$entity = $em->getRepository("RegistroAcademicoBundle:Anho")->findBy(array("enCurso" => true));
-		
-=======
+<<<<<<< HEAD
 		$entity = $em->getRepository("RegistroAcademicoBundle:Anho")
 			->findBy(array("enCurso" => true));
 
->>>>>>> Stashed changes
 		if ($entity) {
 			$queryPeriodo = $em->createQuery(
 				'SELECT p FROM RegistroAcademicoBundle:Periodo
@@ -49,6 +45,19 @@ class PeriodoController extends Controller {
 					'entity' => $entity,
 					'periodos' => $periodos,
 					'title' => 'Consultar periodos escolares'
+=======
+		$entity = $em->getRepository("RegistroAcademicoBundle:Anho")->findBy(array("encurso" => true));
+		
+		if ($entity) {
+			$queryPeriodo = $em->createQuery('SELECT p FROM RegistroAcademicoBundle:Periodo p WHERE p.anho = :anho')
+					->setParameter(':anho', $entity);
+			$periodos = $queryPeriodo->getResult();
+			if ($periodos) {
+				return array(
+					'entity'   => $entity,
+					'periodos' => $periodos,
+					'title'    => 'Consultar periodos escolares'
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 				);
 			} else {
 				return array(
@@ -61,6 +70,7 @@ class PeriodoController extends Controller {
 		}
 	}
 
+<<<<<<< HEAD
 
 
 	/**
@@ -161,6 +171,8 @@ class PeriodoController extends Controller {
 	}
 
 
+=======
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 	/**
 	 * @Route("/start", name="anho_start")
 	 * @Method("POST")
@@ -168,6 +180,7 @@ class PeriodoController extends Controller {
 	public function startAnhoAction() {
 		$anho = new Anho();
 		$em = $this->getDoctrine()->getManager();
+<<<<<<< HEAD
 		/**
 		 * verificar si ya hay un año para volver a abrirlo si hace falta
 		 **/
@@ -199,6 +212,13 @@ class PeriodoController extends Controller {
 			json_encode(array(
 				'current' => $anho->getAnho(),
 				'inicio' => $anho->getInicio()->format("d M Y"))));
+=======
+
+		$em->persist($anho);
+		$em->flush();
+
+		$respuesta = new JsonResponse(json_encode(array('current' => $anho->getAnho(), 'inicio' => $anho->getInicio()->format("d M Y"))));
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 		$respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
 
 		return $respuesta;
@@ -211,6 +231,7 @@ class PeriodoController extends Controller {
 	public function closeAnhoAction(Request $request) {
 		$em = $this->getDoctrine()->getManager();
 		$anho = $em->getRepository("RegistroAcademicoBundle:Anho")
+<<<<<<< HEAD
 			->find(2013);
 
 		//By(array("anho" => 2013));
@@ -220,15 +241,30 @@ class PeriodoController extends Controller {
 			$em->persist($anho);
 			$em->flush();
 
-			$respuesta = new JsonResponse(json_encode(array('fin' => $anho
-				->getFin()->format("d M Y"))));
+			$respuesta = new JsonResponse(json_encode(array('fin' => $anho->getFin())));
 			$respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
 
+=======
+				->findBy(array("anho" => 2013));
+		if($anho){
+			$anho->setFin(new \DateTime("NOW"));
+			
+//			  $em->persist($anho);
+//			  $em->flush();
+			
+			$respuesta = new JsonResponse(json_encode(array('fin' => $anho->getFin())));
+			$respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
+			
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 			return $respuesta;
 		} else {
 			$respuesta = new JsonResponse(json_encode(array('error' => 'El año ya esta cerrado')));
 			$respuesta->headers->set("Content-Type", "application/json; charset=UTF-8");
+<<<<<<< HEAD
 
+=======
+			
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 			return $respuesta;
 		}
 	}
@@ -298,7 +334,11 @@ class PeriodoController extends Controller {
 		);
 	}
 
+<<<<<<< HEAD
 	//Metodos relacionados con el inicio de un nuevo año escolar
+=======
+//Metodos relacionados con el inicio de un nuevo año escolar
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 
 	/**
 	 * Crea un formulario para iniciar un año escolar.
@@ -319,8 +359,12 @@ class PeriodoController extends Controller {
 		  ));
 		 */
 
+<<<<<<< HEAD
 
 		return $form;
+=======
+		 return $form;
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 	}
 
 	/**
@@ -362,10 +406,17 @@ class PeriodoController extends Controller {
 
 		$em = $this->getDoctrine()->getManager();
 		$query = $em->createQuery(
+<<<<<<< HEAD
 			'SELECT p
 			FROM RegistroAcademicoBundle:Periodo p
 			WHERE p.anhoCorriente = :anhoCorriente'
 		)->setParameter('anhoCorriente', $entity->getAnhoCorriente());
+=======
+						'SELECT p
+				FROM RegistroAcademicoBundle:Periodo p
+				WHERE p.anhoCorriente = :anhoCorriente'
+				)->setParameter('anhoCorriente', $entity->getAnhoCorriente());
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 		$periodos = $query->getResult();
 		$yaingresados = count($periodos);
 		if ($yaingresados > 4) {
@@ -408,7 +459,11 @@ class PeriodoController extends Controller {
 		}
 	}
 
+<<<<<<< HEAD
 	//Fin metodos relacionados con el inicio de un año escolar
+=======
+//Fin metodos relacionados con el inicio de un año escolar
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 
 	/**
 	 * Finds and displays a Periodo entity.
@@ -446,11 +501,19 @@ class PeriodoController extends Controller {
 
 		$entity = $em->getRepository('RegistroAcademicoBundle:Periodo')->find($id);
 		$query = $em->createQuery(
+<<<<<<< HEAD
 			'SELECT p
 			FROM RegistroAcademicoBundle:Periodo p
 			WHERE p.estaAbierto = 1'
 		);
 		//		$otroPerAbierto= $m:	
+=======
+				'SELECT p
+				FROM RegistroAcademicoBundle:Periodo p
+				WHERE p.estaAbierto = 1'
+		);
+//		$otroPerAbierto= $m:	
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 		if (!$entity) {
 			throw $this->createNotFoundException('Unable to find Periodo entity.');
 		}
@@ -478,7 +541,11 @@ class PeriodoController extends Controller {
 			'method' => 'PUT',
 		));
 
+<<<<<<< HEAD
 		//        $form->add('submit', 'submit', array('label' => 'Cambiar Estado'));
+=======
+//		  $form->add('submit', 'submit', array('label' => 'Cambiar Estado'));
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 
 		return $form;
 	}
@@ -495,9 +562,15 @@ class PeriodoController extends Controller {
 
 		$entity = $em->getRepository('RegistroAcademicoBundle:Periodo')->find($id);
 		$query = $em->createQuery(
+<<<<<<< HEAD
 			'SELECT p
 			FROM RegistroAcademicoBundle:Periodo p
 			WHERE p.estaAbierto = 2'
+=======
+				'SELECT p
+				FROM RegistroAcademicoBundle:Periodo p
+				WHERE p.estaAbierto = 2'
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 		);
 		$periodos = $query->getResult();
 		$otroPeriodoAbierto = count($periodos);
@@ -566,11 +639,19 @@ class PeriodoController extends Controller {
 	 */
 	private function createDeleteForm($id) {
 		return $this->createFormBuilder()
+<<<<<<< HEAD
 			->setAction($this->generateUrl('periodo_delete', array('id' => $id)))
 			->setMethod('DELETE')
 			->add('submit', 'submit', array('label' => 'Eliminar'))
 			->getForm()
 			;
+=======
+						->setAction($this->generateUrl('periodo_delete', array('id' => $id)))
+						->setMethod('DELETE')
+						->add('submit', 'submit', array('label' => 'Eliminar'))
+						->getForm()
+		;
+>>>>>>> ef3c2fd7b7eb7dc765cd081e50886d1e9287c577
 	}
 
 }

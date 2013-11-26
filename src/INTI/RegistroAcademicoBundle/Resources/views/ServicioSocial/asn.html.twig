@@ -1,0 +1,255 @@
+
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+
+<li class="active"><span class="divider">&gt;</span> Servicio Social</li>
+{% endblock %}
+
+{% block style %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" 
+href="{{ asset('assets/watable/watable.css') }}">
+
+{% endblock %}
+
+{% block content %}
+    <h1>Asignación de Horas Sociales</h1>
+
+<form class="form-horizontal" name="asignarProyecto" id="asignarProyecto">
+	<div class ="control-group">
+		<label class="control-label">Lugar de realización:</label>
+			&nbsp; &nbsp;
+			<input type="radio" class="lug" name="lugar" value="in"
+			checked="checked"> Dentro del Instituto
+			<input type="radio" class="lug" name="lugar" value="out"
+			> Fuera del Instituto
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="alnie">NIE:</label>
+		<div class="controls">
+			<input type="text" id="alnie" name="alnie" 
+			value="" placeholder="NIE del Alumno">
+		</div>
+	</div>
+
+	<!-- si existen proyectos internos se mostraran
+  	aqui el proyecto es interno-->
+	<div class="control-group proyint">
+		<label class="control-label" for="lproy">Proyectos Internos:</label>
+		<div class="controls">
+			<select name="lproy" id="lproy">
+			{% for proy in proyint %}
+			{% if loop.first %}
+			<option class="proyselect" id="proy-{{ proy.id }}"  
+			value="{{ proy.nombre }}" selected>{{ proy.nombre }}</option>
+			{% else %}
+			<option class="proyselect" id="proy-{{ proy.id }}"  
+			value="{{ proy.nombre }}">{{ proy.nombre }}</option>
+			{% endif %}
+			{% endfor %}
+			</select>
+		</div>
+	</div>
+	<div class="control-group proyint" >
+		<label class="control-label" for="lencargado">Encargado:</label>
+		<div class="controls">
+			{% for proy in proyint %}
+			{% if loop.first %}
+			<input type="text" id="lencargado" name="lencargado" 
+			value="{{ proy.nomencargado }}" readonly>
+			{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+	<div class="control-group proyint" >
+		<label class="control-label" for="iproy">Descripción Proyecto:</label>
+		<div class="controls">
+			{% for proy in proyint %}
+			{% if loop.first %}
+			<textarea rows="3" id="iproy" name="iproy" 
+				placeholder="Descripción del Proyecto" readonly>{{proy.descripcion}}</textarea>
+			{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+
+	<!-- si es afuera de la institución se mostrará un formulario para ingreso
+	de encargado y proyecto -->
+	<div class="control-group proyext" style="display:none">
+		<label class="control-label" for="encargado">Encargado:</label>
+		<div class="controls">
+			<input type="text" id="encargado" name="encargado" 
+			placeholder="Encargado del Proyecto">
+		</div>
+	</div>
+	<div class="control-group proyext" style="display:none">
+		<label class="control-label" for="nproy">Proyecto:</label>
+		<div class="controls">
+			<input type="text" id="nproy" name="nproy"
+		   	placeholder="Nombre Proyecto">
+		</div>
+	</div>
+	<div class="control-group proyext" style="display:none">
+		<label class="control-label" for="dproy">Descripción Proyecto:</label>
+		<div class="controls">
+			<textarea rows="3" id="dproy" name="dproy" 
+				placeholder="Descripción del Proyecto"></textarea>
+		</div>
+	</div>
+	<div class="control-group " style="display:none">
+		
+		<label class="control-label" for="idencproy">Id encargado proyecto:</label>
+		<div class="controls">
+			{% for proy in proyint %}
+			{% if loop.first %}
+			<input type="text" id="idencproy" name="idencproy"
+			value="{{ proy.idencargado}}" placeholder="Nombre Proyecto">
+			{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<button id="qalumn" class="btn-primary">Asignar Proyecto</button>
+			<a href="{{ path('serviciosocial') }}" class="btn ">Regresar a la lista</a>
+		</div>
+	</div>
+</form>
+<div id="datosalumno">
+
+</div>
+<div id="confirmarAsignacion" class="modal hide fade" tabindex="-1" role="dialog" 
+	aria-labelledby="confirmCloseTitle" aria-hidden="true">
+    <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" 
+			aria-hidden="true">&times;</button>
+        <h3 id="confirmClosebTitle">Confirmar asignacion Alumno</h3>
+    </div>
+    <div class="modal-body">
+		<p id="dal">Alumno: con los datos</em></p>
+        </div>
+        <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Cancelar</button>
+        <button id="RealizarAsignacion" class="btn btn-primary">Confirmar</button>
+    </div>
+</div>
+
+<div id="asignacionExitosa" class="modal hide fade" tabindex="-1" role="dialog" 
+	aria-labelledby="confirmCloseTitle" aria-hidden="true">
+    <div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" 
+			aria-hidden="true">&times;</button>
+        <h3 id="confirmClosebTitle">Exito en operación</h3>
+    </div>
+    <div class="modal-body">
+		<p id="dal">Se ha asignado el proyecto al alumno</em></p>
+        </div>
+        <div class="modal-footer">
+        <button class="btn" data-dismiss="modal" aria-hidden="true">Aceptar</button>
+    </div>
+</div>
+<div id="advertencia" class="alert" style="display:none">
+ <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
+ <p id="adv"> No se ha encontrado un alumno con El NIE Ingresado </p>
+</div>
+
+		{% for proy in proyint %}
+			<div id="nenc-{{proy.id}}" style="display:none;visibility:none"
+			>{{ proy.nomencargado }}</div>
+			<div id="idenc-{{proy.id}}" style="display:none;visibility:none"
+			>{{ proy.idencargado }}</div>
+			<div id="descproy-{{proy.id}}" style="display:none;visibility:none"
+			>{{ proy.descripcion }}</div>
+		{% endfor %}
+    {% endblock %}
+{% block javascript %}
+{{ parent() }}
+{{ parent() }}
+<script>
+	
+$(document).ready(function() {
+	var proy=0;
+	$('.proyext').hide();
+	
+	//nombre del encargado del proyecto al seleccionar
+	//proyecto interno	
+	$('body').on('click','.proyselect',function(){
+		var currentId=$(this).attr('id');
+		var p_id=currentId.split("-");
+		var prsel=p_id[1];
+		$('#lencargado').val($('#nenc-'+prsel).html());
+		$('#iproy').html($('#descproy-'+prsel).html());
+	});
+	//mostrar según el tipo de horas social a realizar
+	$('.lug').change(function(){
+		if($(this).val()=="in")
+		{
+			$('.proyint').show();
+			$('.proyext').hide();
+			proy=1;
+		}
+		else
+		{
+			$('.proyext').show();
+			$('.proyint').hide();
+			proy=2;
+		}
+		
+	});
+
+	$('body').on('click','#qalumn',function(e){
+		e.preventDefault();
+		var SD=$('#asignarProyecto').serialize();
+        $.ajax({
+            url: "{{ url('consultar_alumnos') }}",
+            method: "POST",
+            data: SD,
+            success: function(data) {
+                var respuesta = $.parseJSON(data);
+				if(respuesta.error=="noencontrada")
+				{
+				$('#adv').html("No hay un alumno con ese NIE");
+				$('#advertencia').show();
+				}
+				else if(respuesta.error=='nodato')
+				{
+				$('#adv').html("No se ingreso un NIE");
+				$('#advertencia').show();
+				}
+				else
+				{
+				$('#advertencia').hide();
+				var txtal="<b>NIE:</b> "+respuesta.nie+"<br>"+
+				"<b>Alumno:</b> "+respuesta.nombres+" "+respuesta.apellido+" "+
+				respuesta.apellido2 +"<br>"+
+				"<b>Especialidad: </b>"+ respuesta.espe + "<br>"+
+				"<b>Año:</b> "+ respuesta.anho + "<br>"+
+				"<b>Sección:</b> " + respuesta.seccion;
+				$('#dal').html(txtal);
+				$('#confirmarAsignacion').modal('show');
+				}
+            }
+        });
+
+    });
+
+	//llama al controlador que realiza la asignación
+	$('body').on('click','#RealizarAsignacion',function(e){
+		e.preventDefault();
+		var SD=$('#asignarProyecto').serialize();
+        $.ajax({
+            url: "{{ url('realizar_asignacion') }}",
+            method: "POST",
+            data: SD,
+            success: function(data) {
+                var respuesta = $.parseJSON(data);
+				$('#confirmarAsignacion').modal('hide');
+				$('#asignacionExitosa').modal('show');
+            }
+        });
+	});
+});
+</script>
+{% endblock %}

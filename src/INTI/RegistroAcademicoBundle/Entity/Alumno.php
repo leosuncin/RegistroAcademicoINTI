@@ -132,4 +132,10 @@ class Alumno extends Aspirante
 	{
 		return $this->usuario;
 	}
+<<<<<<< Updated upstream
 }
+=======
+
+	
+}
+>>>>>>> Stashed changes

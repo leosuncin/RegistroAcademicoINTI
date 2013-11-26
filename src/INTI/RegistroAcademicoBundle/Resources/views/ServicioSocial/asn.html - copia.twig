@@ -1,0 +1,184 @@
+
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+
+<li class="active"><span class="divider">&gt;</span> Servicio Social</li>
+{% endblock %}
+
+{% block style %}
+{{ parent() }}
+<link rel="stylesheet" type="text/css" 
+href="{{ asset('assets/watable/watable.css') }}">
+
+{% endblock %}
+
+{% block content %}
+    <h1>Asignación de Horas Sociales</h1>
+
+<form class="form-horizontal" name="asignarProyecto" id="asignarProyecto">
+	<div class ="control-group">
+		<label class="control-label">Lugar de realización:</label>
+			&nbsp; &nbsp;
+			<input type="radio" class="lug" name="lugar" value="in"
+			> Dentro del Instituto
+			<input type="radio" class="lug" name="lugar" value="out"
+			> Fuera del Instituto
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="spec">Especialidad: </label>
+			<div class="controls">
+			<select name="spec" id="spec">
+				{% for entity in especialidades %}
+				<option value="{{ entity.codigo }}"
+				>{{ entity.nombre }}</option>
+				{% endfor %}
+			</select>
+			</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="anho">Año: </label>
+		<div class="controls">
+		<select name="anhoal"id="anho">
+			<option value="3">Tercer año</option>
+			<option value="1">Primer año</option>
+			<option value="2">Segundo año</option>
+		</select>
+		</div>
+	</div>
+	<div class="control-group">
+		<label class="control-label" for="seccion">Sección: </label>
+		<div class="controls">
+		<select name="seccion"id="seccion">
+			<option value="A">A</option>
+			<option value="B">B</option>
+			<option value="C">C</option>
+			<option value="D">D</option>
+		</select>
+		</div>
+	</div>
+	<!-- si existen proyectos internos se mostraran
+  	aqui el proyecto es interno-->
+	<div class="control-group proyint">
+		<label class="control-label" for="lproy">Proyectos Internos:</label>
+		<div class="controls">
+			<select name="lproy" id="lproy">
+			{% for proy in proyint %}
+			<option class="proyselect" id="proy-{{ proy.id }}"  
+			value="{{ proy.id }}">{{ proy.nombre }}</option>
+			{% endfor %}
+			</select>
+		</div>
+	</div>
+	<div class="control-group proyint">
+		<label class="control-label" for="lencargado">Encargado:</label>
+		<div class="controls">
+			{% for proy in proyint %}
+			{% if loop.first %}
+			<input type="text" id="lencargado" name="lencargado" 
+			value="{{ proy.nomencargado }}" readonly>
+			{% endif %}
+			{% endfor %}
+		</div>
+	</div>
+	<!-- si es afuera de la institución se mostrará un formulario para ingreso
+	de encargado y proyecto -->
+	<div class="control-group proyext">
+		<label class="control-label" for="encargado">Encargado:</label>
+		<div class="controls">
+			<input type="text" id="encargado" name="encargado" 
+			placeholder="Encargado del Proyecto">
+		</div>
+	</div>
+	<div class="control-group proyext">
+		<label class="control-label" for="nproy">Proyecto:</label>
+		<div class="controls">
+			<input type="text" id="nproy" name="nproy"
+		   	placeholder="Nombre Proyecto">
+		</div>
+	</div>
+	<div class="control-group proyext">
+		<label class="control-label" for="dproy">Descripción Proyecto:</label>
+		<div class="controls">
+			<textarea rows="3" id="dproy" name="dproy" 
+				placeholder="Descripción del Proyecto"></textarea>
+		</div>
+	</div>
+	<div class="control-group">
+		<div class="controls">
+			<button id="qalumn" class="btn-primary">Mostrar Alumnos</button>
+		</div>
+	</div>
+</form>
+<table class="table">
+	<tr><th>NIE</th><th>Apellido</th><th>Nombre</th><th>Seleccionar</th></tr>
+	<tr>
+		<td>Data</td>
+		<td>Data</td>
+		<td>Data</td>
+		<td>Data</td>
+	</tr>
+</table>
+           <a class="btn btn-primary" href="{{ path('serviciosocial_new') }}">
+	          {{ '.icon-plus-sign Ingresar nuevo servicio social'|parse_icons('white') }}
+            </a>
+
+		{% for proy in proyint %}
+			<div id="nenc-{{proy.id}}" style="display:none;visibility:none"
+			>{{ proy.nomencargado }}</div>
+			<div id="idenc-{{proy.id}}" style="display:none;visibility:none"
+			>{{ proy.idencargado }}</div>
+		{% endfor %}
+    {% endblock %}
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/watable/jquery.watable.js') }}"></script>
+{{ parent() }}
+<script>
+$(document).ready(function() {
+	var proy=0;
+	$('.proyint').hide();
+	$('.proyext').hide();
+	//nombre del encargado del proyecto al seleccionar
+	//proyecto interno	
+	$('body').on('click','.proyselect',function(){
+		var currentId=$(this).attr('id');
+		var p_id=currentId.split("-");
+		var prsel=p_id[1];
+		$('#lencargado').val($('#nenc-'+prsel).html());
+	});
+	//mostrar según el tipo de horas social a realizar
+	$('.lug').change(function(){
+		if($(this).val()=="in")
+		{
+			$('.proyint').show();
+			$('.proyext').hide();
+			proy=1;
+		}
+		else
+		{
+			$('.proyext').show();
+			$('.proyint').hide();
+			proy=2;
+		}
+		
+	});
+
+	$('body').on('click','#qalumn',function(e){
+		e.preventDefault();
+		var SD=$('#asignarProyecto').serialize();
+        $.ajax({
+            url: "{{ url('consultar_alumnos') }}",
+            method: "POST",
+            data: SD,
+            success: function(data) {
+                var respuesta = $.parseJSON(data);
+				alert(respuesta);
+            }
+        });
+
+    });
+});
+</script>
+{% endblock %}

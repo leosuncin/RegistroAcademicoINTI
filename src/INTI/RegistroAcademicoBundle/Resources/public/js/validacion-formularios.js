@@ -319,7 +319,14 @@ $(document).ready(function() {
 				confirm_password: true,
 				minlength: 8,
 				maxlength: 60
+<<<<<<< Updated upstream
 			}
+=======
+			},
+			"alnie": {
+				required: true
+			},
+>>>>>>> Stashed changes
 		},
 		showErrors: function (errorMap, errorList) {
 			$.each(this.successList, function(index, value) {
