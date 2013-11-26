@@ -17,6 +17,12 @@ class Periodo
 	/**
 	 * @var integer
 	 *
+	 * @Assert\Range(
+	 *      min = "1",
+	 *      max = "5",
+	 *      minMessage = "El periodo no debe ser menor que {{ limit }}",
+	 *      maxMessage = "El periodo no debe ser mayor que {{ limit }}"
+	 * )
 	 *
 	 * @ORM\Column(name="periodo", type="integer", nullable=false)
 	 * @ORM\Id
@@ -77,19 +83,6 @@ class Periodo
 	public function getPeriodo()
 	{
 		return $this->periodo;
-	}
-
-	/**
-	 * Set Periodo
-	 *
-	 * @param integer $periodo
-	 * @return Periodo
-	 */
-
-	public function setPeriodo($periodo)
-	{
-		$this->periodo=$periodo;
-		return $this;
 	}
 
 	/**

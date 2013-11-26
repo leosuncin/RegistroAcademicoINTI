@@ -34,12 +34,9 @@ class AlumnoController extends Controller
 		$em = $this->getDoctrine()->getManager();
 		$request = $this->getRequest();
 
-<<<<<<< HEAD
-=======
 		if($this->getUser()->getRoles()[0] == 'ROLE_USER' && count($this->getUser()->getRoles()) == 1)
 			return new RedirectResponse($this->generateUrl('alumno_show', array('nie' => $this->getUser()->getUsername())), 301);
 
->>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 		if($request->isXmlHttpRequest()) {
 			$apellidos = $request->query->get('apellidos');
 			$codigo = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->find($request->query->get('codigo', ''));
@@ -160,11 +157,7 @@ class AlumnoController extends Controller
 	 * @Method("POST")
 	 * @Template("RegistroAcademicoBundle:Alumno:inscribir.html.twig")
 	 */
-<<<<<<< HEAD
-	public function matricularAction(Request $request)
-=======
 	public function matricularAction(Aspirante $aspirante, Request $request)
->>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 	{
 		$alumno = new Alumno();
 		$form = $this->createForm(new AlumnoType(), $alumno);
@@ -179,10 +172,7 @@ class AlumnoController extends Controller
 			$usuario->setUsername($alumno->getNie());
 			$password = $encoder->encodePassword($alumno->getNie()*2, $usuario->getSalt());
 			$usuario->setPassword($password);
-<<<<<<< HEAD
-=======
 			$usuario->addRole('ROLE_USER');
->>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 			$alumno->setUsuario($usuario);
 
 			$encargado = $em->getRepository('RegistroAcademicoBundle:Encargado')->find($alumno->getEncargado()->getDui());
@@ -191,10 +181,7 @@ class AlumnoController extends Controller
 
 			$em->persist($usuario);
 			$em->persist($alumno);
-<<<<<<< HEAD
-=======
 			$em->remove($aspirante);
->>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 			$em->flush();
 
 			return $this->redirect($this->generateUrl('alumno_show', array('nie' => $alumno->getNie())));

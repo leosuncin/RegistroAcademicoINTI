@@ -48,7 +48,7 @@ class EmpresaController extends Controller
 	{
 		$entity = new Empresa();
 		$form = $this->createForm(new EmpresaType(),$entity);
-		$form->submit($request);
+		$form->handleRequest($request);
 
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
@@ -158,11 +158,7 @@ class EmpresaController extends Controller
 
 		$deleteForm = $this->createDeleteForm($id);
 		$editForm = $this->createForm(new EmpresaType(),$entity);
-<<<<<<< HEAD
-		$editForm->submit($request);
-=======
 		$editForm->handleRequest($request);
->>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 
 		if ($editForm->isValid()) {
 			$em->flush();

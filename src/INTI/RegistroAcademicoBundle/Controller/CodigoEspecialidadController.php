@@ -39,10 +39,7 @@ class CodigoEspecialidadController extends Controller
 			$entities = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
 			return array(
 				'entities' => $entities,
-<<<<<<< HEAD
-=======
 				'title'    => 'Consultar códigos de especialidad'
->>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 			);
 		}
 

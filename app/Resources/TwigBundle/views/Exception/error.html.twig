@@ -3,14 +3,6 @@
 {% set title = 'Un error: '~status_text~' a ocurrido' %}
 
 {% block body %}
-<<<<<<< HEAD
-<div class="container" style="background: white">
-    <header>
-        <hgroup>
-            <h1>¡Lo siento! Ocurrió un error fatal</h1>
-            <h2>El servidor retorno un "{{ status_code }} {{ status_text }}".</h2>
-        </hgroup>
-=======
 <div class="error-board">
 	<header>
     	<hgroup>
@@ -18,7 +10,6 @@
     		<h2 class="error-code">{{ status_code }}</h2>
     		<h3 class="error-status">{{ status_text }}</h3>
     	</hgroup>
->>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
     </header>
     <img class="error-image" src="{% spaceless %}
     {% if status_code == 400 %}

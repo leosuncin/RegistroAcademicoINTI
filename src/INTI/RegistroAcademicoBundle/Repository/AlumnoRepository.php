@@ -6,10 +6,7 @@ use Doctrine\ORM\EntityRepository;
 use INTI\RegistroAcademicoBundle\Entity\Especialidad;
 use INTI\RegistroAcademicoBundle\Entity\CodigoEspecialidad;
 use INTI\RegistroAcademicoBundle\Entity\Empleado;
-<<<<<<< HEAD
-=======
 use INTI\RegistroAcademicoBundle\Entity\Usuario;
->>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 
 /**
  * AlumnoRepository
@@ -80,8 +77,6 @@ class AlumnoRepository extends EntityRepository {
         }
     }
 
-<<<<<<< HEAD
-=======
     /**
      * Busca un alumno usuando su usuario
      *
@@ -95,5 +90,4 @@ class AlumnoRepository extends EntityRepository {
                 ->setParameter(':usuario', $usuario->getUsername());
         return $query->getResult();
     }
->>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 }
