@@ -5,5 +5,9 @@ var tablaApirantes = twig({
 var cmbCodigo = twig({
     id: 'cmbCodigo',
     data: '<option value="">Escoja a un codigo</option>{% for cod in codigos %}<option value="{{ cod.codigo }}">{{ cod.codigo }}</option>{% endfor %}'
+<<<<<<< HEAD
 });
 
+=======
+});
+>>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a

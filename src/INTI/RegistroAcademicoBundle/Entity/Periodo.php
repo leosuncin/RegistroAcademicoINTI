@@ -55,7 +55,19 @@ class Periodo
 	 */
 	private $anho;
 
+	/**
+	 * Set Periodo
+	 *
+	 * @param integer $periodo
+	 * @return Periodo
+	 */
 
+	public function setPeriodo($periodo)
+	{
+		$this->periodo=$periodo;
+
+		return $this;
+	}
 
 	/**
 	 * Get periodo

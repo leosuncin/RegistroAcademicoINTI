@@ -133,5 +133,12 @@ class Alumno extends Aspirante
 		return $this->usuario;
 	}
 
+<<<<<<< HEAD
 	
+=======
+	public function __toString()
+	{
+		return (string) $this->nie;
+	}
+>>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 }

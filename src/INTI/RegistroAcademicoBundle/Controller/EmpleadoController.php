@@ -206,7 +206,11 @@ class EmpleadoController extends Controller
 	/**
      * Lists all Empleado Secretaria entities.
      *
+<<<<<<< HEAD
      * @Route("/responsabilities/set", name="empleado_responsabilities")
+=======
+     * @Route("/responsabilidad/asignar", name="empleado_responsabilities")
+>>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
      * @Method("GET")
      */
     public function asignarResponsabilidades()
@@ -231,7 +235,7 @@ class EmpleadoController extends Controller
 	/**
      * Update Empleados Responsabilities entity.
      *
-     * @Route("/responsability", name="responsability_update")
+     * @Route("/responsabilidad/update", name="responsability_update")
      * @Method("POST")
      */
     public function updateResponsability()

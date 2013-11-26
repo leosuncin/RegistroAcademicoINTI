@@ -33,7 +33,11 @@ class PracticaProfesionalType extends AbstractType
 					'invalid_message' => 'La fecha debe tener mel formato dd/mm/yyyy',
 					'attr'            => array(
 					'placeholder'     => 'Por ejemplo: 17/10/1990',
+<<<<<<< HEAD
 						'class'            => 'date1',
+=======
+						'class'            => 'datepicker',
+>>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 						'data-provide'     => 'datepicker',
 						'data-date-format' => 'dd/mm//yyyy',
 						'data-language'    => 'es'
@@ -48,7 +52,11 @@ class PracticaProfesionalType extends AbstractType
 					'invalid_message' => 'La fecha debe tener mel formato dd/mm/yyyy',
 					'attr'            => array(
 					'placeholder'     => 'Por ejemplo: 17/11/1990',
+<<<<<<< HEAD
 						'class'            => 'date2',
+=======
+						'class'            => 'datepicker',
+>>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 						'required'         => false,
 						'data-provide'     => 'datepicker',
 						'data-date-format' => 'dd/mm//yyyy',
@@ -58,7 +66,10 @@ class PracticaProfesionalType extends AbstractType
 				'text',
 				array(
 					'label'           => 'Evaluación',
+<<<<<<< HEAD
 
+=======
+>>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 					'read_only'       => true,
 					'invalid_message' => 'Ingrese un numero decimal valido',
 					'attr'			  =>	

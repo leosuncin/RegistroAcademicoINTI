@@ -29,12 +29,34 @@ $.validator.addMethod("password", function (value) {
 });
 
 $.validator.addMethod("fecha", function(value) {
-	return !/\d{2}\/\d{2}\/\d{4}/g.test(value);
+	return /^\d{2}\/\d{2}\/\d{4}$/.test(value);
 }, "Por favor digita la fecha siguiendo el formato dd/mm/yyyy.");
 
 $.validator.addMethod("fechanac", function(value) {
-	return Date.parseExact(value, "d/M/yyyy");
-}, "Por favor digita la fecha siguiendo el formato dd/mm/yyyy.");
+	if(/^\d{2}\/\d{2}\/\d{4}$/.test(value)) {
+		valores = value.split('/');
+		d = parseInt(valores[0]);
+		m = parseInt(valores[1])-1;
+		a = parseInt(valores[2]);
+		fechanac = new Date(a, m, d);
+		ahora = new Date();
+		return (ahora-fechanac)/31536000000 < 18;
+	} else {
+		return false;
+	}
+}, function (params, element) {
+	if(/^\d{2}\/\d{2}\/\d{4}$/.test(element.value)) {
+		sp = element.value.split('/');
+		d = parseInt(sp[0]);
+		m = parseInt(sp[1])-1;
+		a = parseInt(sp[2]);
+		fechanac = new Date(a, m, d);
+		ahora = new Date();
+		if((ahora-fechanac)/31536000000 > 18)
+			return "La edad del alumno no puede ser mayor de 18 años";
+	} else
+		return "Por favor digita la fecha siguiendo el formato dd/mm/yyyy.";
+});
 
 $.validator.addMethod("codigo", function(value){
 	return /^[a-zA-Z]*$/.test(value);
@@ -49,13 +71,13 @@ $.validator.addMethod("confirm_password", function(value) {
 }, 'Debe confirmar la nueva contraseña');
 
 $(document).ready(function() {
-	$("form").validate({
+	$("#aspirantetype").validate({
 		rules: {
-			"aspirantetype[primerapellido]": {
+			"aspirantetype[primerApellido]": {
 				minlength: 3,
 				maxlength: 15
 			},
-			"aspirantetype[segundoapellido]": {
+			"aspirantetype[segundoApellido]": {
 				minlength: 3,
 				maxlength: 15
 			},
@@ -70,10 +92,10 @@ $(document).ready(function() {
 				minlength: 8,
 				maxlength: 8
 			},
-			"aspirantetype[fechanac]": {
-				fecha: true
+			"aspirantetype[fechaNac]": {
+				fechanac: true
 			},
-			"aspirantetype[lugarnac]": {
+			"aspirantetype[lugarNac]": {
 				maxlength: 40
 			},
 			"aspirantetype[encargado][nombre]": {
@@ -86,7 +108,88 @@ $(document).ready(function() {
 			"aspirantetype[encargado][telefono]": {
 				minlength: 8,
 				maxlength: 8
+			}
+		},
+		showErrors: function (errorMap, errorList) {
+			$.each(this.successList, function(index, value) {
+				return $(value).popover("hide");
+			});
+			return $.each(errorList, function(index, value) {
+				var _popover;
+				_popover = $(value.element).popover({
+					trigger: "manual",
+					placement: "right",
+					content: value.message,
+					template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"></div></div></div>"
+				});
+				_popover.data("popover").options.content = value.message;
+				return $(value.element).popover("show");
+			});
+		}
+	});
+
+	$("#alumnotype").validate({
+		rules: {
+			"alumnotype[nie]": {
+				number: true,
+				minlength: 6,
+				maxlength: 6
 			},
+			"alumnotype[primerApellido]": {
+				minlength: 3,
+				maxlength: 15
+			},
+			"alumnotype[segundoApellido]": {
+				minlength: 3,
+				maxlength: 15
+			},
+			"alumnotype[nombres]": {
+				minlength: 3,
+				maxlength: 50
+			},
+			"alumnotype[direccion]": {
+				maxlength: 40
+			},
+			"alumnotype[telefono]": {
+				minlength: 8,
+				maxlength: 8
+			},
+			"alumnotype[fechaNac]": "fechanac",
+			"alumnotype[lugarNac]": {
+				maxlength: 40
+			},
+			"alumnotype[encargado][nombre]": {
+				minlength: 3,
+				maxlength: 80
+			},
+			"alumnotype[encargado][dui]": {
+				dui: true
+			},
+			"alumnotype[encargado][telefono]": {
+				minlength: 8,
+				maxlength: 8
+			}
+		},
+		showErrors: function (errorMap, errorList) {
+			$.each(this.successList, function(index, value) {
+				return $(value).popover("hide");
+			});
+			return $.each(errorList, function(index, value) {
+				var _popover;
+				_popover = $(value.element).popover({
+					trigger: "manual",
+					placement: "right",
+					content: value.message,
+					template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"></div></div></div>"
+				});
+				_popover.data("popover").options.content = value.message;
+				return $(value.element).popover("show");
+			});
+		}
+	});
+
+	$("#empleadotype").validate({
+		rules: {
 			"empleadotype[dui]": {
 				dui: true
 			},
@@ -117,45 +220,9 @@ $(document).ready(function() {
 			},
 			"empleadotype[usuario][enabled]": {
 				required: false
-			},
-			"usuariotype[username]": {
-				minlength: 6,
-				maxlength: 50
-			},
-			"usuariotype[password]": {
-				password: true,
-				minlength: 8,
-				maxlength: 60
-			},
-			"usuariotype[enabled]": {
-				required: false
-			},
-			"especialidadtype[codigo]":{
-				codigo: true,
-				minlength: 2,
-				maxlength: 5
-			},
-			"especialidadtype[nombre]":{
-				nombre: true
-			},
-			"form[old_password]":{
-				password: true,
-				minlength: 8,
-				maxlength: 60
-			},
-			"form[new_password]":{
-				password: true,
-				minlength: 8,
-				maxlength: 60
-			},
-			"form[confirm_password]":{
-				password: true,
-				confirm_password: true,
-				minlength: 8,
-				maxlength: 60
-			},
+			}
 		},
-		showErrors: function(errorMap, errorList) {
+		showErrors: function (errorMap, errorList) {
 			$.each(this.successList, function(index, value) {
 				return $(value).popover("hide");
 			});
@@ -172,6 +239,106 @@ $(document).ready(function() {
 			});
 		}
 	});
+
+	$("#usuariotype").validate({
+		rules: {
+			"usuariotype[username]": {
+				minlength: 6,
+				maxlength: 50
+			},
+			"usuariotype[password]": {
+				password: true,
+				minlength: 8,
+				maxlength: 60
+			},
+			"usuariotype[enabled]": {
+				required: false
+			},
+		},
+		showErrors: function (errorMap, errorList) {
+			$.each(this.successList, function(index, value) {
+				return $(value).popover("hide");
+			});
+			return $.each(errorList, function(index, value) {
+				var _popover;
+				_popover = $(value.element).popover({
+					trigger: "manual",
+					placement: "right",
+					content: value.message,
+					template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"></div></div></div>"
+				});
+				_popover.data("popover").options.content = value.message;
+				return $(value.element).popover("show");
+			});
+		}
+	});
+
+	$("#especialidadtype").validate({
+		rules: {
+			"especialidadtype[codigo]":{
+				codigo: true,
+				minlength: 2,
+				maxlength: 5
+			},
+			"especialidadtype[nombre]":{
+				nombre: true
+			}
+		},
+		showErrors: function (errorMap, errorList) {
+			$.each(this.successList, function(index, value) {
+				return $(value).popover("hide");
+			});
+			return $.each(errorList, function(index, value) {
+				var _popover;
+				_popover = $(value.element).popover({
+					trigger: "manual",
+					placement: "right",
+					content: value.message,
+					template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"></div></div></div>"
+				});
+				_popover.data("popover").options.content = value.message;
+				return $(value.element).popover("show");
+			});
+		}
+	});
+
+	$("#passwordtype").validate({
+		rules: {
+			"form[old_password]":{
+				password: true,
+				minlength: 8,
+				maxlength: 60
+			},
+			"form[new_password]":{
+				password: true,
+				minlength: 8,
+				maxlength: 60
+			},
+			"form[confirm_password]":{
+				password: true,
+				confirm_password: true,
+				minlength: 8,
+				maxlength: 60
+			}
+		},
+		showErrors: function (errorMap, errorList) {
+			$.each(this.successList, function(index, value) {
+				return $(value).popover("hide");
+			});
+			return $.each(errorList, function(index, value) {
+				var _popover;
+				_popover = $(value.element).popover({
+					trigger: "manual",
+					placement: "right",
+					content: value.message,
+					template: "<div class=\"popover\"><div class=\"arrow\"></div><div class=\"popover-inner\"><div class=\"popover-content\"></div></div></div>"
+				});
+				_popover.data("popover").options.content = value.message;
+				return $(value.element).popover("show");
+			});
+		}
+	});
+
 	$("#empleadotype_usuario_username").focus(function() {
 		var username = $(this);
 		if (username.val().length <= 0) {

@@ -39,6 +39,10 @@ class CodigoEspecialidadController extends Controller
 			$entities = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
 			return array(
 				'entities' => $entities,
+<<<<<<< HEAD
+=======
+				'title'    => 'Consultar códigos de especialidad'
+>>>>>>> acd3f7253eca0bccb2de9f319529bb496d61d83a
 			);
 		}
 
@@ -70,7 +74,7 @@ class CodigoEspecialidadController extends Controller
 		return array(
 			'entity' => $entity,
 			'form'   => $form->createView(),
-			'title'  => 'Añadir Especialidad'
+			'title'  => 'Añadir código de especialidad'
 		);
 	}
 
@@ -89,6 +93,7 @@ class CodigoEspecialidadController extends Controller
 		return array(
 			'entity' => $entity,
 			'form'   => $form->createView(),
+			'title'  => 'Añadir código de especialidad'
 		);
 	}
 
@@ -106,6 +111,7 @@ class CodigoEspecialidadController extends Controller
 		return array(
 			'entity'      => $codigoEspecialidad,
 			'delete_form' => $deleteForm->createView(),
+			'title'       => 'Consultar código de especialidad'
 		);
 	}
 
@@ -125,6 +131,7 @@ class CodigoEspecialidadController extends Controller
 			'entity'      => $codigoEspecialidad,
 			'edit_form'   => $editForm->createView(),
 			'delete_form' => $deleteForm->createView(),
+			'tittle'      => 'Modificar código de especialidad'
 		);
 	}
 
@@ -154,13 +161,14 @@ class CodigoEspecialidadController extends Controller
 			'entity'      => $codigoEspecialidad,
 			'edit_form'   => $editForm->createView(),
 			'delete_form' => $deleteForm->createView(),
+			'tittle'      => 'Modificar código de especialidad'
 		);
 	}
 
 	/**
 	 * Deletes a CodigoEspecialidad entity.
 	 *
-	 * @Route("/{codigo}", name="codigoespecialidad_delete", requirements={"codigo"="[A-Z]{1,3}\d[A-Z]"})
+	 * @Route("/{codigo}/del", name="codigoespecialidad_delete", requirements={"codigo"="[A-Z]{1,3}\d[A-Z]"})
 	 * @Method("DELETE")
 	 */
 	public function deleteAction(Request $request, CodigoEspecialidad $codigoEspecialidad)
