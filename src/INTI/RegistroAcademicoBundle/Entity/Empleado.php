@@ -10,7 +10,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  * Empleado
  *
  * @ORM\Table(name="Empleado")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="INTI\RegistroAcademicoBundle\Repository\EmpleadoRepository")
  * @UniqueEntity(fields = "dui", message = "El DUI ya esta registrado")
  * @UniqueEntity(fields = "isss", message = "El ISSS ya esta registrado")
  * @UniqueEntity(fields = "nit", message = "El NIT ya esta registrado")

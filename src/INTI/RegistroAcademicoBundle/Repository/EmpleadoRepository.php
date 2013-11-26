@@ -22,7 +22,7 @@ class EmpleadoRepository extends EntityRepository {
                 ->getEntityManager()
                 ->createQuery('SELECT e FROM RegistroAcademicoBundle:Empleado e WHERE e.usuario = :usuario')
                 ->setParameter(':usuario', $usuario->getUsername());
-        return $query->getResult();
+        return $query->getSingleResult();
     }
 
 }

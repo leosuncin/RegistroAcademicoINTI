@@ -4,6 +4,7 @@ namespace INTI\RegistroAcademicoBundle\Repository;
 
 use Doctrine\ORM\EntityRepository;
 use INTI\RegistroAcademicoBundle\Entity\Especialidad;
+use INTI\RegistroAcademicoBundle\Entity\Empleado;
 
 /**
  * CodigoEspecialidadRepository
@@ -24,5 +25,14 @@ class CodigoEspecialidadRepository extends EntityRepository {
 				->createQuery("SELECT cod FROM RegistroAcademicoBundle:CodigoEspecialidad cod WHERE cod.especialidad = :especialidad")
 				->setParameter(':especialidad', $especialidad->getCodigo());
 		return $query->getResult();
+	}
+
+	public function findByResponsable(Empleado $responsable)
+	{
+		$query = $this->getEntityManager()
+				->createQuery("SELECT cod FROM RegistroAcademicoBundle:CodigoEspecialidad cod WHERE cod.especialidad = IN (SELECT em.responsabilidad FROM RegistroAcademicoBundle:CodigoEspecialidad em WHERE em.dui = :dui)")
+				->setParameter(':dui', $responsable->getDui());
+		return $query->getResult();
+
 	}
 }
