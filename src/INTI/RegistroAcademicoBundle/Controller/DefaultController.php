@@ -19,7 +19,7 @@ class DefaultController extends Controller
 	public function indexAction()
 	{
 		$user = $this->getUser();
-		if($user->getRoles()[0] == 'ROLE_USER')
+		if($user->getRoles()[0] == 'ROLE_USER' && count($user->getRoles()) == 1)
 			return new RedirectResponse($this->generateUrl('alumno_show', array('nie' => $user->getUsername())), 301);
 		return array('title' => 'Pagina principal');
 	}

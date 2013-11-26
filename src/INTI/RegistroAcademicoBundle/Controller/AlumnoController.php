@@ -3,6 +3,7 @@
 namespace INTI\RegistroAcademicoBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -32,6 +33,9 @@ class AlumnoController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 		$request = $this->getRequest();
+
+		if($this->getUser()->getRoles()[0] == 'ROLE_USER' && count($this->getUser()->getRoles()) == 1)
+			return new RedirectResponse($this->generateUrl('alumno_show', array('nie' => $this->getUser()->getUsername())), 301);
 
 		if($request->isXmlHttpRequest()) {
 			$apellidos = $request->query->get('apellidos');

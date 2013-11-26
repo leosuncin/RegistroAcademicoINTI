@@ -40,6 +40,99 @@ class PracticaProfesionalController extends Controller
         );
     }
 
+	/**
+     * List Aspirantes Aprobados entities.
+     *
+     * @Route("/search1", name="practicaprofesional_search1")
+     * @Method("GET")
+     */
+    function listAlumnoSelect()
+    {
+        $search=$_REQUEST['searchValue'];
+        $parameters=Array(
+               'nombres'=>"%".$search."%",
+                'nie'=>$search."%",
+            );
+        $em = $this->getDoctrine()->getManager();
+        $dql="SELECT p FROM RegistroAcademicoBundle:PracticaProfesional p JOIN p.alumno u WHERE CONCAT(CONCAT(CONCAT(CONCAT(u.nombres,' '),u.primerApellido),' '),u.segundoApellido) LIKE :nombres or u.nie LIKE :nie";
+      
+
+        $query=$em->createQuery($dql)->setParameters($parameters);;
+        try{
+            $alumno = $query->getResult();
+            $text="<br><table class='table table-hover'>";
+            $text.="<tr class='header'><th>NIE</th><th>Nombre Completo</th></tr>";
+            if(count($alumno)>0){
+                for($i=0;$i<count($alumno) and $i<10;$i++){
+                    $text.="<tr class='alumno'><td class='n_nie' value='".$alumno[$i]->getAlumno()->getNie()."'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $alumno[$i]->getAlumno()->getNie())."</td>";
+                    $text.="<td class='aspName' value='".$alumno[$i]->getAlumno()->getNombres()." ".$alumno[$i]->getAlumno()->getPrimerapellido()."'>".str_ireplace($search, '<span style="color:#00f">'.$search.'</span>', $alumno[$i]->getAlumno()->getNombres()." ".$alumno[$i]->getAlumno()->getPrimerapellido()." ".$alumno[$i]->getAlumno()->getSegundoapellido())."</td>";
+                    $text.="<td class='empresa' value='".$alumno[$i]->getEmpresa()->getNombre()."'></td>";
+                    $text.="<td class='direccion' value='".$alumno[$i]->getEmpresa()->getDireccion()."'></td>";
+                    $text.="<td class='telefono' value='".$alumno[$i]->getEmpresa()->getTelefono()."'></td>"; 
+                    $text.="<td class='id' value='".$alumno[$i]->getId()."'></td>";
+                    $text.="<td class='contacto' value='".$alumno[$i]->getEmpresa()->getContacto()."'></td>";
+                    $text.='<td><div class="btn-group btn-group-horizontal">';
+                   
+                }
+            }else{
+                $text.="<tr><td colspan='4'>No se encuentran alumnos que coincidan con el criterio de busqueda</td></tr>";
+            }                             
+            $text.="</table>";
+        } catch (\Doctrine\Orm\NoResultException $e) {
+            $text = "<table class='table table-hover'><tr><td>No se encuentra el alumno</td></tr></table>";
+        }   
+        return new response($text);
+    }
+
+	/**
+	* @Route("/evaluacion", name="practicaprofesional_evaluacion")
+	* @Method("GET")
+	*
+	*/
+	public function evaluacionAction(){
+
+		$em = $this->getDoctrine()->getManager();
+
+		$entities = $em->getRepository('RegistroAcademicoBundle:PracticaProfesional')->findAll();
+
+		return $this->render('RegistroAcademicoBundle:practicaprofesional:estadistic.html.twig',array(
+		    'entities' => $entities,
+		    'title'    => 'Evaluacion practicaprofesional'
+		));
+	   // return $this->render('RegistroAcademicoBundle:PracticaProfesional:estadistic.html.twig');
+
+	}
+
+
+    /**
+     * Update Empleados Responsabilities entity.
+     *
+     * @Route("/practicapro", name="practicapro_update")
+     * @Method("GET")
+     */
+    public function updatePracticaProfesional()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $entity = $em->getRepository('RegistroAcademicoBundle:PracticaProfesional')->find($_REQUEST['id']);
+
+        if (!$entity) {
+            throw $this->createNotFoundException('No se encontro el alumno seleccionado');
+        }
+
+        
+        $evaluacion=$_REQUEST['campoNota'];
+        
+        $entity->setEvaluacion(floatval($evaluacion));
+        
+        $em->persist($entity);
+        $em->flush();
+
+        return new Response($this->generateUrl('practicaprofesional_show', array('id' => $_REQUEST['id'])));
+    }
+
+
+
     /**
      * Creates a new PracticaProfesional entity.
      *
@@ -147,7 +240,7 @@ class PracticaProfesionalController extends Controller
      * @Method("PUT")
      * @Template("RegistroAcademicoBundle:PracticaProfesional:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
+    public function updateAction(Request $request, $id) 
     {
         $em = $this->getDoctrine()->getManager();
 
