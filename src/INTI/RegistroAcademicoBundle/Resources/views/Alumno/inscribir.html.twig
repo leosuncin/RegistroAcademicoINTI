@@ -1,0 +1,44 @@
+{% extends 'RegistroAcademicoBundle:Alumno:new.html.twig' %}
+
+{% block style %}
+{{ parent() }}
+{% endblock %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span> <a href="{{ path('alumno_index') }} ">Alumno</a></li>
+<li class="active"><span class="divider">&gt;</span> Crear</li>
+{% endblock %}
+
+{% block content %}
+<form id="alumnotype" action="{{ path('alumno_matricular', { 'aspirante': aspirante }) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	{{ form_label(form.foto) }}
+    <input type="file" id="filePicker" name="filePicker" accept="image/jpg" class="btn" required />
+    {{ form_widget(form, {'form_type': 'horizontal'}) }}
+    <div class="form-actions">
+        <input type="submit" value="Crear" class="btn btn-primary" />
+        <a href="{{ path('alumno_index') }}" class="btn">Regresar</a>
+    </div>
+</form>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script>
+$(document).ready(function() {
+	$('#alumnotype_primerApellido').val("{{ entity.primerApellido }}");
+	$('#alumnotype_segundoApellido').val("{{ entity.segundoApellido }}");
+	$('#alumnotype_nombres').val("{{ entity.nombres }}");
+	$('#alumnotype_especialidad').val("{{ entity.especialidad.codigo }}");
+	$('#alumnotype_direccion').val("{{ entity.direccion }}");
+	$('#alumnotype_telefono').val("{{ entity.telefono }}");
+	$('#alumnotype_fechaNac').val("{{ entity.fechaNac|date('d/m/Y') }}");
+	$('#alumnotype_lugarNac').val("{{ entity.lugarNac }}");
+	$('#alumnotype_sexo').val("{{ entity.sexo }}");
+	$('#alumnotype_encargado_dui').val("{{ entity.encargado.dui }}");
+	$('#alumnotype_encargado_nombre').val("{{ entity.encargado.nombre }}");
+	$('#alumnotype_encargado_parentesco').val("{{ entity.encargado.parentesco }}");
+	$('#alumnotype_encargado_telefono').val("{{ entity.encargado.telefono }}");
+});
+</script>
+{% endblock %}

@@ -33,7 +33,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `Aspirante` (
   `NIE` INT NOT NULL,
-  `foto` TEXT NOT NULL,
+  `foto` LONGTEXT NOT NULL,
   `primer_apellido` VARCHAR(15) NOT NULL,
   `segundo_apellido` VARCHAR(15) NULL,
   `nombres` VARCHAR(50) NOT NULL,
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `Aspirante` (
     FOREIGN KEY (`Encargado`)
     REFERENCES `Encargado` (`DUI`)
     ON DELETE RESTRICT
-    ON UPDATE RESTRICT)
+    ON UPDATE CASCADE)
 ENGINE = InnoDB;
 
 
@@ -347,8 +347,6 @@ CREATE TABLE IF NOT EXISTS `Proyecto` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-USE `registro` ;
-
 -- -----------------------------------------------------
 -- Placeholder table for view `Alumno_inscrito`
 -- -----------------------------------------------------
@@ -405,7 +403,30 @@ END$$
 CREATE FUNCTION `edad` (fecha DATE) RETURNS INT DETERMINISTIC
 	RETURN DATE_FORMAT(FROM_DAYS(TO_DAYS(NOW()) - TO_DAYS(fecha)), '%Y') + 0;$$
 
+-- -----------------------------------------------------
+-- function periodo_actual
+-- -----------------------------------------------------
+
+CREATE FUNCTION `periodo_actual` () RETURNS INT DETERMINISTIC
+BEGIN
+DECLARE p_actual INT;
+SELECT MAX(periodo) INTO p_actual FROM Periodo WHERE en_curso = TRUE;
+RETURN p_actual;
+END$$
+
+-- -----------------------------------------------------
+-- function anho_actual
+-- -----------------------------------------------------
+
+CREATE FUNCTION `anho_actual` () RETURNS INT DETERMINISTIC
+BEGIN
+DECLARE a_actual INT;
+SELECT MAX(anho) INTO a_actual FROM Anho WHERE en_curso = TRUE;
+RETURN a_actual;
+END$$
+
 DELIMITER ;
+
 -- -----------------------------------------------------
 -- View `Alumno_inscrito`
 -- -----------------------------------------------------
@@ -447,6 +468,8 @@ GRANT UPDATE, SELECT, INSERT, DELETE ON TABLE `registro`.`Materia` TO 'academico
 GRANT UPDATE, SELECT, INSERT, DELETE ON TABLE `registro`.`Nota` TO 'academico';
 GRANT UPDATE, SELECT, INSERT, DELETE ON TABLE `registro`.`Periodo` TO 'academico';
 GRANT UPDATE, SELECT, INSERT, DELETE ON TABLE `registro`.`Practica_profesional` TO 'academico';
+GRANT EXECUTE ON function `registro`.`periodo_actual` TO 'academico';
+GRANT EXECUTE ON function `registro`.`anho_actual` TO 'academico';
 
 FLUSH PRIVILEGES;
 
@@ -458,7 +481,6 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- Data for table `Especialidad`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `registro`;
 INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('ELTIA', 'Electrotecnia');
 INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('ELCA', 'Electrónica');
 INSERT INTO `Especialidad` (`codigo`, `nombre`) VALUES ('AUTO', 'Automotores');
@@ -473,7 +495,6 @@ COMMIT;
 -- Data for table `Usuario`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `registro`;
 INSERT INTO `Usuario` (`username`, `password`, `salt`, `rol`, `enabled`, `locked`, `intents`) VALUES ('usuarioINTI', 'Uv9u6JM/NbN464qxZXpCzJomfYB2TWWCrI4MdT+S5C+N3EHP+TtvkA0lSA8ETyzZ/tcriC3aRy9YDPqr4Sa16Q==', 'l2gkhe40o5c44g8s8g4kw4w0o0sck0g', 'a:1:{i:0;s:9:\"ROLE_USER\";}', 1, NULL, 0);
 INSERT INTO `Usuario` (`username`, `password`, `salt`, `rol`, `enabled`, `locked`, `intents`) VALUES ('desarrolladorUES', 'ok6HFgqr7/uwDPKRN7KfdOiiOedTYgpRdrfIfAQh5S1zubtz7O/+Rqg11IXU99h8jV8PI/d5SxcGIuAQqjSwfw==', 'pxzoid8tur4s440swgs0k84800scgk0', 'a:2:{i:0;s:9:\"ROLE_USER\";i:1;s:16:\"ROLE_SUPER_ADMIN\";}', 1, NULL, 0);
 

@@ -13,7 +13,7 @@
     {{ flashMessage }}
 </div>
 {% endfor %}
-<form action="{{ path('update_password', { 'username':usuario.username }) }}" method="POST" {{ form_enctype(form) }} class="form-horizontal">
+<form id="passwordtype" action="{{ path('update_password', { 'username':usuario.username }) }}" method="POST" {{ form_enctype(form) }} class="form-horizontal">
     {{ form_widget(form, {'form_type': 'horizontal'}) }}
     <div class="form-actions">
         <input type="submit" value="Cambiar contraseña" class="btn btn-primary" />

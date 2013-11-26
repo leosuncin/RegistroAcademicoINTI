@@ -1,0 +1,293 @@
+{% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
+
+{% block breadcrumb %}
+<li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
+<li><span class="divider">&gt;</span> <a href="{{ path('practicaprofesional') }} ">Practica Profesional</a></li>
+<li class="active"><span class="divider">&gt;</span> Crear</li>
+{% endblock %}
+
+{% block content %}
+
+
+
+
+<h3> Evaluacion de Alumnos practica profesional</h3>
+ {# <table>
+        <tr>
+            <td>Seleccione un alumno: </td>
+            <td><select id='alumno' name='alumno'>
+            {% for entity in entities %}
+                <option value='{{ entity.id }}'> {{ entity.alumno }} </option>
+            {% endfor %}
+            </select></td>
+        </tr>
+  </table>#}
+<div style="border:solid 1px #000;padding:15px"> Buscar: <input type='search' id='search' placeholder='Nombre o NIE del Alumno'> 
+   
+    <div id='resultTable'></div></div>
+
+       
+        <table class='table-striped'>
+        
+        <tr><td>NIE:</td><td><input type='text' id='nie' name='nie' required="required"></td>
+       
+        <td>Nombre de Alumno</td><td><input type='text' id='userName' placeholder='Nombre de Alumno' maxlength="50" required="required"></td></tr>
+        <tr> <td>Empresa:</td><td><input type='text' id='empresa' name='empresa' required="required"></td>
+        <td>Direccion:</td><td><input type='text' id='direccion' name='direccion' required="required"></td> </tr>
+
+        <tr> <td>Telefono:</td><td><input type="text" id="telefono" name="telefono" required="required"></td>
+        <td>Encargado:</td><td><input type="text" id="encargado" name="encargado" required="required"></td>
+         
+            </tr>   
+
+
+   
+             
+    </table>   
+     
+ <h4 >Indicaciones: Marcar los criterios</h4>
+ <p  > E=Excelente, MB=Muy Bueno, B=Bueno, R=Regular, NM=Necesita Mejorar.</p>
+
+    <table class="table table-bordered">
+<tr>
+     <th rowspan="2" colspan="2">Aspectos personales</th>
+    <th colspan="5">Criterios</th>  
+   
+</tr>
+<tr> <th>E</th><th>MB</th><th>B</th><th>R</th><th>NM</th>
+</tr>
+<tr>
+ <td>1</td><td>Presentacion personal</td>
+<th><input type="radio" class="E"  name="chk_group[]" value="E" validate="required:true"></th>
+<th><input type="radio" class="MB"  name="chk_group[]" value="MB"></th>
+<th><input type="radio" class="B"  name="chk_group[]" value="B"></th>
+<th><input type="radio" class="R"  name="chk_group[]" value="R"></th>
+<th><input type="radio" class="NM"  name="chk_group[]" value="NM"></th>
+
+</tr> 
+<tr>
+ <td>2</td><td>Puntualidad a las practicas</td>
+<th><input type="radio" class="E" name="chk_group2[]" value="E"></th>
+<th><input type="radio" class="MB" name="chk_group2[]" value="MB"></th>
+<th><input type="radio" class="B" name="chk_group2[]" value="B"></th>
+<th><input type="radio" class="R" name="chk_group2[]" value="R"></th>
+<th><input type="radio" class="NM" name="chk_group2[]" value="NM"></th>
+
+</tr>     
+
+<tr>
+ <td>3</td><td>Capacidad de criterio</td>
+<th><input type="radio" class="E" name="chk_group3[]" value="E"></th>
+<th><input type="radio" class="MB" name="chk_group3[]" value="MB"></th>
+<th><input type="radio" class="B" name="chk_group3[]" value="B"></th>
+<th><input type="radio" class="R" name="chk_group3[]" value="R"></th>
+<th><input type="radio" class="NM" name="chk_group3[]" value="NM"></th>
+
+</tr>  
+
+<tr>
+ <td>4</td><td>Valora y estimula el trabajo de grupo</td>
+<th><input type="radio" class="E" name="chk_group4[]" value="E"></th>
+<th><input type="radio" class="MB" name="chk_group4[]" value="MB"></th>
+<th><input type="radio" class="B" name="chk_group4[]" value="B"></th>
+<th><input type="radio" class="R" name="chk_group4[]" value="R"></th>
+<th><input type="radio" class="NM" name="chk_group4[]" value="NM"></th>
+
+</tr>  
+
+<tr>
+ <td>5</td><td>Demuestra confianza en si mismo</td>
+<th><input type="radio" class="E" name="chk_group5[]" value="E"></th>
+<th><input type="radio" class="MB" name="chk_group5[]" value="MB"></th>
+<th><input type="radio" class="B" name="chk_group5[]" value="B"></th>
+<th><input type="radio" class="R" name="chk_group5[]" value="R"></th>
+<th><input type="radio" class="NM" name="chk_group5[]" value="NM"></th>
+
+</tr>  
+
+<tr>
+ <td>6</td><td>Sabe escuchar</td>
+<th><input type="radio" class="E" name="chk_group6[]" value="E"></th>
+<th><input type="radio" class="MB" name="chk_group6[]" value="MB"></th>
+<th><input type="radio" class="B" name="chk_group6[]" value="B"></th>
+<th><input type="radio" class="R" name="chk_group6[]" value="R"></th>
+<th><input type="radio" class="NM" name="chk_group6[]" value="NM"></th>
+
+</tr>  
+
+<tr>
+ <td>7</td><td>Aprovecha adecudamente su tiempo</td>
+<th><input type="radio" class="E" name="chk_group7[]" value="E"></th>
+<th><input type="radio" class="MB" name="chk_group7[]" value="MB"></th>
+<th><input type="radio" class="B" name="chk_group7[]" value="B"></th>
+<th><input type="radio" class="R" name="chk_group7[]" value="R"></th>
+<th><input type="radio" class="NM" name="chk_group7[]" value="NM"></th>
+
+</tr>  
+
+<tr>
+ <td>8</td><td>Estabilidad emocinal</td>
+<th><input type="radio" class="E" name="chk_group8[]" value="E"></th>
+<th><input type="radio" class="MB" name="chk_group8[]" value="MB"></th>
+<th><input type="radio" class="B" name="chk_group8[]" value="B"></th>
+<th><input type="radio" class="R" name="chk_group8[]" value="R"></th>
+<th><input type="radio" class="NM" name="chk_group8[]" value="NM"></th>
+
+</tr> 
+
+<tr>
+ <td>9</td><td>Facilidad de adaptarse a imprevistos</td>
+<th><input type="radio" class="E" name="chk_group9[]" value="E"></th>
+<th><input type="radio" class="MB" name="chk_group9[]" value="MB"></th>
+<th><input type="radio" class="B" name="chk_group9[]" value="B"></th>
+<th><input type="radio" class="B" name="chk_group9[]"   value="R"></th>
+<th><input type="radio" class="NM" name="chk_group9[]"  value="NM"></th>
+
+</tr>
+<tr>
+ <td>10</td><td>Calidad de trabajo</td>
+<th><input type="radio" class="E" name="chk_group10[]"  value="E"></th>
+<th><input type="radio" class="MB" name="chk_group10[]"  value="MB"></th>
+<th><input type="radio" class="B" name="chk_group10[]"  value="B"></th>
+<th><input type="radio" class="R" name="chk_group10[]"  value="R"></th>
+<th><input type="radio" class="NM" name="chk_group10[]"  value="NM"></th>
+
+</tr>     
+
+<tr>
+ <td>11</td><td>Disciplina en el trabajo</td>
+<th><input type="radio" class="E" name="chk_group11[]"  value="E"></th>
+<th><input type="radio" class="MB" name="chk_group11[]"  value="MB"></th>
+<th><input type="radio" class="B" name="chk_group11[]"  value="B"></th>
+<th><input type="radio" class="R" name="chk_group11[]"  value="R"></th>
+<th><input type="radio" class="NM" name="chk_group11[]"  value="NM"></th>
+
+</tr>  
+
+<tr>
+ <td>12</td><td>Dominio del area tecnica</td>
+<th><input type="radio" class="E" name="chk_group12[]"  value="E"></th>
+<th><input type="radio" class="MB" name="chk_group12[]"  value="MB"></th>
+<th><input type="radio" class="B" name="chk_group12[]"  value="B"></th>
+<th><input type="radio" class="R" name="chk_group12[]"  value="R"></th>
+<th><input type="radio" class="NM" name="chk_group12[]"  value="NM"></th>
+
+</tr>  
+
+<tr>
+ <td>13</td><td>Vocabulario utilizado</td>
+<th><input type="radio" class="E" name="chk_group13[]"   value="E"></th>
+<th><input type="radio" class="MB" name="chk_group13[]"  value="MB"></th>
+<th><input type="radio" class="B" name="chk_group13[]"  value="B"></th>
+<th><input type="radio" class="R" name="chk_group13[]"  value="R"></th>
+<th><input type="radio" class="NM" name="chk_group13[]"  value="NM"></th>
+
+</tr>  
+</table>
+
+<div ><button class="btn btn-info" onclick="calcular()">Calcular Nota</button> 
+<form   action="{{ path('practicapro_update') }}" method="GET"  >
+    
+    <div class="form-actions">
+<input type="number" id="campoNota" name="campoNota">
+       
+        <input type="button" id="btn2" value="Asignar nota" class="btn btn-primary" /><input style="visibility:hidden" type="text" id="id" name="id"></div>
+</form>
+
+
+
+</div>
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+<script src="{{ asset('assets/jquery-ui/js/jquery-ui.js') }}"></script>
+<script src="{{ asset('assets/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+<script>
+    $(document).ready(function(){
+        showAlumnos();
+    
+        $("#search").keyup(showAlumnos);
+       
+         $("#btn2").click(guardar);
+       
+    });
+   
+  
+
+    function showAlumnos(){
+        $.get("{{ path('practicaprofesional_search1') }}", {"searchValue":$("#search").val()}, function(e){
+            $("#resultTable").html(e);
+            $("tr.alumno").click(function(){
+                $("#nie").val($(this).find("td.n_nie").attr('value'));
+                $("#userName").val($(this).find("td.aspName").attr('value'));
+                $("#empresa").val($(this).find("td.empresa").attr('value'));
+                $("#direccion").val($(this).find("td.direccion").attr('value'));
+                $("#telefono").val($(this).find("td.telefono").attr('value'));
+                $("#encargado").val($(this).find("td.contacto").attr('value'));
+                $("#id").val($(this).find("td.id").attr('value'));
+
+
+            });
+        });
+    }
+
+    function calcular(){
+        var total_E=$(".E:checked").size();
+        var total_MB=$(".MB:checked").size();
+        var total_B=$(".B:checked").size();
+        var total_R=$(".R:checked").size();
+        var total_NM=$(".NM:checked").size();
+        $acamulador=0;
+        $prom=0;
+    var myLength = $("#nie").val().length;
+
+ 
+    var radio_buttons = $("input[name='chk_group[]']");
+    var radio_buttons1 = $("input[name='chk_group2[]']");
+    var radio_buttons2 = $("input[name='chk_group3[]']");
+    var radio_buttons3 = $("input[name='chk_group4[]']");
+    var radio_buttons4 = $("input[name='chk_group5[]']");
+    var radio_buttons5 = $("input[name='chk_group6[]']");
+    var radio_buttons6 = $("input[name='chk_group7[]']");
+    var radio_buttons7 = $("input[name='chk_group8[]']");
+    var radio_buttons8 = $("input[name='chk_group9[]']");
+    var radio_buttons9 = $("input[name='chk_group10[]']");
+    var radio_buttons10 = $("input[name='chk_group11[]']");
+    var radio_buttons11 = $("input[name='chk_group12[]']");
+    var radio_buttons12 = $("input[name='chk_group13[]']");
+
+        if (radio_buttons.filter(':checked').length != 0 && radio_buttons1.filter(':checked').length != 0
+            && radio_buttons2.filter(':checked').length != 0 && radio_buttons3.filter(':checked').length != 0
+            && radio_buttons4.filter(':checked').length != 0 && radio_buttons5.filter(':checked').length != 0
+            && radio_buttons6.filter(':checked').length != 0 && radio_buttons7.filter(':checked').length != 0
+            && radio_buttons8.filter(':checked').length != 0 && radio_buttons9.filter(':checked').length != 0
+            && radio_buttons10.filter(':checked').length != 0 && radio_buttons11.filter(':checked').length != 0
+            && radio_buttons12.filter(':checked').length != 0 && myLength !=0) {    
+
+          if (total_E !=0) {$acamulador+=$(".E:checked").size()*10;}
+          if (total_MB !=0) {$acamulador+=$(".MB:checked").size()*8;}
+          if (total_B !=0) {$acamulador+=$(".B:checked").size()*6;}
+          if (total_R !=0) {$acamulador+=$(".R:checked").size()*4;}
+          if (total_NM !=0) {$acamulador+=$(".NM:checked").size()*2;}
+        }
+
+        else{ alert("Complete todos los criterios");}
+         $prom=$acamulador/13;
+        
+        $("#campoNota").val($prom.toFixed(2));
+       // alert($prom);
+      //  alert($acamulador);
+
+    }
+
+function guardar(){
+    $.get("{{ path('practicapro_update') }}", {"campoNota":$("#campoNota").val(),"id":$("#id").val()}, function(e){
+
+        document.location.href=e;
+    });
+}
+
+
+</script>
+{% endblock %}

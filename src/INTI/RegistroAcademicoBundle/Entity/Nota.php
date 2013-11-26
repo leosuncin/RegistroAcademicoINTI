@@ -10,7 +10,7 @@ use INTI\RegistroAcademicoBundle\Validator\Constraints as RegistroAcademicoAsser
  * Nota
  *
  * @ORM\Table(name="Nota")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="INTI\RegistroAcademicoBundle\Repository\NotaRepository")
  */
 class Nota
 {

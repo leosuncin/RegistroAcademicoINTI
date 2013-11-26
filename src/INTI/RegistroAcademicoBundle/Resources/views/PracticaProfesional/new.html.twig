@@ -30,3 +30,32 @@
 </form>
 
 {% endblock %}
+
+{% block javascript %}
+
+<script src="{{ asset('assets/bootstrap-datepicker/js/bootstrap-datepicker.js') }}"></script>
+
+
+<script >
+
+    
+       
+
+    $(document).ready(function(){
+         $('.date1').datepicker(
+
+            {  
+                dateFormat: 'dd/mm/yy' }
+
+            ) 
+        $('.date2').datepicker(
+
+            {  
+                dateFormat: 'dd/mm/yy' }
+
+            ) 
+       
+    });
+   
+</script>
+{% endblock %}

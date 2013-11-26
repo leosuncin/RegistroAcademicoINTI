@@ -3,7 +3,7 @@
 {% block content -%}
     <h1>Modificar Especialidad</h1>
 
-    <form action="{{ path('especialidad_update', { 'id': entity.codigo }) }}" method="post" {{ form_enctype(edit_form) }}>
+    <form action="{{ path('especialidad_update', { 'codigo': entity.codigo }) }}" method="post" {{ form_enctype(edit_form) }}>
         <input type="hidden" name="_method" value="PUT" />
         
         
@@ -20,7 +20,7 @@
         </a> </td>
    
    
-        <form action="{{ path('especialidad_delete', { 'id': entity.codigo }) }}" method="post">
+        <form action="{{ path('especialidad_delete', { 'codigo': entity.codigo }) }}" method="post">
             <input type="hidden" name="_method" value="DELETE" />
             {{ form_widget(delete_form) }}
          <td>   <button type="submit" class="btn btn-danger">Eliminar</button></td>

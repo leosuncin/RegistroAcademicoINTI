@@ -1,9 +1,9 @@
 {% extends 'RegistroAcademicoBundle::base.html.twig' %}
 
-{% set title = 'Un error:'~status_text~'a ocurrido' %}
+{% set title = 'Un error: '~status_text~' a ocurrido' %}
 
 {% block body %}
-<div class="container">
+<div class="container" style="background: white">
     <header>
         <hgroup>
             <h1>¡Lo siento! Ocurrió un error fatal</h1>
@@ -14,26 +14,5 @@
     cuéntale que es lo que ocurrió y que estabas haciendo cuando sucedió
     el error. Para poder arreglarlo lo mas pronto posible. Disculpa por el
     inconveniente causado :(.</p>
-    <p> 
- ___________ 
-< Lo siento >
- ----------- 
-      \                    / \  //\
-       \    |\___/|      /   \//  \\
-            /0  0  \__  /    //  | \ \    
-           /     /  \/_/    //   |  \  \  
-           @_^_@'/   \/_   //    |   \   \ 
-           //_^_/     \/_ //     |    \    \
-        ( //) |        \///      |     \     \
-      ( / /) _|_ /   )  //       |      \     _\
-    ( // /) '/,_ _ _/  ( ; -.    |    _ _\.-~        .-~~~^-.
-  (( / / )) ,-{        _      `-.|.-~-.           .~         `.
- (( // / ))  '/\      /                 ~-. _ .-~      .-~^-.  \
- (( /// ))      `.   {            }                   /      \  \
-  (( / ))     .----~-.\        \-'                 .~         \  `. \^-.
-             ///.----..>        \             _ -~             `.  ^-`  ^-_
-               ///-._ _ _ _ _ _ _}^ - - - - ~                     ~-- ,.-~
-                                                                  /.-~
-</p>
 </div>
 {% endblock %}

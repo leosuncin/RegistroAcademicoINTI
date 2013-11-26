@@ -48,7 +48,7 @@ class EmpresaController extends Controller
 	{
 		$entity = new Empresa();
 		$form = $this->createForm(new EmpresaType(),$entity);
-		$form->handleRequest($request);
+		$form->submit($request);
 
 		if ($form->isValid()) {
 			$em = $this->getDoctrine()->getManager();
@@ -157,8 +157,8 @@ class EmpresaController extends Controller
 		}
 
 		$deleteForm = $this->createDeleteForm($id);
-		$editForm = $this->createEditForm($entity);
-		$editForm->handleRequest($request);
+		$editForm = $this->createForm(new EmpresaType(),$entity);
+		$editForm->submit($request);
 
 		if ($editForm->isValid()) {
 			$em->flush();
@@ -208,11 +208,9 @@ $this->get('session')->getFlashBag()->add('notice', 'Se elimino correctamente');
 	*/
 	private function createDeleteForm($id)
 	{
-		return $this->createFormBuilder()
-			->setAction($this->generateUrl('empresa_delete', array('id' => $id)))
-			->setMethod('DELETE')
-			->add('submit', 'submit', array('label' => 'Delete'))
-			->getForm()
+		 return $this->createFormBuilder(array('id' => $id))
+            ->add('id', 'hidden')
+            ->getForm()
 		;
 	}
 }

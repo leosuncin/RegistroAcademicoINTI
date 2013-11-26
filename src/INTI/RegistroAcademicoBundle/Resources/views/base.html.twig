@@ -67,6 +67,7 @@
 	{% endif %}
 	{% if js.twig|default(false) %}
 		<script src="{{ asset('assets/twig.js/twig.min.js') }}"></script>
+		<script src="{{ asset('bundles/registroacademico/js/plantillas.js') }}"></script>
 	{% endif %}
 	{% if js.buscarAjax|default(false) %}
 		<script src="{{ asset('bundles/registroacademico/js/buscarAjax.js') }}"></script>
@@ -81,6 +82,7 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('assets/watable/watable.css') }}" />
 	{% endif %}
 	{% if sheet.select2|default(false) %}
+<link rel="stylesheet" href="{{ asset('assets/select2/select2.css') }}">
 <link rel="stylesheet" href="{{ asset('bundles/registroacademico/css/select2-bootstrap.css') }}">
 	{% endif %}
 	{% if sheet.offline|default(false) %}

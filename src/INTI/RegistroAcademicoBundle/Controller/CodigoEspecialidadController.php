@@ -22,7 +22,7 @@ class CodigoEspecialidadController extends Controller
 	/**
 	 * Lists all Especialidad entities.
 	 *
-	 * @Route("/", name="codigoespecialidad_index")
+	 * @Route("/", name="codigoespecialidad_index", options={"expose"=true})
 	 * @Method("GET")
 	 * @Template()
 	 */
@@ -30,11 +30,18 @@ class CodigoEspecialidadController extends Controller
 	{
 		$em = $this->getDoctrine()->getManager();
 
-		$entities = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
+		if($this->getRequest()->isXmlHttpRequest()) {
+			$serializer = $this->get("jms_serializer");
+			$especialidad = $em->getRepository('RegistroAcademicoBundle:Especialidad')->find($this->getRequest()->query->get('especialidad'));
+			$entities = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findByEspecialidad($especialidad);
+			return new Response($serializer->serialize($entities, 'json'), 200, array("Content-Type" => "application/json; charset=UTF-8"));
+		} else {
+			$entities = $em->getRepository('RegistroAcademicoBundle:CodigoEspecialidad')->findAll();
+			return array(
+				'entities' => $entities,
+			);
+		}
 
-		return array(
-			'entities' => $entities,
-		);
 	}
 
 	/**

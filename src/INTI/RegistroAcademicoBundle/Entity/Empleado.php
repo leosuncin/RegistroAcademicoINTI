@@ -148,6 +148,18 @@ class Empleado
 	private $usuario;
 
 	/**
+	 * Set dui
+	 *
+	 * @param string
+	 * @return Empleado
+	 */
+	public function setDui($dui)
+	{
+		$this->dui = $dui;
+		return $this;
+	}
+
+	/**
 	 * Get dui
 	 *
 	 * @return string

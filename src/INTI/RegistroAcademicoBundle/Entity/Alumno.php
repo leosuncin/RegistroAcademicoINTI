@@ -4,13 +4,15 @@ namespace INTI\RegistroAcademicoBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use INTI\RegistroAcademicoBundle\Entity\Aspirante;
 
 /**
  * Alumno
  *
  * @ORM\Table(name="Alumno")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="INTI\RegistroAcademicoBundle\Repository\AlumnoRepository")
+ * @UniqueEntity(fields = "nie", message = "El NIE ya esta registrado")
  */
 class Alumno extends Aspirante
 {
@@ -29,7 +31,7 @@ class Alumno extends Aspirante
 	/**
 	 * @var \CodigoEspecialidad
 	 *
-	 * @ORM\ManyToOne(targetEntity="CodigoEspecialidad")
+	 * @ORM\ManyToOne(targetEntity="CodigoEspecialidad",cascade={"persist"})
 	 * @ORM\JoinColumns({
 	 *   @ORM\JoinColumn(name="Codigo_especialidad", referencedColumnName="codigo")
 	 * })
@@ -39,12 +41,28 @@ class Alumno extends Aspirante
 	/**
 	 * @var \Usuario
 	 *
-	 * @ORM\ManyToOne(targetEntity="Usuario")
+	 * @ORM\ManyToOne(targetEntity="Usuario",cascade={"persist"})
 	 * @ORM\JoinColumns({
 	 *   @ORM\JoinColumn(name="Usuario", referencedColumnName="username")
 	 * })
 	 */
 	private $usuario;
+
+	public function __construct(Aspirante $aspirante = null) {
+		if($aspirante !== null) {
+			$this->foto            = $aspirante->getFoto();
+			$this->primerApellido  = $aspirante->getPrimerapellido();
+			$this->segundoApellido = $aspirante->getSegundoapellido();
+			$this->nombres         = $aspirante->getNombres();
+			$this->direccion       = $aspirante->getDireccion();
+			$this->telefono        = $aspirante->getTelefono();
+			$this->fechaNac        = $aspirante->getFechanac();
+			$this->lugarNac        = $aspirante->getLugarnac();
+			$this->sexo            = $aspirante->getSexo();
+			$this->especialidad    = $aspirante->getEspecialidad();
+			$this->encargado       = $aspirante->getEncargado();
+		}
+	}
 
 	/**
 	 * Set condicion
@@ -115,8 +133,5 @@ class Alumno extends Aspirante
 		return $this->usuario;
 	}
 
-	public function __toString()
-	{
-		return (string)$this->nie;
-	}
+	
 }

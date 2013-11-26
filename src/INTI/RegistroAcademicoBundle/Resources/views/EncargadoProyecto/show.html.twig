@@ -1,7 +1,7 @@
 {% extends 'RegistroAcademicoBundle:Default:layout.html.twig' %}
 {% block breadcrumb %}
 <li><span class="divider">&gt;</span> <a href="{{ path('index') }}">Inicio</a></li>
-<li><span class="divider">&gt;</span> <a href="{{ path('encargadoproyecto') }}">Encargados de Proyectos</a></li>
+<li><span class="divider">&gt;</span> <a href="{{ path('encargado_proyecto') }}">Encargados de Proyectos</a></li>
 <li class="active"><span class="divider">&gt;</span> Mostrar</li>
 {% endblock %}
 
@@ -23,12 +23,12 @@
     </table>
 
 <div class="form-actions">
-<form action="{{ path('encargadoproyecto_delete', { 'id': entity.id }) }}" method="post" class="form-acctions">
+<form action="{{ path('encargado_proyecto_delete', { 'id': entity.id }) }}" method="post" class="form-acctions">
 <table>
   <tr>
-    <td><a href="{{ path('encargadoproyecto_edit', { 'id': entity.id }) }}" class="btn btn-primary">Editar</a></td>
+    <td><a href="{{ path('encargado_proyecto_edit', { 'id': entity.id }) }}" class="btn btn-primary">Editar</a></td>
     
-     <td> <a href="{{ path('encargadoproyecto') }}" class="btn btn-info">Regresar a la lista</a></td>
+     <td> <a href="{{ path('encargado_proyecto') }}" class="btn btn-info">Regresar a la lista</a></td>
  
     <input type="hidden" name="_method" value="DELETE" /> 
     {{ form_widget(delete_form) }}

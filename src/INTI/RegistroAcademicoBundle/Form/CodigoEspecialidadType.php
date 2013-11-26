@@ -15,39 +15,30 @@ class CodigoEspecialidadType extends AbstractType
 		public function buildForm(FormBuilderInterface $builder, array $options)
 		{
 			$builder
+				->add('especialidad',
+					'entity',
+					array(
+						'label'    => 'Especialidad',
+						'class'    => 'RegistroAcademicoBundle:Especialidad',
+						'property' => 'nombre'
+				))
+				->add('anho',
+						'number',
+						array(
+							'label'      => 'Año',
+							'max_length' => 1
+					))
+				->add('seccion',
+						'text',
+						array(
+							'label'      => 'Sección',
+							'max_length' => 1
+					))
 				->add('codigo',
 						'text',
 						array(
 							'label'      => 'Código',
 							'max_length' => 5
-					))
-				->add('anho',
-						'choice',
-						array(
-							'label'   => 'Año',
-							'choices' => array(
-								'1' => 'Primero',
-								'2' => 'Segundo',
-								'3' => 'Tercero',
-								'4' => 'Cuarto'
-					)))
-				->add('seccion',
-						'choice',
-						array(
-							'label'   => 'Sección',
-							'choices' => array(
-								'A' => 'A',
-								'B' => 'B',
-								'C' => 'C',
-								'D' => 'D',
-								'E' => 'E'
-					)))
-				->add('especialidad',
-						'entity',
-            array(
-              'label'    => 'Especialidad',
-              'class'    => 'RegistroAcademicoBundle:Especialidad',
-              'property' => 'nombre'
 					));
 		}
 
